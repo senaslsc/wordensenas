@@ -1,0 +1,254 @@
+{
+  "generated": "2026-06-04T18:42:06.490Z",
+  "total": 31,
+  "tools": [
+    {
+      "id": 1,
+      "title": "Cortar",
+      "slug": "cortar",
+      "category": "Portapapeles",
+      "page": "herramientas/01-cortar.html",
+      "icon": "icons/Cortar.png"
+    },
+    {
+      "id": 2,
+      "title": "Copiar",
+      "slug": "copiar",
+      "category": "Portapapeles",
+      "page": "herramientas/02-copiar.html",
+      "icon": "icons/Copiar.png"
+    },
+    {
+      "id": 3,
+      "title": "Pegar",
+      "slug": "pegar",
+      "category": "Portapapeles",
+      "page": "herramientas/03-pegar.html",
+      "icon": "icons/Pegar.png"
+    },
+    {
+      "id": 4,
+      "title": "Zoom",
+      "slug": "zoom",
+      "category": "Edición básica",
+      "page": "herramientas/04-zoom.html",
+      "icon": "icons/zoom.png"
+    },
+    {
+      "id": 5,
+      "title": "Guardar",
+      "slug": "guardar",
+      "category": "Edición básica",
+      "page": "herramientas/05-guardar.html",
+      "icon": "icons/Guardar.png"
+    },
+    {
+      "id": 6,
+      "title": "Deshacer",
+      "slug": "deshacer",
+      "category": "Edición básica",
+      "page": "herramientas/06-deshacer.html",
+      "icon": "icons/Deshacer.png"
+    },
+    {
+      "id": 7,
+      "title": "Rehacer",
+      "slug": "rehacer",
+      "category": "Edición básica",
+      "page": "herramientas/07-rehacer.html",
+      "icon": "icons/Rehacer.png"
+    },
+    {
+      "id": 8,
+      "title": "Ortografía y gramática",
+      "slug": "ortografia-y-gramatica",
+      "category": "Edición básica",
+      "page": "herramientas/08-ortografia-y-gramatica.html",
+      "icon": "icons/Ortografia.png"
+    },
+    {
+      "id": 9,
+      "title": "Subrayado",
+      "slug": "subrayado",
+      "category": "Formato de texto",
+      "page": "herramientas/09-subrayado.html",
+      "icon": "icons/Subrayado.png"
+    },
+    {
+      "id": 10,
+      "title": "Fuente",
+      "slug": "fuente",
+      "category": "Formato de texto",
+      "page": "herramientas/10-fuente.html",
+      "icon": "icons/Fuente.png"
+    },
+    {
+      "id": 11,
+      "title": "Alineación",
+      "slug": "alineacion",
+      "category": "Formato de texto",
+      "page": "herramientas/11-alineacion.html",
+      "icon": "icons/Alineación de parrafos.png"
+    },
+    {
+      "id": 12,
+      "title": "Sangría",
+      "slug": "sangria",
+      "category": "Formato de texto",
+      "page": "herramientas/12-sangria.html",
+      "icon": "icons/Sangria.png"
+    },
+    {
+      "id": 13,
+      "title": "Interlineado",
+      "slug": "interlineado",
+      "category": "Formato de texto",
+      "page": "herramientas/13-interlineado.html",
+      "icon": "icons/Interlineado.png"
+    },
+    {
+      "id": 14,
+      "title": "Resaltar",
+      "slug": "resaltar",
+      "category": "Formato de texto",
+      "page": "herramientas/14-resaltar.html",
+      "icon": "icons/Resaltar.png"
+    },
+    {
+      "id": 15,
+      "title": "Bordes",
+      "slug": "bordes",
+      "category": "Decorativos",
+      "page": "herramientas/15-bordes.html",
+      "icon": "icons/Bordes.png"
+    },
+    {
+      "id": 16,
+      "title": "Sombreado",
+      "slug": "sombreado",
+      "category": "Decorativos",
+      "page": "herramientas/16-sombreado.html",
+      "icon": "icons/Sombreado.png"
+    },
+    {
+      "id": 17,
+      "title": "Letra capital",
+      "slug": "letra-capital",
+      "category": "Decorativos",
+      "page": "herramientas/17-letra-capital.html",
+      "icon": "icons/Letra capital.png"
+    },
+    {
+      "id": 18,
+      "title": "Fondos",
+      "slug": "fondos",
+      "category": "Decorativos",
+      "page": "herramientas/18-fondos.html",
+      "icon": "icons/Fondo.png"
+    },
+    {
+      "id": 19,
+      "title": "Insertar imagen",
+      "slug": "insertar-imagen",
+      "category": "Elementos visuales",
+      "page": "herramientas/19-insertar-imagen.html",
+      "icon": "icons/Insertar imagen.png"
+    },
+    {
+      "id": 20,
+      "title": "Tabla",
+      "slug": "tabla",
+      "category": "Elementos visuales",
+      "page": "herramientas/20-tabla.html",
+      "icon": "icons/Tabla.png"
+    },
+    {
+      "id": 21,
+      "title": "Figura",
+      "slug": "figura",
+      "category": "Elementos visuales",
+      "page": "herramientas/21-figura.html",
+      "icon": "icons/Formas.png"
+    },
+    {
+      "id": 22,
+      "title": "Numeración",
+      "slug": "numeracion",
+      "category": "Organización del contenido",
+      "page": "herramientas/22-numeracion.html",
+      "icon": "icons/Numeración.png"
+    },
+    {
+      "id": 23,
+      "title": "Viñetas",
+      "slug": "vinetas",
+      "category": "Organización del contenido",
+      "page": "herramientas/23-vinetas.html",
+      "icon": "icons/Viñetas.png"
+    },
+    {
+      "id": 24,
+      "title": "Columnas",
+      "slug": "columnas",
+      "category": "Organización del contenido",
+      "page": "herramientas/24-columnas.html",
+      "icon": "icons/Columnas.png"
+    },
+    {
+      "id": 25,
+      "title": "Salto de página",
+      "slug": "salto-de-pagina",
+      "category": "Configuración de la página",
+      "page": "herramientas/25-salto-de-pagina.html",
+      "icon": "icons/Salto de página.png"
+    },
+    {
+      "id": 26,
+      "title": "Márgenes",
+      "slug": "margenes",
+      "category": "Configuración de la página",
+      "page": "herramientas/26-margenes.html",
+      "icon": "icons/MArgenes.png"
+    },
+    {
+      "id": 27,
+      "title": "Orientación",
+      "slug": "orientacion",
+      "category": "Configuración de la página",
+      "page": "herramientas/27-orientacion.html",
+      "icon": "icons/orientación de la página.png"
+    },
+    {
+      "id": 28,
+      "title": "Encabezado",
+      "slug": "encabezado",
+      "category": "Elementos del documento",
+      "page": "herramientas/28-encabezado.html",
+      "icon": "icons/Encabezado.png"
+    },
+    {
+      "id": 29,
+      "title": "Pie de página",
+      "slug": "pie-de-pagina",
+      "category": "Elementos del documento",
+      "page": "herramientas/29-pie-de-pagina.html",
+      "icon": "icons/pie de página.png"
+    },
+    {
+      "id": 30,
+      "title": "Número de página",
+      "slug": "numero-de-pagina",
+      "category": "Elementos del documento",
+      "page": "herramientas/30-numero-de-pagina.html",
+      "icon": "icons/Numero de pagina.png"
+    },
+    {
+      "id": 31,
+      "title": "Notas de pie",
+      "slug": "notas-de-pie",
+      "category": "Elementos del documento",
+      "page": "herramientas/31-notas-de-pie.html",
+      "icon": "icons/Notas al pie.png"
+    }
+  ]
+}
