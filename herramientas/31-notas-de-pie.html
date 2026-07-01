@@ -9,7 +9,6 @@
     :root {
       --word-blue: #2B579A;
       --word-dark: #0b2d5c;
-      --ribbon-bg: #f3f2f1;
       --page-bg: #eef2f6;
       --card: #fff;
       --text: #1a1a1a;
@@ -25,11 +24,10 @@
       font-family: var(--font);
       color: var(--text);
       background: var(--page-bg);
-      padding-bottom: calc(var(--nav-h) + var(--tool-nav-h));
+      padding-bottom: calc(var(--nav-h) + var(--tool-nav-h) + 10px);
     }
-    a { color: inherit; }
-    img { display: block; max-width: 100%; }
 
+    /* ── BARRA SUPERIOR ── */
     .title-bar {
       background: var(--word-blue);
       color: #fff;
@@ -53,195 +51,24 @@
     .title-bar a.title-link { color: #fff; text-decoration: none; }
     .title-bar a.title-link:hover { text-decoration: underline; }
 
+    /* Solo pestaña Inicio */
     .ribbon-tabs {
-      display: flex; flex-wrap: wrap;
+      display: flex;
       list-style: none; margin: 0; padding: 0 6px;
       background: #fff;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 2px solid var(--word-blue);
     }
-    .ribbon-tabs a, .ribbon-tabs button {
+    .ribbon-tabs li a {
       display: block;
-      border: none; background: transparent;
-      padding: 9px 12px; font-size: 12px; color: var(--text);
-      border-bottom: 2px solid transparent;
-      text-decoration: none;
-      font-family: inherit;
-      cursor: pointer;
-    }
-    .ribbon-tabs li.active a,
-    .ribbon-tabs li.active button {
-      background: var(--ribbon-bg);
-      border-bottom-color: var(--word-blue);
-      font-weight: 600;
-    }
-    .ribbon-fake {
-      background: var(--ribbon-bg);
-      border-bottom: 1px solid var(--border);
-      padding: 6px 12px;
-      font-size: 10px;
-      color: var(--muted);
-      display: flex; gap: 16px; flex-wrap: wrap;
-    }
-    .ribbon-fake span { padding: 2px 6px; background: #fff; border-radius: 3px; border: 1px solid #e0e0e0; }
-
-    .platform-shell {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 14px 16px 20px;
-      display: grid;
-      grid-template-columns: 1fr 270px;
-      gap: 16px;
-      align-items: start;
-    }
-    @media (max-width: 960px) {
-      .platform-shell { grid-template-columns: 1fr; }
-    }
-    .hero {
-      grid-column: 1 / -1;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .hero-text h2 {
-      margin: 0 0 4px;
-      font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+      padding: 9px 16px;
+      font-size: 13px;
       color: var(--word-blue);
-      display: flex; align-items: center; gap: 8px;
-    }
-    .hero-text .w-icon {
-      width: 32px; height: 32px;
-      background: linear-gradient(135deg, #2B579A, #41a5ee);
-      color: #fff; font-weight: 800;
-      display: flex; align-items: center; justify-content: center;
-      border-radius: 5px; font-size: 18px;
-    }
-    .hero-text p { margin: 0; color: var(--muted); font-size: 0.9rem; }
-    .main-panel {
-      background: var(--card);
-      border-radius: 12px;
-      padding: 16px;
-      box-shadow: 0 2px 10px rgba(0,0,0,.08);
-      border: 1px solid rgba(0,0,0,.06);
-    }
-    .main-panel > p.hint-line {
-      margin: 0 0 14px;
-      font-size: 0.88rem;
-      color: var(--muted);
-    }
-    .categories-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-    @media (max-width: 640px) {
-      .categories-grid { grid-template-columns: 1fr; }
-    }
-    .category-block {
-      background: var(--cat-tint);
-      border: 2px solid var(--cat-color);
-      border-radius: 10px;
-      padding: 10px 10px 12px;
-    }
-    .category-header {
-      display: flex; align-items: center; gap: 8px;
-      margin-bottom: 10px;
-    }
-    .category-number {
-      width: 24px; height: 24px; border-radius: 50%;
-      background: var(--cat-color); color: #fff;
-      font-size: 11px; font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .category-header h3 {
-      margin: 0; font-size: 0.68rem; font-weight: 800;
-      letter-spacing: 0.04em; color: var(--cat-color);
-    }
-    .category-tools {
-      display: flex; flex-wrap: wrap; gap: 8px;
-    }
-    .tool-card {
-      display: flex; flex-direction: column; align-items: center;
-      width: 78px;
-      padding: 8px 4px;
-      background: #fff;
-      border: 1px solid rgba(0,0,0,.08);
-      border-radius: 8px;
+      font-weight: 700;
       text-decoration: none;
-      color: var(--text);
-      transition: transform .15s, box-shadow .15s, border-color .15s;
-    }
-    .tool-card:hover, .tool-card:focus-visible {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 14px rgba(0,0,0,.12);
-      border-color: var(--cat-color);
-      outline: none;
-    }
-    .tool-card img {
-      width: 44px; height: 44px;
-      object-fit: contain;
-      margin-bottom: 4px;
-    }
-    .tool-label {
-      font-size: 10px;
-      text-align: center;
-      line-height: 1.2;
-      font-weight: 600;
-    }
-    .sidebar { display: flex; flex-direction: column; gap: 12px; }
-    .sidebar-card {
-      background: var(--card);
-      border-radius: 10px;
-      padding: 14px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.07);
-      border: 1px solid rgba(0,0,0,.05);
-    }
-    .welcome-card {
-      background: linear-gradient(145deg, #2B579A, #1e4080);
-      color: #fff;
-    }
-    .welcome-card h3 { margin: 0 0 8px; font-size: 1rem; }
-    .welcome-card p { margin: 0 0 12px; font-size: 0.8rem; line-height: 1.45; opacity: .95; }
-    .btn-start {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 8px 14px;
-      background: #fff; color: var(--word-blue);
-      border: none; border-radius: 6px;
-      font-weight: 700; font-size: 0.85rem;
-      text-decoration: none;
-      font-family: inherit;
-      cursor: pointer;
-    }
-    .sidebar-card h3 { margin: 0 0 10px; font-size: 0.95rem; }
-    .progress-bar {
-      height: 8px; background: #e8ecf0;
-      border-radius: 4px; overflow: hidden;
-      margin-bottom: 10px;
-    }
-    .progress-bar span {
-      display: block; height: 100%; width: 35%;
-      background: #0f7b3f; border-radius: 4px;
-    }
-    .progress-list { list-style: none; margin: 0; padding: 0; font-size: 0.78rem; }
-    .progress-list li {
-      display: flex; align-items: center; gap: 6px;
-      padding: 5px 0; border-bottom: 1px solid #f0f0f0;
-      color: var(--muted);
-    }
-    .progress-list li.done { color: #0f7b3f; font-weight: 600; }
-    .progress-list li.current { color: var(--word-blue); font-weight: 600; }
-    .progress-list a { text-decoration: none; color: inherit; }
-    .btn-lsc {
-      display: block; width: 100%;
-      padding: 10px; text-align: center;
-      background: var(--word-blue); color: #fff;
-      border: none; border-radius: 6px;
-      font-weight: 600; font-size: 0.85rem;
-      font-family: inherit;
-      cursor: pointer;
+      border-bottom: 3px solid var(--word-blue);
     }
 
+    /* ── CABECERA DE LA HERRAMIENTA ── */
     .detail-header {
       background: linear-gradient(135deg, var(--word-blue), #1e3f6e);
       color: #fff;
@@ -260,71 +87,172 @@
       padding: 3px 8px; border-radius: 4px;
       font-size: 11px; font-weight: 600;
     }
+
+    /* ── CONTENIDO PRINCIPAL ── */
     .detail-body {
       max-width: 800px; margin: 0 auto;
       padding: 16px 16px 24px;
     }
-    .ribbon-path, .block, .extra-zone {
+
+    .block {
       background: #fff;
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 14px 16px;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
-    .ribbon-path { border-left: 4px solid var(--word-blue); }
-    .block h2, .extra-zone h2 { margin: 0 0 8px; font-size: 1rem; color: var(--word-blue); }
-    .block p, .block li { line-height: 1.55; }
-    .block ol { margin: 0; padding-left: 1.25rem; }
-    .before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    @media (max-width: 500px) { .before-after { grid-template-columns: 1fr; } }
-    .ba-card { padding: 10px; border-radius: 6px; font-size: 13px; }
-    .ba-card.before { background: #fff4ce; }
-    .ba-card.after { background: #dff6dd; }
-    .ba-card h3 { margin: 0 0 4px; font-size: 11px; text-transform: uppercase; }
-    .placeholder-box {
-      min-height: 120px;
-      border: 2px dashed #c8c6c4;
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      text-align: center; color: var(--muted);
-      font-size: 13px; padding: 12px;
-      background: #faf9f8;
+    .block h2 {
+      margin: 0 0 12px;
+      font-size: 1rem;
+      color: var(--word-blue);
     }
-    .placeholder-box.lsc { border-color: var(--word-blue); background: #f0f6fc; }
-    .extra-zone {
-      border-style: dashed;
-      border-color: var(--word-blue);
-      background: #fafcfe;
-      min-height: 80px;
-    }
-    .extra-zone p.hint { margin: 0; font-size: 0.85rem; color: var(--muted); }
 
-    .tool-tabs {
+    /* ── VIDEO ── */
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: 8px;
+      background: #000;
+    }
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    /* ── SIMULADOR + QUIZ ── */
+    .extra-zone {
+      background: #fff;
+      border: 1px solid var(--word-blue);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+    }
+    .extra-zone h2 { margin: 0 0 8px; font-size: 1rem; color: var(--word-blue); }
+    .extra-zone p.hint { margin: 0 0 6px; font-size: 0.85rem; color: var(--muted); }
+
+    .simulator {
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,.08);
+      padding: 16px;
+      margin-top: 12px;
+    }
+    .simulator .toolbar {
       display: flex;
       flex-wrap: wrap;
-      gap: 4px;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .simulator .toolbar button,
+    .simulator .toolbar label {
+      font-size: 0.9rem;
+    }
+    .simulator button {
       padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
       background: #fff;
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 20;
+      color: var(--text);
+      cursor: pointer;
+      font-weight: 700;
+      font-family: inherit;
     }
-    .tool-tabs a {
-      padding: 6px 10px;
-      font-size: 11px;
-      text-decoration: none;
-      border-radius: 4px;
-      color: var(--muted);
-      border: 1px solid transparent;
-    }
-    .tool-tabs a:hover { background: var(--ribbon-bg); color: var(--text); }
-    .tool-tabs a.active {
+    .simulator button.primary {
       background: var(--word-blue);
       color: #fff;
-      font-weight: 600;
+      border-color: var(--word-blue);
+    }
+    .simulator button.secondary {
+      background: #f3f4f6;
+      color: var(--text);
+    }
+    .simulator .toolbar input {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      min-width: 220px;
+      font-family: inherit;
+      flex: 1 1 220px;
+    }
+    .doc-surface {
+      background: #f8fbff;
+      border: 1px solid #e1e3e6;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .doc-surface .page {
+      background: #fff;
+      padding: 18px 20px;
+      min-height: 220px;
+      position: relative;
+    }
+    .doc-surface p {
+      margin: 0 0 12px;
+      line-height: 1.7;
+      color: var(--text);
+    }
+    .select-word {
+      color: #1a1a1a;
+      cursor: pointer;
+      border-bottom: 1px dashed rgba(43, 87, 154, .4);
+    }
+    .select-word:hover,
+    .select-word.active {
+      background: rgba(43, 87, 154, 0.14);
+      border-bottom-color: rgba(43, 87, 154, 0.85);
+      border-radius: 4px;
+    }
+    .doc-surface p small {
+      vertical-align: super;
+      font-size: 0.75rem;
+      color: var(--word-dark);
+    }
+    .footnotes {
+      padding: 14px 18px 18px;
+      background: #f4f6f8;
+      border-top: 1px solid #e1e3e6;
+      font-size: 0.92rem;
+      color: var(--text);
+    }
+    .footnotes p {
+      margin: 0;
+      color: var(--muted);
+    }
+    .footnotes span {
+      font-weight: 700;
+      margin-right: 6px;
+      color: var(--word-dark);
     }
 
+    .quiz { margin-top: 18px; }
+    .quiz .q { margin-bottom: 18px; }
+    .quiz .q p { margin: 0 0 4px; }
+    .quiz label { display: block; margin-top: 8px; cursor: pointer; font-size: 0.95rem; }
+    .check-btn {
+      margin-top: 10px;
+      padding: 8px 16px;
+      background: var(--word-blue);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .check-btn:disabled { opacity: .6; cursor: not-allowed; }
+    .feedback { margin-top: 8px; font-size: 0.95rem; color: var(--muted); }
+    .feedback.correct { color: #0f7b3f; font-weight: 600; }
+    .feedback.wrong { color: #b22222; font-weight: 600; }
+    #finalResult { margin-top: 12px; font-weight: 700; color: var(--word-dark); }
+
+    /* ── NAV ENTRE HERRAMIENTAS ── */
     .detail-nav-bar {
       position: fixed;
       bottom: var(--nav-h);
@@ -358,6 +286,7 @@
       cursor: not-allowed;
     }
 
+    /* ── NAV INFERIOR ── */
     .bottom-nav {
       position: fixed; bottom: 0; left: 0; right: 0;
       height: var(--nav-h);
@@ -366,54 +295,37 @@
       z-index: 100;
       box-shadow: 0 -2px 12px rgba(0,0,0,.2);
     }
-    .bottom-nav a, .bottom-nav button {
+    .bottom-nav a {
       flex: 1; max-width: 130px;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       gap: 2px;
-      border: none; background: transparent;
       color: rgba(255,255,255,.8);
       text-decoration: none;
       font-size: 0.62rem; font-weight: 500;
       padding: 4px;
-      font-family: inherit;
-      cursor: pointer;
     }
-    .bottom-nav a:hover, .bottom-nav button:hover { color: #fff; background: rgba(255,255,255,.08); }
-    .bottom-nav a.active { background: rgba(255,255,255,.15); color: #fff; font-weight: 700; }
+    .bottom-nav a:hover { color: #fff; background: rgba(255,255,255,.08); }
     .bottom-nav .nav-icon { font-size: 1.15rem; }
-</style>
+  </style>
 </head>
-<body data-tool-id="31" data-tool-slug="notas-de-pie">
+<body>
 
+  <!-- BARRA SUPERIOR: solo logo + título -->
   <header class="title-bar">
     <a class="word-logo" href="../index.html" title="Inicio">W</a>
     <h1><a class="title-link" href="../index.html">Notas de pie — Word Básico</a></h1>
   </header>
 
-  <nav aria-label="Pestañas Word">
+  <!-- SOLO PESTAÑA INICIO -->
+  <nav aria-label="Menú Word">
     <ul class="ribbon-tabs">
-      <li class="active"><a href="../index.html">Inicio</a></li>
-      <li><button type="button">Insertar</button></li>
-      <li><button type="button">Diseño</button></li>
-      <li><button type="button">Disposición</button></li>
-      <li><button type="button">Referencias</button></li>
-      <li><button type="button">Revisar</button></li>
-      <li><button type="button">Vista</button></li>
+      <li><a href="../index.html">Inicio</a></li>
     </ul>
   </nav>
-  <div class="ribbon-fake" aria-hidden="true">
-    <span>Portapapeles</span><span>Fuente</span><span>Párrafo</span><span>Estilos</span>
-  </div>
-<nav class="tool-tabs" aria-label="Pestañas de esta herramienta">
-    <a href="#leccion" class="active">📖 Lección</a>
-    <a href="#lsc">🤟 LSC</a>
-    <a href="#captura">🖼️ Captura Word</a>
-    <a href="#ejercicios">✏️ Ejercicios</a>
-    <a href="#extra">➕ Actividades</a>
-  </nav>
 
-  <header class="detail-header" id="leccion">
+  <!-- CABECERA DE LA HERRAMIENTA -->
+  <header class="detail-header">
     <img src="../icons/Notas%20al%20pie.png" alt="Notas de pie" width="64" height="64" />
     <div>
       <span class="detail-cat">Elementos del documento</span>
@@ -422,78 +334,194 @@
   </header>
 
   <div class="detail-body">
-    <div class="ribbon-path"><strong>Ruta en la cinta:</strong> Referencias → Nota al pie</div>
 
-    <article class="block">
-      <h2>¿Qué significa?</h2>
-      <p>Nota explicativa al pie de la página.</p>
-    </article>
-
-    <article class="block">
-      <h2>Antes / Después</h2>
-      <div class="before-after">
-        <div class="ba-card before"><h3>Antes</h3><p>Sin nota.</p></div>
-        <div class="ba-card after"><h3>Después</h3><p>Número en palabra y nota abajo.</p></div>
+    <!-- VIDEO DE YOUTUBE (mismo video usado en las herramientas anteriores) -->
+    <div class="block">
+      <h2>🎥 Video explicativo</h2>
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/9nEndiBCvQk?start=30" title="Video explicativo: Notas de pie en Word" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
       </div>
-    </article>
+    </div>
 
-    <article class="block">
-      <h2>Pasos para usarlo</h2>
-      <ol><li>Cursor tras la palabra.</li>
-<li>Insertar nota al pie.</li>
-<li>Escribe explicación.</li>
-<li>Listo.</li></ol>
-    </article>
+    <!-- SIMULADOR + QUIZ -->
+    <div class="extra-zone">
+      <h2>✏️ Simulador y actividad</h2>
+      <p class="hint">Prueba el simulador para insertar una nota al pie y responde las preguntas sobre su uso en Word.</p>
 
-    <article class="block" id="lsc">
-      <h2>Referente en LSC</h2>
-      <div class="placeholder-box lsc">Espacio para foto o video de la seña en Lengua de Señas Colombiana (LSC).</div>
-    </article>
+      <div class="simulator" aria-label="Simulador de notas al pie">
+        <div class="toolbar" role="toolbar">
+          <button type="button" id="insertNote" class="primary">Insertar nota al pie</button>
+          <button type="button" id="resetNote" class="secondary">Reiniciar ejercicio</button>
+          <label for="noteText">Texto de nota:</label>
+          <input type="text" id="noteText" value="Explicación de ejemplo sobre la palabra seleccionada." />
+        </div>
 
-    <article class="block" id="captura">
-      <h2>Captura en Word 2021</h2>
-      <div class="placeholder-box">Espacio para captura de pantalla real de Microsoft Word 2021.</div>
-    </article>
+        <div class="doc-surface" id="docSurface">
+          <div class="page" id="pageContent" tabindex="0" aria-label="Documento de ejemplo">
+            <p>Las notas al pie son útiles para <span data-word="1" class="select-word" tabindex="0">definir</span> términos o <span data-word="2" class="select-word" tabindex="0">citar</span> referencias sin interrumpir el texto.</p>
+            <p>Haz clic en una palabra y luego en "Insertar nota al pie" para simular el proceso de Word.</p>
+          </div>
+          <div class="footnotes" id="footnotesArea">
+            <p><em>Aún no hay notas al pie insertadas.</em></p>
+          </div>
+        </div>
+      </div>
 
-    <section class="extra-zone" id="ejercicios">
-      <h2>Ejercicios</h2>
-      <p class="hint">Zona lista para agregar actividades de esta herramienta más adelante.</p>
-    </section>
+      <div class="quiz">
+        <div class="q" data-answer="references">
+          <p><strong>1.</strong> ¿En qué pestaña de Word se inserta una nota al pie?</p>
+          <label><input type="radio" name="q1" value="references"> Referencias</label>
+          <label><input type="radio" name="q1" value="insert"> Insertar</label>
+          <label><input type="radio" name="q1" value="revisar"> Revisar</label>
+          <button type="button" class="check-btn" data-q="q1">Comprobar</button>
+          <div class="feedback" id="fb-q1"></div>
+        </div>
+        <div class="q" data-answer="inferior">
+          <p><strong>2.</strong> Una nota al pie aparece en el área:</p>
+          <label><input type="radio" name="q2" value="inferior"> Inferior de la página</label>
+          <label><input type="radio" name="q2" value="superior"> Superior de la página</label>
+          <label><input type="radio" name="q2" value="cuerpo"> En el cuerpo del texto</label>
+          <button type="button" class="check-btn" data-q="q2">Comprobar</button>
+          <div class="feedback" id="fb-q2"></div>
+        </div>
+        <div class="q" data-answer="numero">
+          <p><strong>3.</strong> ¿Qué elemento se coloca junto al texto principal para indicar la nota?</p>
+          <label><input type="radio" name="q3" value="numero"> Un número en superíndice</label>
+          <label><input type="radio" name="q3" value="color"> Un color diferente</label>
+          <label><input type="radio" name="q3" value="subrayado"> Subrayado</label>
+          <button type="button" class="check-btn" data-q="q3">Comprobar</button>
+          <div class="feedback" id="fb-q3"></div>
+        </div>
+        <div id="finalResult"></div>
+      </div>
+    </div>
 
-    <section class="extra-zone" id="extra">
-      <h2>Actividades extra</h2>
-      <p class="hint">Puedes editar solo este archivo (<code>31-notas-de-pie.html</code>) sin tocar las demás lecciones.</p>
-    </section>
-  </div>
+  </div><!-- /detail-body -->
 
+  <!-- NAV ENTRE HERRAMIENTAS (última herramienta del curso) -->
   <nav class="detail-nav-bar" aria-label="Navegación entre herramientas">
     <a href="30-numero-de-pagina.html">◀ Número de página</a>
     <a href="../index.html" class="btn-gray">🏠 Ver todas</a>
     <span class="disabled">Siguiente ▶</span>
   </nav>
 
-
+  <!-- NAV INFERIOR: solo Inicio -->
   <nav class="bottom-nav" aria-label="Menú principal">
     <a href="../index.html"><span class="nav-icon">🏠</span>Inicio</a>
-    <a href="../index.html#categories-grid" class="active"><span class="nav-icon">📚</span>Lecciones</a>
-    <a href="#ejercicios"><span class="nav-icon">✏️</span>Ejercicios</a>
-    <a href="#evaluaciones"><span class="nav-icon">📋</span>Evaluaciones</a>
-    <a href="#ayuda"><span class="nav-icon">❓</span>Ayuda</a>
   </nav>
 
   <script>
-    /* Página: 31-notas-de-pie.html | Herramienta: Notas de pie */
     (function () {
-      var tabs = document.querySelectorAll(".tool-tabs a");
-      var hash = location.hash || "#leccion";
-      tabs.forEach(function (a) {
-        a.classList.toggle("active", a.getAttribute("href") === hash);
-        a.addEventListener("click", function () {
-          tabs.forEach(function (t) { t.classList.remove("active"); });
-          a.classList.add("active");
+      var selectedWord = null;
+      var wordItems = document.querySelectorAll('.select-word');
+      var insertButton = document.getElementById('insertNote');
+      var resetButton = document.getElementById('resetNote');
+      var noteInput = document.getElementById('noteText');
+      var footnotesArea = document.getElementById('footnotesArea');
+      var docSurface = document.getElementById('docSurface');
+      var checkButtons = document.querySelectorAll('.check-btn');
+      var finalResult = document.getElementById('finalResult');
+      var score = 0;
+      var total = document.querySelectorAll('.quiz .q').length;
+
+      function clearSelection() {
+        wordItems.forEach(function (item) {
+          item.classList.remove('active');
+        });
+        selectedWord = null;
+      }
+
+      function getExistingFootnoteCount() {
+        return Array.from(footnotesArea.querySelectorAll('p')).filter(function (p) {
+          return p.querySelector('span');
+        }).length;
+      }
+
+      wordItems.forEach(function (item) {
+        item.addEventListener('click', function () {
+          clearSelection();
+          selectedWord = item;
+          item.classList.add('active');
+        });
+      });
+
+      docSurface.addEventListener('click', function (event) {
+        if (!event.target.classList.contains('select-word')) {
+          clearSelection();
+        }
+      });
+
+      insertButton.addEventListener('click', function () {
+        if (!selectedWord) {
+          alert('Selecciona primero la palabra donde quieres insertar la nota al pie.');
+          return;
+        }
+        if (selectedWord.querySelector('small')) {
+          alert('Esta palabra ya tiene una nota al pie. Selecciona otra palabra.');
+          return;
+        }
+        var footnoteNumber = getExistingFootnoteCount() + 1;
+        var mark = document.createElement('small');
+        mark.textContent = footnoteNumber;
+        selectedWord.appendChild(mark);
+        var noteText = noteInput.value.trim() || 'Texto de nota al pie de ejemplo.';
+        if (footnoteNumber === 1) {
+          footnotesArea.innerHTML = '';
+        }
+        var noteLine = document.createElement('p');
+        noteLine.innerHTML = '<span>' + footnoteNumber + '</span>' + noteText;
+        footnotesArea.appendChild(noteLine);
+        clearSelection();
+      });
+
+      resetButton.addEventListener('click', function () {
+        wordItems.forEach(function (item) {
+          var note = item.querySelector('small');
+          if (note) item.removeChild(note);
+        });
+        footnotesArea.innerHTML = '<p><em>Aún no hay notas al pie insertadas.</em></p>';
+        noteInput.value = 'Explicación de ejemplo sobre la palabra seleccionada.';
+        clearSelection();
+      });
+
+      function setFeedback(element, text, ok) {
+        element.textContent = text;
+        element.classList.remove('correct', 'wrong');
+        if (ok === true) element.classList.add('correct');
+        if (ok === false) element.classList.add('wrong');
+      }
+
+      checkButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+          var qName = button.getAttribute('data-q');
+          var selected = document.querySelector('input[name="' + qName + '"]:checked');
+          var feedback = document.getElementById('fb-' + qName);
+          var question = button.closest('.q');
+          if (!selected) {
+            setFeedback(feedback, 'Selecciona una opción.', false);
+            return;
+          }
+          if (question.getAttribute('data-answered') === 'true') return;
+          question.setAttribute('data-answered', 'true');
+          button.disabled = true;
+          question.querySelectorAll('input').forEach(function (input) { input.disabled = true; });
+          var answer = selected.value;
+          var correct = question.getAttribute('data-answer');
+          if (answer === correct) {
+            setFeedback(feedback, '¡Correcto!', true);
+            score += 1;
+          } else {
+            setFeedback(feedback, 'Incorrecto. Revisa la lección.', false);
+          }
+          finalResult.textContent = 'Puntuación: ' + score + ' / ' + total;
+          var answered = document.querySelectorAll('.quiz .q[data-answered="true"]').length;
+          if (answered === total) {
+            try { localStorage.setItem('score-tool-31-notas-de-pie', '1'); } catch (e) {}
+          }
         });
       });
     })();
   </script>
+
 </body>
 </html>

@@ -9,7 +9,6 @@
     :root {
       --word-blue: #2B579A;
       --word-dark: #0b2d5c;
-      --ribbon-bg: #f3f2f1;
       --page-bg: #eef2f6;
       --card: #fff;
       --text: #1a1a1a;
@@ -25,11 +24,10 @@
       font-family: var(--font);
       color: var(--text);
       background: var(--page-bg);
-      padding-bottom: calc(var(--nav-h) + var(--tool-nav-h));
+      padding-bottom: calc(var(--nav-h) + var(--tool-nav-h) + 10px);
     }
-    a { color: inherit; }
-    img { display: block; max-width: 100%; }
 
+    /* ── BARRA SUPERIOR ── */
     .title-bar {
       background: var(--word-blue);
       color: #fff;
@@ -53,195 +51,24 @@
     .title-bar a.title-link { color: #fff; text-decoration: none; }
     .title-bar a.title-link:hover { text-decoration: underline; }
 
+    /* Solo pestaña Inicio */
     .ribbon-tabs {
-      display: flex; flex-wrap: wrap;
+      display: flex;
       list-style: none; margin: 0; padding: 0 6px;
       background: #fff;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 2px solid var(--word-blue);
     }
-    .ribbon-tabs a, .ribbon-tabs button {
+    .ribbon-tabs li a {
       display: block;
-      border: none; background: transparent;
-      padding: 9px 12px; font-size: 12px; color: var(--text);
-      border-bottom: 2px solid transparent;
-      text-decoration: none;
-      font-family: inherit;
-      cursor: pointer;
-    }
-    .ribbon-tabs li.active a,
-    .ribbon-tabs li.active button {
-      background: var(--ribbon-bg);
-      border-bottom-color: var(--word-blue);
-      font-weight: 600;
-    }
-    .ribbon-fake {
-      background: var(--ribbon-bg);
-      border-bottom: 1px solid var(--border);
-      padding: 6px 12px;
-      font-size: 10px;
-      color: var(--muted);
-      display: flex; gap: 16px; flex-wrap: wrap;
-    }
-    .ribbon-fake span { padding: 2px 6px; background: #fff; border-radius: 3px; border: 1px solid #e0e0e0; }
-
-    .platform-shell {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 14px 16px 20px;
-      display: grid;
-      grid-template-columns: 1fr 270px;
-      gap: 16px;
-      align-items: start;
-    }
-    @media (max-width: 960px) {
-      .platform-shell { grid-template-columns: 1fr; }
-    }
-    .hero {
-      grid-column: 1 / -1;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .hero-text h2 {
-      margin: 0 0 4px;
-      font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+      padding: 9px 16px;
+      font-size: 13px;
       color: var(--word-blue);
-      display: flex; align-items: center; gap: 8px;
-    }
-    .hero-text .w-icon {
-      width: 32px; height: 32px;
-      background: linear-gradient(135deg, #2B579A, #41a5ee);
-      color: #fff; font-weight: 800;
-      display: flex; align-items: center; justify-content: center;
-      border-radius: 5px; font-size: 18px;
-    }
-    .hero-text p { margin: 0; color: var(--muted); font-size: 0.9rem; }
-    .main-panel {
-      background: var(--card);
-      border-radius: 12px;
-      padding: 16px;
-      box-shadow: 0 2px 10px rgba(0,0,0,.08);
-      border: 1px solid rgba(0,0,0,.06);
-    }
-    .main-panel > p.hint-line {
-      margin: 0 0 14px;
-      font-size: 0.88rem;
-      color: var(--muted);
-    }
-    .categories-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-    @media (max-width: 640px) {
-      .categories-grid { grid-template-columns: 1fr; }
-    }
-    .category-block {
-      background: var(--cat-tint);
-      border: 2px solid var(--cat-color);
-      border-radius: 10px;
-      padding: 10px 10px 12px;
-    }
-    .category-header {
-      display: flex; align-items: center; gap: 8px;
-      margin-bottom: 10px;
-    }
-    .category-number {
-      width: 24px; height: 24px; border-radius: 50%;
-      background: var(--cat-color); color: #fff;
-      font-size: 11px; font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .category-header h3 {
-      margin: 0; font-size: 0.68rem; font-weight: 800;
-      letter-spacing: 0.04em; color: var(--cat-color);
-    }
-    .category-tools {
-      display: flex; flex-wrap: wrap; gap: 8px;
-    }
-    .tool-card {
-      display: flex; flex-direction: column; align-items: center;
-      width: 78px;
-      padding: 8px 4px;
-      background: #fff;
-      border: 1px solid rgba(0,0,0,.08);
-      border-radius: 8px;
+      font-weight: 700;
       text-decoration: none;
-      color: var(--text);
-      transition: transform .15s, box-shadow .15s, border-color .15s;
-    }
-    .tool-card:hover, .tool-card:focus-visible {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 14px rgba(0,0,0,.12);
-      border-color: var(--cat-color);
-      outline: none;
-    }
-    .tool-card img {
-      width: 44px; height: 44px;
-      object-fit: contain;
-      margin-bottom: 4px;
-    }
-    .tool-label {
-      font-size: 10px;
-      text-align: center;
-      line-height: 1.2;
-      font-weight: 600;
-    }
-    .sidebar { display: flex; flex-direction: column; gap: 12px; }
-    .sidebar-card {
-      background: var(--card);
-      border-radius: 10px;
-      padding: 14px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.07);
-      border: 1px solid rgba(0,0,0,.05);
-    }
-    .welcome-card {
-      background: linear-gradient(145deg, #2B579A, #1e4080);
-      color: #fff;
-    }
-    .welcome-card h3 { margin: 0 0 8px; font-size: 1rem; }
-    .welcome-card p { margin: 0 0 12px; font-size: 0.8rem; line-height: 1.45; opacity: .95; }
-    .btn-start {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 8px 14px;
-      background: #fff; color: var(--word-blue);
-      border: none; border-radius: 6px;
-      font-weight: 700; font-size: 0.85rem;
-      text-decoration: none;
-      font-family: inherit;
-      cursor: pointer;
-    }
-    .sidebar-card h3 { margin: 0 0 10px; font-size: 0.95rem; }
-    .progress-bar {
-      height: 8px; background: #e8ecf0;
-      border-radius: 4px; overflow: hidden;
-      margin-bottom: 10px;
-    }
-    .progress-bar span {
-      display: block; height: 100%; width: 35%;
-      background: #0f7b3f; border-radius: 4px;
-    }
-    .progress-list { list-style: none; margin: 0; padding: 0; font-size: 0.78rem; }
-    .progress-list li {
-      display: flex; align-items: center; gap: 6px;
-      padding: 5px 0; border-bottom: 1px solid #f0f0f0;
-      color: var(--muted);
-    }
-    .progress-list li.done { color: #0f7b3f; font-weight: 600; }
-    .progress-list li.current { color: var(--word-blue); font-weight: 600; }
-    .progress-list a { text-decoration: none; color: inherit; }
-    .btn-lsc {
-      display: block; width: 100%;
-      padding: 10px; text-align: center;
-      background: var(--word-blue); color: #fff;
-      border: none; border-radius: 6px;
-      font-weight: 600; font-size: 0.85rem;
-      font-family: inherit;
-      cursor: pointer;
+      border-bottom: 3px solid var(--word-blue);
     }
 
+    /* ── CABECERA DE LA HERRAMIENTA ── */
     .detail-header {
       background: linear-gradient(135deg, var(--word-blue), #1e3f6e);
       color: #fff;
@@ -260,71 +87,160 @@
       padding: 3px 8px; border-radius: 4px;
       font-size: 11px; font-weight: 600;
     }
+
+    /* ── CONTENIDO PRINCIPAL ── */
     .detail-body {
       max-width: 800px; margin: 0 auto;
       padding: 16px 16px 24px;
     }
-    .ribbon-path, .block, .extra-zone {
+
+    .block {
       background: #fff;
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 14px 16px;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
-    .ribbon-path { border-left: 4px solid var(--word-blue); }
-    .block h2, .extra-zone h2 { margin: 0 0 8px; font-size: 1rem; color: var(--word-blue); }
-    .block p, .block li { line-height: 1.55; }
-    .block ol { margin: 0; padding-left: 1.25rem; }
-    .before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    @media (max-width: 500px) { .before-after { grid-template-columns: 1fr; } }
-    .ba-card { padding: 10px; border-radius: 6px; font-size: 13px; }
-    .ba-card.before { background: #fff4ce; }
-    .ba-card.after { background: #dff6dd; }
-    .ba-card h3 { margin: 0 0 4px; font-size: 11px; text-transform: uppercase; }
-    .placeholder-box {
-      min-height: 120px;
-      border: 2px dashed #c8c6c4;
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      text-align: center; color: var(--muted);
-      font-size: 13px; padding: 12px;
-      background: #faf9f8;
+    .block h2 {
+      margin: 0 0 12px;
+      font-size: 1rem;
+      color: var(--word-blue);
     }
-    .placeholder-box.lsc { border-color: var(--word-blue); background: #f0f6fc; }
-    .extra-zone {
-      border-style: dashed;
-      border-color: var(--word-blue);
-      background: #fafcfe;
-      min-height: 80px;
-    }
-    .extra-zone p.hint { margin: 0; font-size: 0.85rem; color: var(--muted); }
 
-    .tool-tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-      padding: 8px 12px;
+    /* ── VIDEO ── */
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: 8px;
+      background: #000;
+    }
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    /* ── ACTIVIDAD: JUEGO FUENTE ── */
+    .extra-zone {
       background: #fff;
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 20;
+      border: 1px solid var(--word-blue);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
     }
-    .tool-tabs a {
-      padding: 6px 10px;
-      font-size: 11px;
-      text-decoration: none;
-      border-radius: 4px;
+    .extra-zone h2 { margin: 0 0 8px; font-size: 1rem; color: var(--word-blue); }
+    .extra-zone p.hint { margin: 0 0 6px; font-size: 0.85rem; color: var(--muted); }
+
+    .font-card {
+      background: #f8fbff;
+      border: 1px solid #d7e6f5;
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 8px 24px rgba(43,87,154,.08);
+      margin-top: 10px;
+      max-width: 760px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .font-task {
+      margin: 0 0 12px;
+      font-size: 0.95rem;
       color: var(--muted);
-      border: 1px solid transparent;
-    }
-    .tool-tabs a:hover { background: var(--ribbon-bg); color: var(--text); }
-    .tool-tabs a.active {
-      background: var(--word-blue);
-      color: #fff;
       font-weight: 600;
     }
+    .font-toolbar {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(100px, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+      align-items: center;
+    }
+    @media (max-width: 540px) {
+      .font-toolbar { grid-template-columns: repeat(2, 1fr); }
+    }
+    .font-toolbar select,
+    .font-toolbar button {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #cfd8e5;
+      border-radius: 8px;
+      background: #fff;
+      font-family: inherit;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+    .font-toolbar button {
+      font-weight: 700;
+      color: var(--word-blue);
+    }
+    .font-toolbar button.active {
+      background: #d7e6ff;
+      border-color: #2b579a;
+      color: #0d305d;
+    }
+    .font-editor {
+      background: #fff;
+      border: 1px solid #cfd8e5;
+      border-radius: 12px;
+      padding: 18px;
+      min-height: 180px;
+      line-height: 1.7;
+      font-size: 0.95rem;
+      color: #1a1a1a;
+    }
+    .font-segment {
+      display: inline-block;
+      padding: 2px 4px;
+      margin: 0 2px 4px 0;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background .15s, color .15s, box-shadow .15s;
+    }
+    .font-segment.selected {
+      background: rgba(43,87,154,.12);
+      color: #0f407e;
+      box-shadow: inset 0 0 0 1px rgba(43,87,154,.18);
+    }
+    .font-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    .font-btn {
+      padding: 10px 14px;
+      background: var(--word-blue);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      font-family: inherit;
+      cursor: pointer;
+    }
+    .font-btn.gray { background: #fff; color: var(--word-blue); border: 1px solid #d7e6ff; }
+    .font-feedback {
+      min-height: 24px;
+      margin-top: 12px;
+      font-weight: 600;
+      color: #555;
+      font-size: 0.95rem;
+    }
+    .font-score {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: #e9f5ff;
+      border: 1px solid #b7d5ff;
+      color: #0b2d5c;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
 
+    /* ── NAV ENTRE HERRAMIENTAS ── */
     .detail-nav-bar {
       position: fixed;
       bottom: var(--nav-h);
@@ -358,6 +274,7 @@
       cursor: not-allowed;
     }
 
+    /* ── NAV INFERIOR ── */
     .bottom-nav {
       position: fixed; bottom: 0; left: 0; right: 0;
       height: var(--nav-h);
@@ -366,54 +283,37 @@
       z-index: 100;
       box-shadow: 0 -2px 12px rgba(0,0,0,.2);
     }
-    .bottom-nav a, .bottom-nav button {
+    .bottom-nav a {
       flex: 1; max-width: 130px;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       gap: 2px;
-      border: none; background: transparent;
       color: rgba(255,255,255,.8);
       text-decoration: none;
       font-size: 0.62rem; font-weight: 500;
       padding: 4px;
-      font-family: inherit;
-      cursor: pointer;
     }
-    .bottom-nav a:hover, .bottom-nav button:hover { color: #fff; background: rgba(255,255,255,.08); }
-    .bottom-nav a.active { background: rgba(255,255,255,.15); color: #fff; font-weight: 700; }
+    .bottom-nav a:hover { color: #fff; background: rgba(255,255,255,.08); }
     .bottom-nav .nav-icon { font-size: 1.15rem; }
-</style>
+  </style>
 </head>
-<body data-tool-id="10" data-tool-slug="fuente">
+<body>
 
+  <!-- BARRA SUPERIOR: solo logo + título -->
   <header class="title-bar">
     <a class="word-logo" href="../index.html" title="Inicio">W</a>
     <h1><a class="title-link" href="../index.html">Fuente — Word Básico</a></h1>
   </header>
 
-  <nav aria-label="Pestañas Word">
+  <!-- SOLO PESTAÑA INICIO -->
+  <nav aria-label="Menú Word">
     <ul class="ribbon-tabs">
-      <li class="active"><a href="../index.html">Inicio</a></li>
-      <li><button type="button">Insertar</button></li>
-      <li><button type="button">Diseño</button></li>
-      <li><button type="button">Disposición</button></li>
-      <li><button type="button">Referencias</button></li>
-      <li><button type="button">Revisar</button></li>
-      <li><button type="button">Vista</button></li>
+      <li><a href="../index.html">Inicio</a></li>
     </ul>
   </nav>
-  <div class="ribbon-fake" aria-hidden="true">
-    <span>Portapapeles</span><span>Fuente</span><span>Párrafo</span><span>Estilos</span>
-  </div>
-<nav class="tool-tabs" aria-label="Pestañas de esta herramienta">
-    <a href="#leccion" class="active">📖 Lección</a>
-    <a href="#lsc">🤟 LSC</a>
-    <a href="#captura">🖼️ Captura Word</a>
-    <a href="#ejercicios">✏️ Ejercicios</a>
-    <a href="#extra">➕ Actividades</a>
-  </nav>
 
-  <header class="detail-header" id="leccion">
+  <!-- CABECERA DE LA HERRAMIENTA -->
+  <header class="detail-header">
     <img src="../icons/Fuente.png" alt="Fuente" width="64" height="64" />
     <div>
       <span class="detail-cat">Formato de texto</span>
@@ -422,78 +322,262 @@
   </header>
 
   <div class="detail-body">
-    <div class="ribbon-path"><strong>Ruta en la cinta:</strong> Inicio → Fuente</div>
 
-    <article class="block">
-      <h2>¿Qué significa?</h2>
-      <p>Cambia tipo, tamaño y estilo de letra.</p>
-    </article>
+    <!-- VIDEO DE YOUTUBE (mismo video usado en las herramientas anteriores) -->
+    <div class="block">
+      <h2>🎥 Video explicativo</h2>
+      <div class="video-wrapper">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/izoybEazwmg?si=HhbjGWZF2cWrXIiQ&amp;start=29" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>      </div>
+    </div>
 
-    <article class="block">
-      <h2>Antes / Después</h2>
-      <div class="before-after">
-        <div class="ba-card before"><h3>Antes</h3><p>Fuente predeterminada.</p></div>
-        <div class="ba-card after"><h3>Después</h3><p>Texto con nuevo estilo.</p></div>
+    <!-- ACTIVIDAD: JUEGO FUENTE -->
+    <div class="extra-zone">
+      <h2>✏️ Actividad</h2>
+      <p class="hint"><strong>Instrucción:</strong> Selecciona el texto correcto y cambia su fuente, tamaño y estilo, como en Word. Son 2 tareas.</p>
+
+      <div class="font-card">
+        <p class="font-task" id="font-task">Tarea 1 de 2: selecciona el texto correcto y cambia su fuente a Calibri 16.</p>
+        <div class="font-toolbar">
+          <select id="font-family">
+            <option value="Calibri">Calibri</option>
+            <option value="Arial">Arial</option>
+            <option value="Times New Roman">Times New Roman</option>
+          </select>
+          <select id="font-size">
+            <option value="12">12</option>
+            <option value="14">14</option>
+            <option value="16">16</option>
+            <option value="18">18</option>
+          </select>
+          <button id="bold-btn" type="button" class="font-toolbar-btn">B Negrita</button>
+          <button id="italic-btn" type="button" class="font-toolbar-btn">I Cursiva</button>
+        </div>
+        <div class="font-editor" id="font-editor" aria-label="Editor simulado de fuente"></div>
+        <div class="font-actions">
+          <button id="apply-style" class="font-btn">Aplicar al texto seleccionado</button>
+          <button id="check-font" class="font-btn">Comprobar</button>
+          <button id="reset-font" class="font-btn gray">Reiniciar</button>
+        </div>
+        <div class="font-feedback" id="font-feedback">Selecciona un segmento de texto en el editor.</div>
+        <div class="font-score" id="font-score">Puntaje del juego: 0 puntos</div>
       </div>
-    </article>
+    </div>
 
-    <article class="block">
-      <h2>Pasos para usarlo</h2>
-      <ol><li>Selecciona texto.</li>
-<li>Elige fuente y tamaño.</li>
-<li>Negrita o cursiva si quieres.</li>
-<li>Listo.</li></ol>
-    </article>
+  </div><!-- /detail-body -->
 
-    <article class="block" id="lsc">
-      <h2>Referente en LSC</h2>
-      <div class="placeholder-box lsc">Espacio para foto o video de la seña en Lengua de Señas Colombiana (LSC).</div>
-    </article>
-
-    <article class="block" id="captura">
-      <h2>Captura en Word 2021</h2>
-      <div class="placeholder-box">Espacio para captura de pantalla real de Microsoft Word 2021.</div>
-    </article>
-
-    <section class="extra-zone" id="ejercicios">
-      <h2>Ejercicios</h2>
-      <p class="hint">Zona lista para agregar actividades de esta herramienta más adelante.</p>
-    </section>
-
-    <section class="extra-zone" id="extra">
-      <h2>Actividades extra</h2>
-      <p class="hint">Puedes editar solo este archivo (<code>10-fuente.html</code>) sin tocar las demás lecciones.</p>
-    </section>
-  </div>
-
+  <!-- NAV ENTRE HERRAMIENTAS -->
   <nav class="detail-nav-bar" aria-label="Navegación entre herramientas">
     <a href="09-subrayado.html">◀ Subrayado</a>
     <a href="../index.html" class="btn-gray">🏠 Ver todas</a>
     <a href="11-alineacion.html">Alineación ▶</a>
   </nav>
 
-
+  <!-- NAV INFERIOR: solo Inicio -->
   <nav class="bottom-nav" aria-label="Menú principal">
     <a href="../index.html"><span class="nav-icon">🏠</span>Inicio</a>
-    <a href="../index.html#categories-grid" class="active"><span class="nav-icon">📚</span>Lecciones</a>
-    <a href="#ejercicios"><span class="nav-icon">✏️</span>Ejercicios</a>
-    <a href="#evaluaciones"><span class="nav-icon">📋</span>Evaluaciones</a>
-    <a href="#ayuda"><span class="nav-icon">❓</span>Ayuda</a>
   </nav>
 
   <script>
-    /* Página: 10-fuente.html | Herramienta: Fuente */
     (function () {
-      var tabs = document.querySelectorAll(".tool-tabs a");
-      var hash = location.hash || "#leccion";
-      tabs.forEach(function (a) {
-        a.classList.toggle("active", a.getAttribute("href") === hash);
-        a.addEventListener("click", function () {
-          tabs.forEach(function (t) { t.classList.remove("active"); });
-          a.classList.add("active");
+      var tasks = [
+        {
+          instructions: 'Selecciona el texto correcto y cambia su fuente a Calibri 16.',
+          expected: { family: 'Calibri', size: '16', bold: false, italic: false },
+          segments: [
+            { id: '1', text: 'Es un ejemplo', family: 'Arial', size: '12', bold: false, italic: false },
+            { id: '2', text: 'Es un ejemplo', family: 'Times New Roman', size: '14', bold: false, italic: false },
+            { id: '3', text: 'Es un ejemplo', family: 'Calibri', size: '16', bold: false, italic: false, correct: true },
+            { id: '4', text: 'Es un ejemplo.', family: 'Arial', size: '12', bold: false, italic: false }
+          ]
+        },
+        {
+          instructions: 'Cambia el tamaño a 18 y aplica cursiva al texto destacado.',
+          expected: { family: 'Calibri', size: '18', bold: false, italic: true },
+          segments: [
+            { id: '1', text: 'La invitación', family: 'Calibri', size: '16', bold: false, italic: false },
+            { id: '2', text: 'debe decir', family: 'Calibri', size: '16', bold: false, italic: false },
+            { id: '3', text: 'fecha y hora', family: 'Calibri', size: '18', bold: false, italic: true, correct: true },
+            { id: '4', text: 'para la entrega.', family: 'Calibri', size: '16', bold: false, italic: false }
+          ]
+        }
+      ];
+
+      var state = {
+        currentTask: 0,
+        selectedSegmentId: null,
+        family: 'Calibri',
+        size: '12',
+        bold: false,
+        italic: false,
+        score: 0,
+        gameScore: 0
+      };
+
+      function updateGameScore() {
+        var gameScoreLabel = document.getElementById('font-score');
+        if (!gameScoreLabel) { return; }
+        if (state.gameScore === 1) {
+          gameScoreLabel.textContent = 'Puntaje del juego: +1 punto';
+          gameScoreLabel.style.color = '#0f7b3f';
+        } else if (state.gameScore === -1) {
+          gameScoreLabel.textContent = 'Puntaje del juego: -1 punto';
+          gameScoreLabel.style.color = '#d9534f';
+        } else {
+          gameScoreLabel.textContent = 'Puntaje del juego: 0 puntos';
+          gameScoreLabel.style.color = '#0b2d5c';
+        }
+      }
+
+      function saveGameScore() {
+        try { localStorage.setItem('score-tool-10-fuente', state.gameScore); } catch (e) {}
+      }
+
+      function loadGameScore() {
+        try {
+          var stored = localStorage.getItem('score-tool-10-fuente');
+          state.gameScore = stored !== null ? Number(stored) : 0;
+        } catch (e) {
+          state.gameScore = 0;
+        }
+      }
+
+      var editor = document.getElementById('font-editor');
+      var feedback = document.getElementById('font-feedback');
+      var taskLabel = document.getElementById('font-task');
+      var familySelect = document.getElementById('font-family');
+      var sizeSelect = document.getElementById('font-size');
+      var boldBtn = document.getElementById('bold-btn');
+      var italicBtn = document.getElementById('italic-btn');
+      var applyBtn = document.getElementById('apply-style');
+      var checkBtn = document.getElementById('check-font');
+      var resetBtn = document.getElementById('reset-font');
+
+      function setFeedback(message, color) {
+        feedback.textContent = message;
+        feedback.style.color = color || '#555';
+      }
+
+      function currentTask() {
+        return tasks[state.currentTask];
+      }
+
+      function renderTask() {
+        var task = currentTask();
+        taskLabel.textContent = 'Tarea ' + (state.currentTask + 1) + ' de ' + tasks.length + ': ' + task.instructions;
+        editor.innerHTML = task.segments.map(function (segment) {
+          var style = [];
+          style.push('font-family:' + segment.family);
+          style.push('font-size:' + segment.size + 'px');
+          if (segment.bold) { style.push('font-weight:bold'); }
+          if (segment.italic) { style.push('font-style:italic'); }
+          var active = state.selectedSegmentId === segment.id ? ' selected' : '';
+          return '<span class="font-segment' + active + '" data-id="' + segment.id + '" style="' + style.join(';') + '" data-family="' + segment.family + '" data-size="' + segment.size + '" data-bold="' + segment.bold + '" data-italic="' + segment.italic + '">' + segment.text + '</span>';
+        }).join(' ');
+
+        editor.querySelectorAll('.font-segment').forEach(function (segment) {
+          segment.addEventListener('click', function () {
+            state.selectedSegmentId = segment.getAttribute('data-id');
+            renderTask();
+            setFeedback('Segmento seleccionado. Ajusta la fuente y aplica estilo.', '#0b662f');
+          });
         });
-      });
+      }
+
+      function updateToolbar() {
+        familySelect.value = state.family;
+        sizeSelect.value = state.size;
+        boldBtn.classList.toggle('active', state.bold);
+        italicBtn.classList.toggle('active', state.italic);
+      }
+
+      function applyStyle() {
+        if (!state.selectedSegmentId) {
+          setFeedback('Selecciona un segmento antes de aplicar los cambios.', 'red');
+          return;
+        }
+        var segment = currentTask().segments.find(function (item) { return item.id === state.selectedSegmentId; });
+        if (!segment) { return; }
+        segment.family = state.family;
+        segment.size = state.size;
+        segment.bold = state.bold;
+        segment.italic = state.italic;
+        renderTask();
+        setFeedback('Cambio aplicado. Comprobar para ver si es correcto.', '#0b662f');
+      }
+
+      function checkAnswer() {
+        var task = currentTask();
+        var target = task.segments.find(function (item) { return item.correct; });
+        if (!target) { return; }
+        var correct = target.family === task.expected.family && target.size === task.expected.size && target.bold === task.expected.bold && target.italic === task.expected.italic;
+        if (correct) {
+          state.score += 1;
+          if (state.gameScore !== -1) {
+            state.gameScore = 1;
+            saveGameScore();
+            updateGameScore();
+          }
+          if (state.currentTask + 1 < tasks.length) {
+            setFeedback('¡Excelente! Siguiente tarea.', '#0f7b3f');
+            state.currentTask += 1;
+            state.selectedSegmentId = null;
+            state.family = 'Calibri';
+            state.size = '12';
+            state.bold = false;
+            state.italic = false;
+            updateToolbar();
+            renderTask();
+          } else {
+            setFeedback('¡Ya está! Completaste todas las actividades.', '#0f7b3f');
+            taskLabel.textContent = 'Actividad terminada. Puntaje: ' + state.score + ' / ' + tasks.length + '.';
+          }
+        } else {
+          state.gameScore = -1;
+          saveGameScore();
+          updateGameScore();
+          setFeedback('Aún falta ajustar el formato del texto correcto.', 'red');
+        }
+      }
+
+      function resetGame() {
+        state.currentTask = 0;
+        state.selectedSegmentId = null;
+        state.family = 'Calibri';
+        state.size = '12';
+        state.bold = false;
+        state.italic = false;
+        state.score = 0;
+        state.gameScore = 0;
+        tasks.forEach(function (task) {
+          task.segments.forEach(function (segment) {
+            segment.family = segment.family || 'Calibri';
+            segment.size = segment.size || '12';
+            segment.bold = segment.bold || false;
+            segment.italic = segment.italic || false;
+          });
+        });
+        updateToolbar();
+        renderTask();
+        updateGameScore();
+        saveGameScore();
+        setFeedback('Juego reiniciado. Selecciona un segmento de texto.', '#555');
+      }
+
+      familySelect.addEventListener('change', function () { state.family = familySelect.value; updateToolbar(); });
+      sizeSelect.addEventListener('change', function () { state.size = sizeSelect.value; updateToolbar(); });
+      boldBtn.addEventListener('click', function () { state.bold = !state.bold; updateToolbar(); });
+      italicBtn.addEventListener('click', function () { state.italic = !state.italic; updateToolbar(); });
+      applyBtn.addEventListener('click', applyStyle);
+      checkBtn.addEventListener('click', checkAnswer);
+      resetBtn.addEventListener('click', resetGame);
+
+      loadGameScore();
+      updateToolbar();
+      renderTask();
+      updateGameScore();
+      setFeedback('Selecciona un segmento de texto primero.', '#555');
     })();
   </script>
+
 </body>
 </html>

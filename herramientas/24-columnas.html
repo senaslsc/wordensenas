@@ -9,7 +9,6 @@
     :root {
       --word-blue: #2B579A;
       --word-dark: #0b2d5c;
-      --ribbon-bg: #f3f2f1;
       --page-bg: #eef2f6;
       --card: #fff;
       --text: #1a1a1a;
@@ -25,11 +24,10 @@
       font-family: var(--font);
       color: var(--text);
       background: var(--page-bg);
-      padding-bottom: calc(var(--nav-h) + var(--tool-nav-h));
+      padding-bottom: calc(var(--nav-h) + var(--tool-nav-h) + 10px);
     }
-    a { color: inherit; }
-    img { display: block; max-width: 100%; }
 
+    /* ── BARRA SUPERIOR ── */
     .title-bar {
       background: var(--word-blue);
       color: #fff;
@@ -53,195 +51,24 @@
     .title-bar a.title-link { color: #fff; text-decoration: none; }
     .title-bar a.title-link:hover { text-decoration: underline; }
 
+    /* Solo pestaña Inicio */
     .ribbon-tabs {
-      display: flex; flex-wrap: wrap;
+      display: flex;
       list-style: none; margin: 0; padding: 0 6px;
       background: #fff;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 2px solid var(--word-blue);
     }
-    .ribbon-tabs a, .ribbon-tabs button {
+    .ribbon-tabs li a {
       display: block;
-      border: none; background: transparent;
-      padding: 9px 12px; font-size: 12px; color: var(--text);
-      border-bottom: 2px solid transparent;
-      text-decoration: none;
-      font-family: inherit;
-      cursor: pointer;
-    }
-    .ribbon-tabs li.active a,
-    .ribbon-tabs li.active button {
-      background: var(--ribbon-bg);
-      border-bottom-color: var(--word-blue);
-      font-weight: 600;
-    }
-    .ribbon-fake {
-      background: var(--ribbon-bg);
-      border-bottom: 1px solid var(--border);
-      padding: 6px 12px;
-      font-size: 10px;
-      color: var(--muted);
-      display: flex; gap: 16px; flex-wrap: wrap;
-    }
-    .ribbon-fake span { padding: 2px 6px; background: #fff; border-radius: 3px; border: 1px solid #e0e0e0; }
-
-    .platform-shell {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 14px 16px 20px;
-      display: grid;
-      grid-template-columns: 1fr 270px;
-      gap: 16px;
-      align-items: start;
-    }
-    @media (max-width: 960px) {
-      .platform-shell { grid-template-columns: 1fr; }
-    }
-    .hero {
-      grid-column: 1 / -1;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .hero-text h2 {
-      margin: 0 0 4px;
-      font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+      padding: 9px 16px;
+      font-size: 13px;
       color: var(--word-blue);
-      display: flex; align-items: center; gap: 8px;
-    }
-    .hero-text .w-icon {
-      width: 32px; height: 32px;
-      background: linear-gradient(135deg, #2B579A, #41a5ee);
-      color: #fff; font-weight: 800;
-      display: flex; align-items: center; justify-content: center;
-      border-radius: 5px; font-size: 18px;
-    }
-    .hero-text p { margin: 0; color: var(--muted); font-size: 0.9rem; }
-    .main-panel {
-      background: var(--card);
-      border-radius: 12px;
-      padding: 16px;
-      box-shadow: 0 2px 10px rgba(0,0,0,.08);
-      border: 1px solid rgba(0,0,0,.06);
-    }
-    .main-panel > p.hint-line {
-      margin: 0 0 14px;
-      font-size: 0.88rem;
-      color: var(--muted);
-    }
-    .categories-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-    @media (max-width: 640px) {
-      .categories-grid { grid-template-columns: 1fr; }
-    }
-    .category-block {
-      background: var(--cat-tint);
-      border: 2px solid var(--cat-color);
-      border-radius: 10px;
-      padding: 10px 10px 12px;
-    }
-    .category-header {
-      display: flex; align-items: center; gap: 8px;
-      margin-bottom: 10px;
-    }
-    .category-number {
-      width: 24px; height: 24px; border-radius: 50%;
-      background: var(--cat-color); color: #fff;
-      font-size: 11px; font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .category-header h3 {
-      margin: 0; font-size: 0.68rem; font-weight: 800;
-      letter-spacing: 0.04em; color: var(--cat-color);
-    }
-    .category-tools {
-      display: flex; flex-wrap: wrap; gap: 8px;
-    }
-    .tool-card {
-      display: flex; flex-direction: column; align-items: center;
-      width: 78px;
-      padding: 8px 4px;
-      background: #fff;
-      border: 1px solid rgba(0,0,0,.08);
-      border-radius: 8px;
+      font-weight: 700;
       text-decoration: none;
-      color: var(--text);
-      transition: transform .15s, box-shadow .15s, border-color .15s;
-    }
-    .tool-card:hover, .tool-card:focus-visible {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 14px rgba(0,0,0,.12);
-      border-color: var(--cat-color);
-      outline: none;
-    }
-    .tool-card img {
-      width: 44px; height: 44px;
-      object-fit: contain;
-      margin-bottom: 4px;
-    }
-    .tool-label {
-      font-size: 10px;
-      text-align: center;
-      line-height: 1.2;
-      font-weight: 600;
-    }
-    .sidebar { display: flex; flex-direction: column; gap: 12px; }
-    .sidebar-card {
-      background: var(--card);
-      border-radius: 10px;
-      padding: 14px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.07);
-      border: 1px solid rgba(0,0,0,.05);
-    }
-    .welcome-card {
-      background: linear-gradient(145deg, #2B579A, #1e4080);
-      color: #fff;
-    }
-    .welcome-card h3 { margin: 0 0 8px; font-size: 1rem; }
-    .welcome-card p { margin: 0 0 12px; font-size: 0.8rem; line-height: 1.45; opacity: .95; }
-    .btn-start {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 8px 14px;
-      background: #fff; color: var(--word-blue);
-      border: none; border-radius: 6px;
-      font-weight: 700; font-size: 0.85rem;
-      text-decoration: none;
-      font-family: inherit;
-      cursor: pointer;
-    }
-    .sidebar-card h3 { margin: 0 0 10px; font-size: 0.95rem; }
-    .progress-bar {
-      height: 8px; background: #e8ecf0;
-      border-radius: 4px; overflow: hidden;
-      margin-bottom: 10px;
-    }
-    .progress-bar span {
-      display: block; height: 100%; width: 35%;
-      background: #0f7b3f; border-radius: 4px;
-    }
-    .progress-list { list-style: none; margin: 0; padding: 0; font-size: 0.78rem; }
-    .progress-list li {
-      display: flex; align-items: center; gap: 6px;
-      padding: 5px 0; border-bottom: 1px solid #f0f0f0;
-      color: var(--muted);
-    }
-    .progress-list li.done { color: #0f7b3f; font-weight: 600; }
-    .progress-list li.current { color: var(--word-blue); font-weight: 600; }
-    .progress-list a { text-decoration: none; color: inherit; }
-    .btn-lsc {
-      display: block; width: 100%;
-      padding: 10px; text-align: center;
-      background: var(--word-blue); color: #fff;
-      border: none; border-radius: 6px;
-      font-weight: 600; font-size: 0.85rem;
-      font-family: inherit;
-      cursor: pointer;
+      border-bottom: 3px solid var(--word-blue);
     }
 
+    /* ── CABECERA DE LA HERRAMIENTA ── */
     .detail-header {
       background: linear-gradient(135deg, var(--word-blue), #1e3f6e);
       color: #fff;
@@ -260,71 +87,226 @@
       padding: 3px 8px; border-radius: 4px;
       font-size: 11px; font-weight: 600;
     }
+
+    /* ── CONTENIDO PRINCIPAL ── */
     .detail-body {
       max-width: 800px; margin: 0 auto;
       padding: 16px 16px 24px;
     }
-    .ribbon-path, .block, .extra-zone {
+
+    .block {
       background: #fff;
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 14px 16px;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
-    .ribbon-path { border-left: 4px solid var(--word-blue); }
-    .block h2, .extra-zone h2 { margin: 0 0 8px; font-size: 1rem; color: var(--word-blue); }
-    .block p, .block li { line-height: 1.55; }
-    .block ol { margin: 0; padding-left: 1.25rem; }
-    .before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    @media (max-width: 500px) { .before-after { grid-template-columns: 1fr; } }
-    .ba-card { padding: 10px; border-radius: 6px; font-size: 13px; }
-    .ba-card.before { background: #fff4ce; }
-    .ba-card.after { background: #dff6dd; }
-    .ba-card h3 { margin: 0 0 4px; font-size: 11px; text-transform: uppercase; }
-    .placeholder-box {
-      min-height: 120px;
-      border: 2px dashed #c8c6c4;
+    .block h2 {
+      margin: 0 0 12px;
+      font-size: 1rem;
+      color: var(--word-blue);
+    }
+
+    /* ── VIDEO ── */
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
       border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      text-align: center; color: var(--muted);
-      font-size: 13px; padding: 12px;
-      background: #faf9f8;
+      background: #000;
     }
-    .placeholder-box.lsc { border-color: var(--word-blue); background: #f0f6fc; }
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    /* ── ACTIVIDAD: JUEGO COLUMNAS ── */
     .extra-zone {
-      border-style: dashed;
-      border-color: var(--word-blue);
-      background: #fafcfe;
-      min-height: 80px;
-    }
-    .extra-zone p.hint { margin: 0; font-size: 0.85rem; color: var(--muted); }
-
-    .tool-tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-      padding: 8px 12px;
       background: #fff;
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 20;
+      border: 1px solid var(--word-blue);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
     }
-    .tool-tabs a {
-      padding: 6px 10px;
-      font-size: 11px;
-      text-decoration: none;
-      border-radius: 4px;
-      color: var(--muted);
-      border: 1px solid transparent;
-    }
-    .tool-tabs a:hover { background: var(--ribbon-bg); color: var(--text); }
-    .tool-tabs a.active {
-      background: var(--word-blue);
-      color: #fff;
-      font-weight: 600;
-    }
+    .extra-zone h2 { margin: 0 0 8px; font-size: 1rem; color: var(--word-blue); }
+    .extra-zone p.hint { margin: 0 0 6px; font-size: 0.85rem; color: var(--muted); }
 
+    .exercise-shell {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 18px;
+      align-items: start;
+      margin-top: 10px;
+    }
+    @media (max-width: 760px) { .exercise-shell { grid-template-columns: 1fr; } }
+    .exercise-panel {
+      background: #f8fbff;
+      border: 1px solid rgba(0,0,0,.08);
+      border-radius: 14px;
+      box-shadow: 0 3px 12px rgba(0,0,0,.06);
+      padding: 18px;
+    }
+    .task-card {
+      background: #fff;
+      border: 1px solid #dfe7ee;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 16px;
+    }
+    .task-card .task-title {
+      margin: 0 0 6px;
+      font-size: 0.88rem;
+      color: var(--word-blue);
+      font-weight: 700;
+    }
+    .task-card p { margin: 0; font-size: 0.96rem; line-height: 1.6; }
+    .controls-group { margin-bottom: 16px; }
+    .controls-group h3 {
+      margin: 0 0 10px;
+      font-size: 0.95rem;
+      color: var(--word-dark);
+    }
+    .column-buttons, .page-buttons { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .column-buttons button,
+    .page-buttons button {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+      color: var(--text);
+      padding: 12px 10px;
+      font-size: 0.92rem;
+      cursor: pointer;
+      font-family: inherit;
+      transition: transform .15s, border-color .15s, box-shadow .15s;
+    }
+    .column-buttons button.active,
+    .page-buttons button.active {
+      border-color: var(--word-blue);
+      box-shadow: 0 8px 18px rgba(43,87,154,.12);
+      transform: translateY(-1px);
+      background: #f3f7ff;
+    }
+    .column-buttons button:hover,
+    .page-buttons button:hover { border-color: #9ab7e1; }
+    .actions {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      margin-bottom: 14px;
+    }
+    .actions button {
+      flex: 1 1 120px;
+      border: none; border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: transform .15s, box-shadow .15s, background .15s;
+    }
+    .actions button:hover { transform: translateY(-1px); }
+    #applyButton { background: #2B579A; color: #fff; }
+    #checkButton { background: #0f7b3f; color: #fff; }
+    #resetButton { background: #605e5c; color: #fff; }
+    .feedback {
+      border-radius: 10px;
+      padding: 12px 14px;
+      background: #fff;
+      border: 1px solid transparent;
+      min-height: 44px;
+      display: flex; align-items: center;
+      font-size: 0.95rem;
+    }
+    .feedback.success { border-color: #81c784; background: #f0fbf3; color: #1d5d2b; }
+    .feedback.warn { border-color: #f8c471; background: #fff7e5; color: #7f5a1a; }
+    .feedback.error { border-color: #e38d8d; background: #fff1f1; color: #8a2b2b; }
+    .score-line { margin-top: 12px; font-size: 0.95rem; color: var(--muted); }
+    .preview-panel {
+      display: grid;
+      gap: 14px;
+    }
+    .preview-panel .preview-header {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--word-blue);
+    }
+    .page-cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .mini-page {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      text-align: left;
+      cursor: pointer;
+      font-family: inherit;
+      transition: border-color .15s, box-shadow .15s, transform .15s;
+    }
+    .mini-page:hover { border-color: #9ab7e1; transform: translateY(-1px); }
+    .mini-page.active {
+      border-color: var(--word-blue);
+      box-shadow: 0 10px 18px rgba(43,87,154,.12);
+    }
+    .mini-page strong { display: block; margin-bottom: 8px; font-size: 0.95rem; }
+    .mini-page span { display: inline-flex; align-items: center; gap: 4px; font-size: 0.82rem; color: var(--muted); }
+    .mini-col-preview { display: flex; gap: 6px; align-items: center; margin-bottom: 8px; }
+    .mini-col-preview .mini-col { flex: 1; height: 28px; background: #f3f6f9; border: 1px solid #e6e9ec; border-radius: 4px; }
+    .document-preview {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,.12);
+      border-radius: 18px;
+      min-height: 380px;
+      padding: 18px;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.02);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .doc-surface {
+      width: 100%;
+      max-width: 360px;
+      min-height: 340px;
+      background: #fdfdfc;
+      border: 1px solid #d8d8d4;
+      border-radius: 14px;
+      padding: 22px 18px;
+      box-shadow: 0 18px 30px rgba(0,0,0,.08);
+      position: relative;
+    }
+    .doc-surface::before {
+      content: "";
+      position: absolute;
+      top: 12px; left: 18px; right: 18px;
+      height: 22px;
+      background: linear-gradient(90deg, #e4e7eb 12%, transparent 12%, transparent 38%, #e4e7eb 38%, #e4e7eb 50%, transparent 50%, transparent 76%, #e4e7eb 76%);
+      opacity: .45;
+      border-radius: 4px;
+    }
+    .doc-content {
+      position: relative;
+      margin-top: 36px;
+      font-size: 0.87rem;
+      line-height: 1.65;
+      color: #3b3b3b;
+      height: calc(100% - 56px);
+      overflow: hidden;
+    }
+    .doc-content p { margin: 0 0 12px; }
+    .doc-content p:last-child { margin-bottom: 0; }
+    .doc-surface[data-columns="2"] .doc-content { column-count: 2; column-gap: 22px; column-rule: 1px solid rgba(0,0,0,.08); }
+    .doc-surface[data-columns="3"] .doc-content { column-count: 3; column-gap: 20px; column-rule: 1px solid rgba(0,0,0,.08); }
+    .doc-surface[data-columns="1"] .doc-content { column-count: 1; }
+    .doc-surface .ruler {
+      position: absolute; top: 8px; left: 18px; right: 18px; height: 6px; border-bottom: 1px solid rgba(0,0,0,.06);
+      display: flex; gap: 4px; align-items: center; padding-left: 6px; font-size: 10px; color: rgba(0,0,0,.35);
+    }
+    .doc-surface .ruler span { display: inline-block; width: 8px; height: 2px; background: rgba(0,0,0,.06); border-radius: 1px; }
+
+    /* ── NAV ENTRE HERRAMIENTAS ── */
     .detail-nav-bar {
       position: fixed;
       bottom: var(--nav-h);
@@ -358,6 +340,7 @@
       cursor: not-allowed;
     }
 
+    /* ── NAV INFERIOR ── */
     .bottom-nav {
       position: fixed; bottom: 0; left: 0; right: 0;
       height: var(--nav-h);
@@ -366,54 +349,37 @@
       z-index: 100;
       box-shadow: 0 -2px 12px rgba(0,0,0,.2);
     }
-    .bottom-nav a, .bottom-nav button {
+    .bottom-nav a {
       flex: 1; max-width: 130px;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       gap: 2px;
-      border: none; background: transparent;
       color: rgba(255,255,255,.8);
       text-decoration: none;
       font-size: 0.62rem; font-weight: 500;
       padding: 4px;
-      font-family: inherit;
-      cursor: pointer;
     }
-    .bottom-nav a:hover, .bottom-nav button:hover { color: #fff; background: rgba(255,255,255,.08); }
-    .bottom-nav a.active { background: rgba(255,255,255,.15); color: #fff; font-weight: 700; }
+    .bottom-nav a:hover { color: #fff; background: rgba(255,255,255,.08); }
     .bottom-nav .nav-icon { font-size: 1.15rem; }
-</style>
+  </style>
 </head>
-<body data-tool-id="24" data-tool-slug="columnas">
+<body>
 
+  <!-- BARRA SUPERIOR: solo logo + título -->
   <header class="title-bar">
     <a class="word-logo" href="../index.html" title="Inicio">W</a>
     <h1><a class="title-link" href="../index.html">Columnas — Word Básico</a></h1>
   </header>
 
-  <nav aria-label="Pestañas Word">
+  <!-- SOLO PESTAÑA INICIO -->
+  <nav aria-label="Menú Word">
     <ul class="ribbon-tabs">
-      <li class="active"><a href="../index.html">Inicio</a></li>
-      <li><button type="button">Insertar</button></li>
-      <li><button type="button">Diseño</button></li>
-      <li><button type="button">Disposición</button></li>
-      <li><button type="button">Referencias</button></li>
-      <li><button type="button">Revisar</button></li>
-      <li><button type="button">Vista</button></li>
+      <li><a href="../index.html">Inicio</a></li>
     </ul>
   </nav>
-  <div class="ribbon-fake" aria-hidden="true">
-    <span>Portapapeles</span><span>Fuente</span><span>Párrafo</span><span>Estilos</span>
-  </div>
-<nav class="tool-tabs" aria-label="Pestañas de esta herramienta">
-    <a href="#leccion" class="active">📖 Lección</a>
-    <a href="#lsc">🤟 LSC</a>
-    <a href="#captura">🖼️ Captura Word</a>
-    <a href="#ejercicios">✏️ Ejercicios</a>
-    <a href="#extra">➕ Actividades</a>
-  </nav>
 
-  <header class="detail-header" id="leccion">
+  <!-- CABECERA DE LA HERRAMIENTA -->
+  <header class="detail-header">
     <img src="../icons/Columnas.png" alt="Columnas" width="64" height="64" />
     <div>
       <span class="detail-cat">Organización del contenido</span>
@@ -422,78 +388,257 @@
   </header>
 
   <div class="detail-body">
-    <div class="ribbon-path"><strong>Ruta en la cinta:</strong> Disposición → Columnas</div>
 
-    <article class="block">
-      <h2>¿Qué significa?</h2>
-      <p>Divide el texto en columnas.</p>
-    </article>
-
-    <article class="block">
-      <h2>Antes / Después</h2>
-      <div class="before-after">
-        <div class="ba-card before"><h3>Antes</h3><p>Una sola columna.</p></div>
-        <div class="ba-card after"><h3>Después</h3><p>Varias columnas.</p></div>
+    <!-- VIDEO DE YOUTUBE (mismo video usado en las herramientas anteriores) -->
+    <div class="block">
+      <h2>🎥 Video explicativo</h2>
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/9nEndiBCvQk?start=30" title="Video explicativo: Columnas en Word" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
       </div>
-    </article>
+    </div>
 
-    <article class="block">
-      <h2>Pasos para usarlo</h2>
-      <ol><li>Disposición.</li>
-<li>Columnas.</li>
-<li>Una, dos o tres.</li>
-<li>Listo.</li></ol>
-    </article>
+    <!-- ACTIVIDAD: JUEGO COLUMNAS -->
+    <div class="extra-zone">
+      <h2>✏️ Actividad</h2>
+      <p class="hint"><strong>Instrucción:</strong> Selecciona la página correcta y aplica el número de columnas como en Word. Son 3 tareas en total.</p>
 
-    <article class="block" id="lsc">
-      <h2>Referente en LSC</h2>
-      <div class="placeholder-box lsc">Espacio para foto o video de la seña en Lengua de Señas Colombiana (LSC).</div>
-    </article>
+      <div class="exercise-shell">
+        <div class="exercise-panel">
+          <div class="task-card">
+            <p class="task-title">Tarea actual</p>
+            <p id="taskText">Aplica 2 columnas en la Página 1.</p>
+          </div>
 
-    <article class="block" id="captura">
-      <h2>Captura en Word 2021</h2>
-      <div class="placeholder-box">Espacio para captura de pantalla real de Microsoft Word 2021.</div>
-    </article>
+          <div class="controls-group">
+            <h3>Elegir columnas</h3>
+            <div class="column-buttons" id="columnButtons"></div>
+          </div>
 
-    <section class="extra-zone" id="ejercicios">
-      <h2>Ejercicios</h2>
-      <p class="hint">Zona lista para agregar actividades de esta herramienta más adelante.</p>
-    </section>
+          <div class="controls-group">
+            <h3>Elegir página</h3>
+            <div class="page-buttons" id="pageButtons"></div>
+          </div>
 
-    <section class="extra-zone" id="extra">
-      <h2>Actividades extra</h2>
-      <p class="hint">Puedes editar solo este archivo (<code>24-columnas.html</code>) sin tocar las demás lecciones.</p>
-    </section>
-  </div>
+          <div class="actions">
+            <button id="applyButton" type="button">Aplicar columnas</button>
+            <button id="checkButton" type="button">Comprobar</button>
+            <button id="resetButton" type="button">Reiniciar</button>
+          </div>
 
+          <div class="feedback" id="feedback">Selecciona columnas y página, luego aplica.</div>
+          <div class="score-line"><strong>Puntaje:</strong> <span id="scoreValue">0</span> / 3</div>
+        </div>
+
+        <aside class="exercise-panel preview-panel">
+          <div class="preview-header">Vista previa de página</div>
+          <div class="page-cards" id="pageCards"></div>
+          <div class="document-preview" id="docPreview"></div>
+        </aside>
+      </div>
+    </div>
+
+  </div><!-- /detail-body -->
+
+  <!-- NAV ENTRE HERRAMIENTAS -->
   <nav class="detail-nav-bar" aria-label="Navegación entre herramientas">
     <a href="23-vinetas.html">◀ Viñetas</a>
     <a href="../index.html" class="btn-gray">🏠 Ver todas</a>
     <a href="25-salto-de-pagina.html">Salto de página ▶</a>
   </nav>
 
-
+  <!-- NAV INFERIOR: solo Inicio -->
   <nav class="bottom-nav" aria-label="Menú principal">
     <a href="../index.html"><span class="nav-icon">🏠</span>Inicio</a>
-    <a href="../index.html#categories-grid" class="active"><span class="nav-icon">📚</span>Lecciones</a>
-    <a href="#ejercicios"><span class="nav-icon">✏️</span>Ejercicios</a>
-    <a href="#evaluaciones"><span class="nav-icon">📋</span>Evaluaciones</a>
-    <a href="#ayuda"><span class="nav-icon">❓</span>Ayuda</a>
   </nav>
 
   <script>
-    /* Página: 24-columnas.html | Herramienta: Columnas */
     (function () {
-      var tabs = document.querySelectorAll(".tool-tabs a");
-      var hash = location.hash || "#leccion";
-      tabs.forEach(function (a) {
-        a.classList.toggle("active", a.getAttribute("href") === hash);
-        a.addEventListener("click", function () {
-          tabs.forEach(function (t) { t.classList.remove("active"); });
-          a.classList.add("active");
+      var tasks = [
+        { page: 'page1', columns: 2, label: 'Página 1 debe cambiar a 2 columnas.' },
+        { page: 'page2', columns: 3, label: 'Página 2 debe cambiar a 3 columnas.' },
+        { page: 'page3', columns: 1, label: 'Página 3 debe quedar en 1 columna.' }
+      ];
+
+      var state = {
+        selectedPage: 'page1',
+        selectedColumns: 2,
+        currentTask: 0,
+        score: 0,
+        applied: { page1: 1, page2: 1, page3: 1 }
+      };
+
+      var columnButtons = document.getElementById('columnButtons');
+      var pageButtons = document.getElementById('pageButtons');
+      var pageCards = document.getElementById('pageCards');
+      var taskText = document.getElementById('taskText');
+      var feedback = document.getElementById('feedback');
+      var scoreValue = document.getElementById('scoreValue');
+      var docPreview = document.getElementById('docPreview');
+      var applyButton = document.getElementById('applyButton');
+      var checkButton = document.getElementById('checkButton');
+      var resetButton = document.getElementById('resetButton');
+
+      function setFeedback(text, type) {
+        feedback.textContent = text;
+        feedback.className = 'feedback';
+        if (type) feedback.classList.add(type);
+      }
+
+      function renderColumns() {
+        var choices = [
+          { value: 1, label: '1 columna' },
+          { value: 2, label: '2 columnas' },
+          { value: 3, label: '3 columnas' }
+        ];
+        columnButtons.innerHTML = '';
+        choices.forEach(function (choice) {
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.textContent = choice.label;
+          btn.dataset.cols = choice.value;
+          btn.className = state.selectedColumns === choice.value ? 'active' : '';
+          btn.addEventListener('click', function () {
+            state.selectedColumns = choice.value;
+            renderColumns();
+            setFeedback('Estilo seleccionado: ' + choice.label + '.', 'success');
+          });
+          columnButtons.appendChild(btn);
         });
-      });
+      }
+
+      function renderPageButtons() {
+        var pages = [
+          { id: 'page1', label: 'Página 1' },
+          { id: 'page2', label: 'Página 2' },
+          { id: 'page3', label: 'Página 3' }
+        ];
+        pageButtons.innerHTML = '';
+        pageCards.innerHTML = '';
+
+        pages.forEach(function (page) {
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.textContent = page.label;
+          btn.className = state.selectedPage === page.id ? 'active' : '';
+          btn.addEventListener('click', function () {
+            state.selectedPage = page.id;
+            renderPageButtons();
+            renderDocPreview();
+            setFeedback('Página seleccionada: ' + page.label + '.', 'success');
+          });
+          pageButtons.appendChild(btn);
+
+          var card = document.createElement('button');
+          card.type = 'button';
+          card.className = 'mini-page' + (state.selectedPage === page.id ? ' active' : '');
+          card.dataset.page = page.id;
+          var title = document.createElement('strong');
+          title.textContent = page.label;
+          card.appendChild(title);
+
+          var preview = document.createElement('div');
+          preview.className = 'mini-col-preview';
+          var colCount = state.applied[page.id] || 1;
+          for (var i = 0; i < colCount; i++) {
+            var mc = document.createElement('div');
+            mc.className = 'mini-col';
+            preview.appendChild(mc);
+          }
+          card.appendChild(preview);
+
+          var info = document.createElement('span');
+          info.textContent = (state.applied[page.id] || 1) + ' columna' + ((state.applied[page.id] || 1) === 1 ? '' : 's');
+          card.appendChild(info);
+
+          card.addEventListener('click', function () {
+            state.selectedPage = page.id;
+            renderPageButtons();
+            renderDocPreview();
+          });
+          pageCards.appendChild(card);
+        });
+      }
+
+      function renderTask() {
+        var task = tasks[state.currentTask];
+        if (!task) {
+          taskText.textContent = 'Ejercicio completado. ¡Buen trabajo!';
+          return;
+        }
+        taskText.textContent = task.label;
+      }
+
+      function renderDocPreview() {
+        var cols = state.applied[state.selectedPage] || 1;
+        docPreview.innerHTML = '';
+        var surface = document.createElement('div');
+        surface.className = 'doc-surface';
+        surface.dataset.columns = cols;
+        surface.innerHTML = '\n          <div class="ruler">' + new Array(28).fill('<span></span>').join('') + '</div>\n          <div class="doc-content">\n            <p>Las columnas ayudan a organizar el texto en un documento y facilitan la lectura en formatos de revista o folleto.</p>\n            <p>Cuando cambias a varias columnas, el texto se distribuye de manera uniforme de arriba abajo, tal como lo verías en Word.</p>\n            <p>Este diseño es ideal para listados, artículos cortos y contenidos que quedan mejor en varias secciones verticales.</p>\n          </div>\n        ';
+        docPreview.appendChild(surface);
+      }
+
+      function updateScore() {
+        scoreValue.textContent = state.score;
+      }
+
+      function applyColumns() {
+        state.applied[state.selectedPage] = state.selectedColumns;
+        renderPageButtons();
+        renderDocPreview();
+        setFeedback('Columnas aplicadas en ' + state.selectedPage.replace('page', 'Página ') + '.', 'success');
+      }
+
+      function checkTask() {
+        var task = tasks[state.currentTask];
+        if (!task) return;
+        if (state.selectedPage !== task.page) {
+          setFeedback('Selecciona ' + task.page.replace('page', 'Página ') + ' para esta tarea.', 'error');
+          return;
+        }
+        if (state.applied[task.page] !== task.columns) {
+          setFeedback('La página seleccionada no tiene el número correcto de columnas.', 'error');
+          return;
+        }
+        state.score += 1;
+        state.currentTask += 1;
+        updateScore();
+        if (state.currentTask >= tasks.length) {
+          renderTask();
+          setFeedback('¡Excelente! Completaste todas las tareas.', 'success');
+          try { localStorage.setItem('score-tool-24-columnas', '1'); } catch (e) {}
+        } else {
+          renderTask();
+          setFeedback('Correcto. Avanza a la siguiente tarea.', 'success');
+        }
+      }
+
+      function resetExercise() {
+        state.selectedPage = 'page1';
+        state.selectedColumns = 2;
+        state.currentTask = 0;
+        state.score = 0;
+        state.applied = { page1: 1, page2: 1, page3: 1 };
+        renderColumns();
+        renderPageButtons();
+        renderTask();
+        renderDocPreview();
+        updateScore();
+        setFeedback('Ejercicio reiniciado. Selecciona la primera página y aplica columnas.', 'warn');
+      }
+
+      applyButton.addEventListener('click', applyColumns);
+      checkButton.addEventListener('click', checkTask);
+      resetButton.addEventListener('click', resetExercise);
+
+      renderColumns();
+      renderPageButtons();
+      renderTask();
+      renderDocPreview();
+      updateScore();
+      setFeedback('Selecciona columnas y página, luego aplica.', 'warn');
     })();
   </script>
+
 </body>
 </html>

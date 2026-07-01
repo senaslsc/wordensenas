@@ -231,6 +231,8 @@
     }
     .progress-list li.done { color: #0f7b3f; font-weight: 600; }
     .progress-list li.current { color: var(--word-blue); font-weight: 600; }
+    .progress-list li.minus { color: #d9534f; font-weight: 600; }
+    .progress-summary { margin: 0 0 10px; font-size: 0.92rem; font-weight: 700; color: #0b2d5c; }
     .progress-list a { text-decoration: none; color: inherit; }
     .btn-lsc {
       display: block; width: 100%;
@@ -425,14 +427,16 @@
 <a href="herramientas/06-deshacer.html" class="tool-card" title="Deshacer"><img src="icons/Deshacer.png" alt="Deshacer" width="48" height="48" loading="lazy" /><span class="tool-label">Deshacer</span></a>
 <a href="herramientas/07-rehacer.html" class="tool-card" title="Rehacer"><img src="icons/Rehacer.png" alt="Rehacer" width="48" height="48" loading="lazy" /><span class="tool-label">Rehacer</span></a>
 <a href="herramientas/08-ortografia-y-gramatica.html" class="tool-card" title="Ortografía y gramática"><img src="icons/Ortografia.png" alt="Ortografía y gramática" width="48" height="48" loading="lazy" /><span class="tool-label">Ortografía y gramática</span></a></div></section>
-<section class="category-block" style="--cat-color:#6b3fa0;--cat-tint:#f3ecfa"><header class="category-header"><span class="category-number">3</span><h3>FORMATO DE TEXTO</h3></header><div class="category-tools"><a href="herramientas/09-subrayado.html" class="tool-card" title="Subrayado"><img src="icons/Subrayado.png" alt="Subrayado" width="48" height="48" loading="lazy" /><span class="tool-label">Subrayado</span></a>
+<section class="category-block" style="--cat-color:#6b3fa0;--cat-tint:#f3ecfa"><header class="category-header"><span class="category-number">3</span><h3>FORMATO DE TEXTO</h3></header><div class="category-tools">
+<a href="herramientas/negrita.html" class="tool-card" title="Negrita"><img src="icons/Negrita.png" alt="Negrita" width="48" height="48" loading="lazy" /><span class="tool-label">Negrita</span></a>
+<a href="herramientas/cursiva.html" class="tool-card" title="Cursiva"><img src="icons/Cursiva.png" alt="Cursiva" width="48" height="48" loading="lazy" /><span class="tool-label">Cursiva</span></a>
+<a href="herramientas/09-subrayado.html" class="tool-card" title="Subrayado"><img src="icons/Subrayado.png" alt="Subrayado" width="48" height="48" loading="lazy" /><span class="tool-label">Subrayado</span></a>
 <a href="herramientas/10-fuente.html" class="tool-card" title="Fuente"><img src="icons/Fuente.png" alt="Fuente" width="48" height="48" loading="lazy" /><span class="tool-label">Fuente</span></a>
 <a href="herramientas/11-alineacion.html" class="tool-card" title="Alineación"><img src="icons/Alineaci%C3%B3n%20de%20parrafos.png" alt="Alineación" width="48" height="48" loading="lazy" /><span class="tool-label">Alineación</span></a>
 <a href="herramientas/12-sangria.html" class="tool-card" title="Sangría"><img src="icons/Sangria.png" alt="Sangría" width="48" height="48" loading="lazy" /><span class="tool-label">Sangría</span></a>
 <a href="herramientas/13-interlineado.html" class="tool-card" title="Interlineado"><img src="icons/Interlineado.png" alt="Interlineado" width="48" height="48" loading="lazy" /><span class="tool-label">Interlineado</span></a>
 <a href="herramientas/14-resaltar.html" class="tool-card" title="Resaltar"><img src="icons/Resaltar.png" alt="Resaltar" width="48" height="48" loading="lazy" /><span class="tool-label">Resaltar</span></a></div></section>
 <section class="category-block" style="--cat-color:#c45c26;--cat-tint:#fff3eb"><header class="category-header"><span class="category-number">4</span><h3>DECORATIVOS</h3></header><div class="category-tools"><a href="herramientas/15-bordes.html" class="tool-card" title="Bordes"><img src="icons/Bordes.png" alt="Bordes" width="48" height="48" loading="lazy" /><span class="tool-label">Bordes</span></a>
-<a href="herramientas/16-sombreado.html" class="tool-card" title="Sombreado"><img src="icons/Sombreado.png" alt="Sombreado" width="48" height="48" loading="lazy" /><span class="tool-label">Sombreado</span></a>
 <a href="herramientas/17-letra-capital.html" class="tool-card" title="Letra capital"><img src="icons/Letra%20capital.png" alt="Letra capital" width="48" height="48" loading="lazy" /><span class="tool-label">Letra capital</span></a>
 <a href="herramientas/18-fondos.html" class="tool-card" title="Fondos"><img src="icons/Fondo.png" alt="Fondos" width="48" height="48" loading="lazy" /><span class="tool-label">Fondos</span></a></div></section>
 <section class="category-block" style="--cat-color:#c9a227;--cat-tint:#fff9e6"><header class="category-header"><span class="category-number">5</span><h3>ELEMENTOS VISUALES</h3></header><div class="category-tools"><a href="herramientas/19-insertar-imagen.html" class="tool-card" title="Insertar imagen"><img src="icons/Insertar%20imagen.png" alt="Insertar imagen" width="48" height="48" loading="lazy" /><span class="tool-label">Insertar imagen</span></a>
@@ -458,53 +462,14 @@
         <a class="btn-start" href="#categories-grid">▶ Comenzar aprendizaje</a>
       </div>
       <div class="sidebar-card">
-        <h3>Mi progreso</h3>
-        <div class="progress-bar"><span></span></div>
-        <ul class="progress-list"><li class="done"><span class="progress-icon">✓</span> <a href="herramientas/01-cortar.html">Cortar</a></li>
-<li class="done"><span class="progress-icon">✓</span> <a href="herramientas/02-copiar.html">Copiar</a></li>
-<li class="done"><span class="progress-icon">✓</span> <a href="herramientas/03-pegar.html">Pegar</a></li>
-<li class="current"><span class="progress-icon">▶</span> <a href="herramientas/04-zoom.html">Zoom</a></li>
-<li class=""><span class="progress-icon">○</span> <a href="herramientas/05-guardar.html">Guardar</a></li>
-<li class=""><span class="progress-icon">○</span> <a href="herramientas/06-deshacer.html">Deshacer</a></li>
-<li class=""><span class="progress-icon">○</span> <a href="herramientas/07-rehacer.html">Rehacer</a></li>
-<li class=""><span class="progress-icon">○</span> <a href="herramientas/08-ortografia-y-gramatica.html">Ortografía y gramática</a></li></ul>
+        <h3>Mi puntuación de juegos</h3>
+        <p class="progress-summary" id="games-summary">Cargando resultados...</p>
+        <div class="progress-bar"><span id="games-progress"></span></div>
+        <ul class="progress-list" id="game-score-list"></ul>
       </div>
       <div class="sidebar-card">
-        <h3>Índice de lecciones</h3>
-        <ul class="progress-list">
-<li><a href="herramientas/01-cortar.html">01. Cortar</a></li>
-<li><a href="herramientas/02-copiar.html">02. Copiar</a></li>
-<li><a href="herramientas/03-pegar.html">03. Pegar</a></li>
-<li><a href="herramientas/04-zoom.html">04. Zoom</a></li>
-<li><a href="herramientas/05-guardar.html">05. Guardar</a></li>
-<li><a href="herramientas/06-deshacer.html">06. Deshacer</a></li>
-<li><a href="herramientas/07-rehacer.html">07. Rehacer</a></li>
-<li><a href="herramientas/08-ortografia-y-gramatica.html">08. Ortografía y gramática</a></li>
-<li><a href="herramientas/09-subrayado.html">09. Subrayado</a></li>
-<li><a href="herramientas/10-fuente.html">10. Fuente</a></li>
-<li><a href="herramientas/11-alineacion.html">11. Alineación</a></li>
-<li><a href="herramientas/12-sangria.html">12. Sangría</a></li>
-<li><a href="herramientas/13-interlineado.html">13. Interlineado</a></li>
-<li><a href="herramientas/14-resaltar.html">14. Resaltar</a></li>
-<li><a href="herramientas/15-bordes.html">15. Bordes</a></li>
-<li><a href="herramientas/16-sombreado.html">16. Sombreado</a></li>
-<li><a href="herramientas/17-letra-capital.html">17. Letra capital</a></li>
-<li><a href="herramientas/18-fondos.html">18. Fondos</a></li>
-<li><a href="herramientas/19-insertar-imagen.html">19. Insertar imagen</a></li>
-<li><a href="herramientas/20-tabla.html">20. Tabla</a></li>
-<li><a href="herramientas/21-figura.html">21. Figura</a></li>
-<li><a href="herramientas/22-numeracion.html">22. Numeración</a></li>
-<li><a href="herramientas/23-vinetas.html">23. Viñetas</a></li>
-<li><a href="herramientas/24-columnas.html">24. Columnas</a></li>
-<li><a href="herramientas/25-salto-de-pagina.html">25. Salto de página</a></li>
-<li><a href="herramientas/26-margenes.html">26. Márgenes</a></li>
-<li><a href="herramientas/27-orientacion.html">27. Orientación</a></li>
-<li><a href="herramientas/28-encabezado.html">28. Encabezado</a></li>
-<li><a href="herramientas/29-pie-de-pagina.html">29. Pie de página</a></li>
-<li><a href="herramientas/30-numero-de-pagina.html">30. Número de página</a></li>
-<li><a href="herramientas/31-notas-de-pie.html">31. Notas de pie</a></li>
-        </ul>
-      </div>
+        
+      
       <div class="sidebar-card">
         <h3>¿Necesitas ayuda?</h3>
         <button type="button" class="btn-lsc">🤟 Ver video en LSC</button>
@@ -520,5 +485,67 @@
     <a href="#evaluaciones"><span class="nav-icon">📋</span>Evaluaciones</a>
     <a href="#ayuda"><span class="nav-icon">❓</span>Ayuda</a>
   </nav>
+  <script>
+    (function () {
+      var games = [
+        { key: 'score-tool-01-cortar', label: 'Cortar', link: 'herramientas/01-cortar.html' },
+        { key: 'score-tool-02-copiar', label: 'Copiar', link: 'herramientas/02-copiar.html' },
+        { key: 'score-tool-03-pegar', label: 'Pegar', link: 'herramientas/03-pegar.html' },
+        { key: 'score-tool-04-zoom', label: 'Zoom', link: 'herramientas/04-zoom.html' },
+        { key: 'score-tool-05-guardar', label: 'Guardar', link: 'herramientas/05-guardar.html' },
+        { key: 'score-tool-06-deshacer', label: 'Deshacer', link: 'herramientas/06-deshacer.html' },
+        { key: 'score-tool-07-rehacer', label: 'Rehacer', link: 'herramientas/07-rehacer.html' },
+        { key: 'score-tool-08-ortografia-y-gramatica', label: 'Ortografía y Gramática', link: 'herramientas/08-ortografia-y-gramatica.html' },
+        { key: 'score-tool-negrita', label: 'Negrita', link: 'herramientas/negrita.html' },
+        { key: 'score-tool-cursiva', label: 'Cursiva', link: 'herramientas/cursiva.html' },
+        { key: 'score-tool-09-subrayado', label: 'Subrayado', link: 'herramientas/09-subrayado.html' },
+        { key: 'score-tool-10-fuente', label: 'Fuente', link: 'herramientas/10-fuente.html' },
+        { key: 'score-tool-11-alineacion', label: 'Alineación', link: 'herramientas/11-alineacion.html' },
+        { key: 'score-tool-12-sangria', label: 'Sangría', link: 'herramientas/12-sangria.html' },
+        { key: 'score-tool-13-interlineado', label: 'Interlineado', link: 'herramientas/13-interlineado.html' },
+        { key: 'score-tool-14-resaltar', label: 'Resaltar', link: 'herramientas/14-resaltar.html' },
+        { key: 'score-tool-15-bordes', label: 'Bordes', link: 'herramientas/15-bordes.html' },
+        { key: 'score-tool-17-letra-capital', label: 'Letra Capital', link: 'herramientas/17-letra-capital.html' },
+        { key: 'score-tool-18-fondos', label: 'Fondos', link: 'herramientas/18-fondos.html' },
+        { key: 'score-tool-19-insertar-imagen', label: 'Insertar Imagen', link: 'herramientas/19-insertar-imagen.html' },
+        { key: 'score-tool-20-tabla', label: 'Tabla', link: 'herramientas/20-tabla.html' },
+        { key: 'score-tool-21-figura', label: 'Figura', link: 'herramientas/21-figura.html' },
+        { key: 'score-tool-22-numeracion', label: 'Numeración', link: 'herramientas/22-numeracion.html' },
+        { key: 'score-tool-23-vinetas', label: 'Viñetas', link: 'herramientas/23-vinetas.html' },
+        { key: 'score-tool-24-columnas', label: 'Columnas', link: 'herramientas/24-columnas.html' },
+        { key: 'score-tool-25-salto-de-pagina', label: 'Salto de Página', link: 'herramientas/25-salto-de-pagina.html' },
+        { key: 'score-tool-26-margenes', label: 'Márgenes', link: 'herramientas/26-margenes.html' },
+        { key: 'score-tool-27-orientacion', label: 'Orientación', link: 'herramientas/27-orientacion.html' },
+        { key: 'score-tool-28-encabezado', label: 'Encabezado', link: 'herramientas/28-encabezado.html' },
+        { key: 'score-tool-29-pie-de-pagina', label: 'Pie de Página', link: 'herramientas/29-pie-de-pagina.html' },
+        { key: 'score-tool-30-numero-de-pagina', label: 'Número de Página', link: 'herramientas/30-numero-de-pagina.html' },
+        { key: 'score-tool-31-notas-de-pie', label: 'Notas de Pie', link: 'herramientas/31-notas-de-pie.html' }
+      ];
+      var list = document.getElementById('game-score-list');
+      var bar = document.getElementById('games-progress');
+      var summary = document.getElementById('games-summary');
+      if (!list || !bar || !summary) { return; }
+
+      var earned = 0;
+      games.forEach(function (game) {
+        var stored = localStorage.getItem(game.key);
+        var score = stored !== null ? Number(stored) : 0;
+        if (score === 1) { earned += 1; }
+        var icon = score === 1 ? '✓' : score === -1 ? '−1' : '○';
+        var item = document.createElement('li');
+        if (score === 1) {
+          item.className = 'done';
+        } else if (score === -1) {
+          item.className = 'minus';
+        }
+        item.innerHTML = '<span class="progress-icon">' + icon + '</span> <a href="' + game.link + '">' + game.label + '</a>';
+        list.appendChild(item);
+      });
+
+      var percent = Math.round((earned / games.length) * 100);
+      bar.style.width = percent + '%';
+      summary.textContent = percent + '% completado • ' + earned + ' / ' + games.length + ' juegos con +1';
+    })();
+  </script>
 </body>
 </html>

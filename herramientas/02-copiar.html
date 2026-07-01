@@ -9,7 +9,6 @@
     :root {
       --word-blue: #2B579A;
       --word-dark: #0b2d5c;
-      --ribbon-bg: #f3f2f1;
       --page-bg: #eef2f6;
       --card: #fff;
       --text: #1a1a1a;
@@ -17,7 +16,6 @@
       --border: #d1d1d1;
       --font: "Segoe UI", Calibri, system-ui, sans-serif;
       --nav-h: 54px;
-      --tool-nav-h: 48px;
     }
     html { scroll-behavior: smooth; }
     body {
@@ -25,11 +23,10 @@
       font-family: var(--font);
       color: var(--text);
       background: var(--page-bg);
-      padding-bottom: calc(var(--nav-h) + var(--tool-nav-h));
+      padding-bottom: calc(var(--nav-h) + 20px);
     }
-    a { color: inherit; }
-    img { display: block; max-width: 100%; }
 
+    /* BARRA SUPERIOR */
     .title-bar {
       background: var(--word-blue);
       color: #fff;
@@ -53,195 +50,24 @@
     .title-bar a.title-link { color: #fff; text-decoration: none; }
     .title-bar a.title-link:hover { text-decoration: underline; }
 
+    /* Solo pestaña Inicio */
     .ribbon-tabs {
-      display: flex; flex-wrap: wrap;
+      display: flex;
       list-style: none; margin: 0; padding: 0 6px;
       background: #fff;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 2px solid var(--word-blue);
     }
-    .ribbon-tabs a, .ribbon-tabs button {
+    .ribbon-tabs li a {
       display: block;
-      border: none; background: transparent;
-      padding: 9px 12px; font-size: 12px; color: var(--text);
-      border-bottom: 2px solid transparent;
-      text-decoration: none;
-      font-family: inherit;
-      cursor: pointer;
-    }
-    .ribbon-tabs li.active a,
-    .ribbon-tabs li.active button {
-      background: var(--ribbon-bg);
-      border-bottom-color: var(--word-blue);
-      font-weight: 600;
-    }
-    .ribbon-fake {
-      background: var(--ribbon-bg);
-      border-bottom: 1px solid var(--border);
-      padding: 6px 12px;
-      font-size: 10px;
-      color: var(--muted);
-      display: flex; gap: 16px; flex-wrap: wrap;
-    }
-    .ribbon-fake span { padding: 2px 6px; background: #fff; border-radius: 3px; border: 1px solid #e0e0e0; }
-
-    .platform-shell {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 14px 16px 20px;
-      display: grid;
-      grid-template-columns: 1fr 270px;
-      gap: 16px;
-      align-items: start;
-    }
-    @media (max-width: 960px) {
-      .platform-shell { grid-template-columns: 1fr; }
-    }
-    .hero {
-      grid-column: 1 / -1;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .hero-text h2 {
-      margin: 0 0 4px;
-      font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+      padding: 9px 16px;
+      font-size: 13px;
       color: var(--word-blue);
-      display: flex; align-items: center; gap: 8px;
-    }
-    .hero-text .w-icon {
-      width: 32px; height: 32px;
-      background: linear-gradient(135deg, #2B579A, #41a5ee);
-      color: #fff; font-weight: 800;
-      display: flex; align-items: center; justify-content: center;
-      border-radius: 5px; font-size: 18px;
-    }
-    .hero-text p { margin: 0; color: var(--muted); font-size: 0.9rem; }
-    .main-panel {
-      background: var(--card);
-      border-radius: 12px;
-      padding: 16px;
-      box-shadow: 0 2px 10px rgba(0,0,0,.08);
-      border: 1px solid rgba(0,0,0,.06);
-    }
-    .main-panel > p.hint-line {
-      margin: 0 0 14px;
-      font-size: 0.88rem;
-      color: var(--muted);
-    }
-    .categories-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-    @media (max-width: 640px) {
-      .categories-grid { grid-template-columns: 1fr; }
-    }
-    .category-block {
-      background: var(--cat-tint);
-      border: 2px solid var(--cat-color);
-      border-radius: 10px;
-      padding: 10px 10px 12px;
-    }
-    .category-header {
-      display: flex; align-items: center; gap: 8px;
-      margin-bottom: 10px;
-    }
-    .category-number {
-      width: 24px; height: 24px; border-radius: 50%;
-      background: var(--cat-color); color: #fff;
-      font-size: 11px; font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .category-header h3 {
-      margin: 0; font-size: 0.68rem; font-weight: 800;
-      letter-spacing: 0.04em; color: var(--cat-color);
-    }
-    .category-tools {
-      display: flex; flex-wrap: wrap; gap: 8px;
-    }
-    .tool-card {
-      display: flex; flex-direction: column; align-items: center;
-      width: 78px;
-      padding: 8px 4px;
-      background: #fff;
-      border: 1px solid rgba(0,0,0,.08);
-      border-radius: 8px;
+      font-weight: 700;
       text-decoration: none;
-      color: var(--text);
-      transition: transform .15s, box-shadow .15s, border-color .15s;
-    }
-    .tool-card:hover, .tool-card:focus-visible {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 14px rgba(0,0,0,.12);
-      border-color: var(--cat-color);
-      outline: none;
-    }
-    .tool-card img {
-      width: 44px; height: 44px;
-      object-fit: contain;
-      margin-bottom: 4px;
-    }
-    .tool-label {
-      font-size: 10px;
-      text-align: center;
-      line-height: 1.2;
-      font-weight: 600;
-    }
-    .sidebar { display: flex; flex-direction: column; gap: 12px; }
-    .sidebar-card {
-      background: var(--card);
-      border-radius: 10px;
-      padding: 14px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.07);
-      border: 1px solid rgba(0,0,0,.05);
-    }
-    .welcome-card {
-      background: linear-gradient(145deg, #2B579A, #1e4080);
-      color: #fff;
-    }
-    .welcome-card h3 { margin: 0 0 8px; font-size: 1rem; }
-    .welcome-card p { margin: 0 0 12px; font-size: 0.8rem; line-height: 1.45; opacity: .95; }
-    .btn-start {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 8px 14px;
-      background: #fff; color: var(--word-blue);
-      border: none; border-radius: 6px;
-      font-weight: 700; font-size: 0.85rem;
-      text-decoration: none;
-      font-family: inherit;
-      cursor: pointer;
-    }
-    .sidebar-card h3 { margin: 0 0 10px; font-size: 0.95rem; }
-    .progress-bar {
-      height: 8px; background: #e8ecf0;
-      border-radius: 4px; overflow: hidden;
-      margin-bottom: 10px;
-    }
-    .progress-bar span {
-      display: block; height: 100%; width: 35%;
-      background: #0f7b3f; border-radius: 4px;
-    }
-    .progress-list { list-style: none; margin: 0; padding: 0; font-size: 0.78rem; }
-    .progress-list li {
-      display: flex; align-items: center; gap: 6px;
-      padding: 5px 0; border-bottom: 1px solid #f0f0f0;
-      color: var(--muted);
-    }
-    .progress-list li.done { color: #0f7b3f; font-weight: 600; }
-    .progress-list li.current { color: var(--word-blue); font-weight: 600; }
-    .progress-list a { text-decoration: none; color: inherit; }
-    .btn-lsc {
-      display: block; width: 100%;
-      padding: 10px; text-align: center;
-      background: var(--word-blue); color: #fff;
-      border: none; border-radius: 6px;
-      font-weight: 600; font-size: 0.85rem;
-      font-family: inherit;
-      cursor: pointer;
+      border-bottom: 3px solid var(--word-blue);
     }
 
+    /* CABECERA */
     .detail-header {
       background: linear-gradient(135deg, var(--word-blue), #1e3f6e);
       color: #fff;
@@ -260,104 +86,143 @@
       padding: 3px 8px; border-radius: 4px;
       font-size: 11px; font-weight: 600;
     }
+
+    /* CONTENIDO */
     .detail-body {
       max-width: 800px; margin: 0 auto;
       padding: 16px 16px 24px;
     }
-    .ribbon-path, .block, .extra-zone {
+    .block {
       background: #fff;
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 14px 16px;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
-    .ribbon-path { border-left: 4px solid var(--word-blue); }
-    .block h2, .extra-zone h2 { margin: 0 0 8px; font-size: 1rem; color: var(--word-blue); }
-    .block p, .block li { line-height: 1.55; }
-    .block ol { margin: 0; padding-left: 1.25rem; }
-    .before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    @media (max-width: 500px) { .before-after { grid-template-columns: 1fr; } }
-    .ba-card { padding: 10px; border-radius: 6px; font-size: 13px; }
-    .ba-card.before { background: #fff4ce; }
-    .ba-card.after { background: #dff6dd; }
-    .ba-card h3 { margin: 0 0 4px; font-size: 11px; text-transform: uppercase; }
-    .placeholder-box {
-      min-height: 120px;
-      border: 2px dashed #c8c6c4;
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      text-align: center; color: var(--muted);
-      font-size: 13px; padding: 12px;
-      background: #faf9f8;
-    }
-    .placeholder-box.lsc { border-color: var(--word-blue); background: #f0f6fc; }
-    .extra-zone {
-      border-style: dashed;
-      border-color: var(--word-blue);
-      background: #fafcfe;
-      min-height: 80px;
-    }
-    .extra-zone p.hint { margin: 0; font-size: 0.85rem; color: var(--muted); }
+    .block h2 { margin: 0 0 12px; font-size: 1rem; color: var(--word-blue); }
 
-    .tool-tabs {
+    /* VIDEO - botón YouTube */
+    .video-btn-wrap {
       display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-      padding: 8px 12px;
-      background: #fff;
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 20;
-    }
-    .tool-tabs a {
-      padding: 6px 10px;
-      font-size: 11px;
-      text-decoration: none;
-      border-radius: 4px;
-      color: var(--muted);
-      border: 1px solid transparent;
-    }
-    .tool-tabs a:hover { background: var(--ribbon-bg); color: var(--text); }
-    .tool-tabs a.active {
-      background: var(--word-blue);
-      color: #fff;
-      font-weight: 600;
-    }
-
-    .detail-nav-bar {
-      position: fixed;
-      bottom: var(--nav-h);
-      left: 0; right: 0;
-      background: #fff;
-      border-top: 1px solid var(--border);
-      padding: 8px 12px;
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      z-index: 99;
-      min-height: var(--tool-nav-h);
+      flex-direction: column;
       align-items: center;
+      justify-content: center;
+      background: #f0f4fa;
+      border: 2px solid var(--word-blue);
+      border-radius: 12px;
+      padding: 32px 20px;
+      gap: 14px;
+      text-align: center;
     }
-    .detail-nav-bar a, .detail-nav-bar span.disabled {
-      padding: 8px 14px;
-      border-radius: 6px;
-      font-weight: 600;
-      font-size: 13px;
-      text-decoration: none;
-    }
-    .detail-nav-bar a {
-      background: var(--word-blue);
+    .video-btn-wrap p { margin: 0; color: var(--muted); font-size: 0.88rem; }
+    .btn-youtube {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #FF0000;
       color: #fff;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-family: inherit;
+      box-shadow: 0 4px 12px rgba(255,0,0,.3);
+      transition: background .2s, transform .15s;
     }
-    .detail-nav-bar a.btn-gray { background: #605e5c; }
-    .detail-nav-bar span.disabled {
-      background: #e0e0e0;
-      color: #888;
-      cursor: not-allowed;
-    }
+    .btn-youtube:hover { background: #cc0000; transform: translateY(-2px); }
 
+    /* ACTIVIDAD */
+    .extra-zone {
+      background: #fff;
+      border: 1px solid var(--word-blue);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+    }
+    .extra-zone h2 { margin: 0 0 8px; font-size: 1rem; color: var(--word-blue); }
+    .extra-zone p.hint { margin: 0 0 6px; font-size: 0.85rem; color: var(--muted); }
+
+    .game-card {
+      background: #fff;
+      border: 1px solid #c6c8cc;
+      border-radius: 14px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.08);
+      overflow: hidden;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .game-area {
+      display: grid;
+      grid-template-columns: 1fr 180px;
+      gap: 14px;
+      padding: 16px;
+    }
+    @media (max-width: 540px) { .game-area { grid-template-columns: 1fr; } }
+    .game-doc {
+      border: 1px solid #d7d9dc;
+      background: #fff;
+      border-radius: 10px;
+      padding: 16px;
+      min-height: 160px;
+    }
+    .game-doc p { margin: 0 0 10px; color: #333; line-height: 1.55; font-size: 0.95rem; }
+    .text-option {
+      display: inline;
+      color: #1f3f72;
+      cursor: pointer;
+      font-weight: 600;
+      text-decoration: underline;
+      transition: color .2s, background .2s;
+    }
+    .text-option + .text-option::before { content: " · "; color: #999; margin: 0 4px; }
+    .text-option:hover { color: #174a97; }
+    .text-option.selected { color: #174a97; background: #d8eaff; border-radius: 4px; padding: 0 3px; }
+    .text-option.hidden { visibility: hidden; pointer-events: none; }
+
+    .game-sidebar {
+      background: #f7f9fb;
+      border: 1px solid #d7d9dc;
+      border-radius: 10px;
+      padding: 14px;
+      display: flex; flex-direction: column; gap: 12px;
+      min-height: 160px;
+    }
+    .game-sidebar h3 { margin: 0; font-size: 0.95rem; color: #1d1d1d; }
+    .paste-zone {
+      min-height: 80px;
+      border: 2px dashed #a2a6ab;
+      border-radius: 10px;
+      background: #fff;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; color: #616161;
+      padding: 12px; font-size: 0.95rem;
+    }
+    .game-footer {
+      border-top: 1px solid #d2d4d7;
+      padding: 12px 16px 16px;
+      display: flex; flex-wrap: wrap; gap: 12px;
+      align-items: center; justify-content: space-between;
+      background: #fbfcfd;
+    }
+    .game-controls { display: flex; gap: 10px; flex-wrap: wrap; }
+    .boton {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 5px; padding: 10px;
+      width: 90px; height: 70px;
+      border: 1px solid #ccc;
+      cursor: pointer; border-radius: 6px;
+      font-weight: bold; background: white;
+      font-family: inherit; font-size: 0.82rem;
+    }
+    .boton:hover { background: #f3f3f3; }
+    .boton.copiar { border-color: #27ae60; }
+    .boton.pegar  { border-color: #3498db; }
+    .game-score { font-size: 1rem; color: #1d1d1d; font-weight: 700; }
+    .game-message { margin: 8px 16px 0; color: #555; font-size: 0.92rem; min-height: 1.2em; padding-bottom: 10px; }
+
+    /* NAV INFERIOR */
     .bottom-nav {
       position: fixed; bottom: 0; left: 0; right: 0;
       height: var(--nav-h);
@@ -366,54 +231,37 @@
       z-index: 100;
       box-shadow: 0 -2px 12px rgba(0,0,0,.2);
     }
-    .bottom-nav a, .bottom-nav button {
+    .bottom-nav a {
       flex: 1; max-width: 130px;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       gap: 2px;
-      border: none; background: transparent;
       color: rgba(255,255,255,.8);
       text-decoration: none;
       font-size: 0.62rem; font-weight: 500;
       padding: 4px;
-      font-family: inherit;
-      cursor: pointer;
     }
-    .bottom-nav a:hover, .bottom-nav button:hover { color: #fff; background: rgba(255,255,255,.08); }
-    .bottom-nav a.active { background: rgba(255,255,255,.15); color: #fff; font-weight: 700; }
+    .bottom-nav a:hover { color: #fff; background: rgba(255,255,255,.08); }
     .bottom-nav .nav-icon { font-size: 1.15rem; }
-</style>
+  </style>
 </head>
-<body data-tool-id="2" data-tool-slug="copiar">
+<body>
 
+  <!-- BARRA SUPERIOR -->
   <header class="title-bar">
     <a class="word-logo" href="../index.html" title="Inicio">W</a>
     <h1><a class="title-link" href="../index.html">Copiar — Word Básico</a></h1>
   </header>
 
-  <nav aria-label="Pestañas Word">
+  <!-- SOLO PESTAÑA INICIO -->
+  <nav aria-label="Menú Word">
     <ul class="ribbon-tabs">
-      <li class="active"><a href="../index.html">Inicio</a></li>
-      <li><button type="button">Insertar</button></li>
-      <li><button type="button">Diseño</button></li>
-      <li><button type="button">Disposición</button></li>
-      <li><button type="button">Referencias</button></li>
-      <li><button type="button">Revisar</button></li>
-      <li><button type="button">Vista</button></li>
+      <li><a href="../index.html">Inicio</a></li>
     </ul>
   </nav>
-  <div class="ribbon-fake" aria-hidden="true">
-    <span>Portapapeles</span><span>Fuente</span><span>Párrafo</span><span>Estilos</span>
-  </div>
-<nav class="tool-tabs" aria-label="Pestañas de esta herramienta">
-    <a href="#leccion" class="active">📖 Lección</a>
-    <a href="#lsc">🤟 LSC</a>
-    <a href="#captura">🖼️ Captura Word</a>
-    <a href="#ejercicios">✏️ Ejercicios</a>
-    <a href="#extra">➕ Actividades</a>
-  </nav>
 
-  <header class="detail-header" id="leccion">
+  <!-- CABECERA -->
+  <header class="detail-header">
     <img src="../icons/Copiar.png" alt="Copiar" width="64" height="64" />
     <div>
       <span class="detail-cat">Portapapeles</span>
@@ -422,78 +270,109 @@
   </header>
 
   <div class="detail-body">
-    <div class="ribbon-path"><strong>Ruta en la cinta:</strong> Inicio → Portapapeles → Copiar</div>
 
-    <article class="block">
-      <h2>¿Qué significa?</h2>
-      <p>Copia la selección sin borrarla del documento.</p>
-    </article>
-
-    <article class="block">
-      <h2>Antes / Después</h2>
-      <div class="before-after">
-        <div class="ba-card before"><h3>Antes</h3><p>Solo hay una copia en el documento.</p></div>
-        <div class="ba-card after"><h3>Después</h3><p>Sigue en su sitio y queda en el portapapeles.</p></div>
+    <!-- VIDEO -->
+    <div class="block">
+      <h2>🎥 Video explicativo</h2>
+      <div class="video-btn-wrap">
+        <p>Haz clic para ver el video explicativo sobre <strong>Copiar en Word</strong></p>
+        <a class="btn-youtube" href=<iframe width="560" height="315" src="https://www.youtube.com/embed/P8gjA0ouchI?si=bYOVhCQ5M6DIpkrT&amp;start=29" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> target="_blank">
+          &#9654; Ver video en YouTube
+        </a>
+        <p>Se abrirá en una pestaña nueva</p>
       </div>
-    </article>
+    </div>
 
-    <article class="block">
-      <h2>Pasos para usarlo</h2>
-      <ol><li>Selecciona el contenido.</li>
-<li>Clic en Copiar o Ctrl + C.</li>
-<li>Coloca el cursor en otro lugar.</li>
-<li>Usa Pegar.</li></ol>
-    </article>
+    <!-- ACTIVIDAD -->
+    <div class="extra-zone">
+      <h2>✏️ Actividad</h2>
+      <p class="hint"><strong>Instrucción:</strong> Selecciona <strong>Microsoft Word</strong>, cópialo y pégalo en la zona de la derecha.</p>
 
-    <article class="block" id="lsc">
-      <h2>Referente en LSC</h2>
-      <div class="placeholder-box lsc">Espacio para foto o video de la seña en Lengua de Señas Colombiana (LSC).</div>
-    </article>
+      <div class="game-card">
+        <div class="game-area">
+          <div class="game-doc" id="copy-game-doc">
+            <p>Selecciona el texto correcto y usa <strong>📋 Copiar</strong>. Luego usa <strong>📥 Pegar</strong>.</p>
+            <p>
+              <span class="text-option" data-value="Microsoft Word" onclick="selectCopyOption(this)">Microsoft Word</span>
+              <span class="text-option" data-value="Word Básico"    onclick="selectCopyOption(this)">Word Básico</span>
+              <span class="text-option" data-value="Portapapeles"   onclick="selectCopyOption(this)">Portapapeles</span>
+              <span class="text-option" data-value="Inicio"         onclick="selectCopyOption(this)">Inicio</span>
+              <span class="text-option" data-value="Copiar"         onclick="selectCopyOption(this)">Copiar</span>
+            </p>
+          </div>
+          <div class="game-sidebar">
+            <h3>Zona de pegado</h3>
+            <div id="copy-paste-zone" class="paste-zone">Aquí debes pegar el texto copiado.</div>
+          </div>
+        </div>
+        <div class="game-footer">
+          <div class="game-controls">
+            <button class="boton copiar" onclick="gameCopy()">📋 Copiar</button>
+            <button class="boton pegar"  onclick="gamePasteCopy()">📥 Pegar</button>
+            <button class="boton"        onclick="gameResetCopy()">🔄 Reiniciar</button>
+          </div>
+          <div class="game-score" id="copy-game-score">Puntos: 0</div>
+        </div>
+        <p class="game-message" id="copy-game-message"></p>
+      </div>
+    </div>
 
-    <article class="block" id="captura">
-      <h2>Captura en Word 2021</h2>
-      <div class="placeholder-box">Espacio para captura de pantalla real de Microsoft Word 2021.</div>
-    </article>
-
-    <section class="extra-zone" id="ejercicios">
-      <h2>Ejercicios</h2>
-      <p class="hint">Zona lista para agregar actividades de esta herramienta más adelante.</p>
-    </section>
-
-    <section class="extra-zone" id="extra">
-      <h2>Actividades extra</h2>
-      <p class="hint">Puedes editar solo este archivo (<code>02-copiar.html</code>) sin tocar las demás lecciones.</p>
-    </section>
   </div>
 
-  <nav class="detail-nav-bar" aria-label="Navegación entre herramientas">
-    <a href="01-cortar.html">◀ Cortar</a>
-    <a href="../index.html" class="btn-gray">🏠 Ver todas</a>
-    <a href="03-pegar.html">Pegar ▶</a>
-  </nav>
-
-
+  <!-- NAV INFERIOR -->
   <nav class="bottom-nav" aria-label="Menú principal">
     <a href="../index.html"><span class="nav-icon">🏠</span>Inicio</a>
-    <a href="../index.html#categories-grid" class="active"><span class="nav-icon">📚</span>Lecciones</a>
-    <a href="#ejercicios"><span class="nav-icon">✏️</span>Ejercicios</a>
-    <a href="#evaluaciones"><span class="nav-icon">📋</span>Evaluaciones</a>
-    <a href="#ayuda"><span class="nav-icon">❓</span>Ayuda</a>
   </nav>
 
   <script>
-    /* Página: 02-copiar.html | Herramienta: Copiar */
-    (function () {
-      var tabs = document.querySelectorAll(".tool-tabs a");
-      var hash = location.hash || "#leccion";
-      tabs.forEach(function (a) {
-        a.classList.toggle("active", a.getAttribute("href") === hash);
-        a.addEventListener("click", function () {
-          tabs.forEach(function (t) { t.classList.remove("active"); });
-          a.classList.add("active");
-        });
+    var copyState = { copied: false, current: null, score: 0 };
+
+    function setCopyMessage(msg, color) {
+      var el = document.getElementById('copy-game-message');
+      if (el) { el.textContent = msg; el.style.color = color; }
+    }
+
+    function selectCopyOption(el) {
+      document.querySelectorAll('#copy-game-doc .text-option').forEach(function(o) { o.classList.remove('selected'); });
+      el.classList.add('selected');
+      copyState.current = el.getAttribute('data-value');
+      setCopyMessage('Seleccionaste: ' + copyState.current + '. Ahora copia.', '#1b672b');
+    }
+
+    function gameCopy() {
+      if (!copyState.current) { setCopyMessage('❗ Selecciona primero una palabra para copiar.', 'red'); return; }
+      copyState.copied = true;
+      setCopyMessage('📋 Copiaste: ' + copyState.current + '. Ahora pega en la zona de la derecha.', '#1b672b');
+    }
+
+    function gamePasteCopy() {
+      var zone = document.getElementById('copy-paste-zone');
+      if (!copyState.copied) { setCopyMessage('❗ Primero copia el texto.', 'red'); return; }
+      zone.textContent    = copyState.current;
+      zone.style.color    = copyState.current === 'Microsoft Word' ? '#174a97' : '#a02f2f';
+      zone.style.fontWeight = '700';
+      if (copyState.current === 'Microsoft Word') {
+        copyState.score += 1;
+        document.getElementById('copy-game-score').textContent = 'Puntos: ' + copyState.score;
+        setCopyMessage('🎉 ¡Correcto! Ganaste 1 punto.', '#1b672b');
+        try { localStorage.setItem('score-tool-02-copiar', '1'); } catch(e) {}
+      } else {
+        setCopyMessage('❌ Eso no es Microsoft Word. Inténtalo de nuevo.', 'red');
+      }
+      copyState.copied = false;
+    }
+
+    function gameResetCopy() {
+      document.querySelectorAll('#copy-game-doc .text-option').forEach(function(o) {
+        o.classList.remove('selected', 'hidden');
       });
-    })();
+      copyState.copied = false; copyState.current = null;
+      var zone = document.getElementById('copy-paste-zone');
+      zone.textContent = 'Aquí debes pegar el texto copiado.';
+      zone.style.color = '#616161'; zone.style.fontWeight = 'normal';
+      setCopyMessage('Juego reiniciado. Selecciona Microsoft Word y cópialo.', '#222');
+    }
   </script>
+
 </body>
 </html>

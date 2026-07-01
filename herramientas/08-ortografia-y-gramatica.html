@@ -9,7 +9,6 @@
     :root {
       --word-blue: #2B579A;
       --word-dark: #0b2d5c;
-      --ribbon-bg: #f3f2f1;
       --page-bg: #eef2f6;
       --card: #fff;
       --text: #1a1a1a;
@@ -25,11 +24,10 @@
       font-family: var(--font);
       color: var(--text);
       background: var(--page-bg);
-      padding-bottom: calc(var(--nav-h) + var(--tool-nav-h));
+      padding-bottom: calc(var(--nav-h) + var(--tool-nav-h) + 10px);
     }
-    a { color: inherit; }
-    img { display: block; max-width: 100%; }
 
+    /* ── BARRA SUPERIOR ── */
     .title-bar {
       background: var(--word-blue);
       color: #fff;
@@ -53,195 +51,24 @@
     .title-bar a.title-link { color: #fff; text-decoration: none; }
     .title-bar a.title-link:hover { text-decoration: underline; }
 
+    /* Solo pestaña Inicio */
     .ribbon-tabs {
-      display: flex; flex-wrap: wrap;
+      display: flex;
       list-style: none; margin: 0; padding: 0 6px;
       background: #fff;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 2px solid var(--word-blue);
     }
-    .ribbon-tabs a, .ribbon-tabs button {
+    .ribbon-tabs li a {
       display: block;
-      border: none; background: transparent;
-      padding: 9px 12px; font-size: 12px; color: var(--text);
-      border-bottom: 2px solid transparent;
-      text-decoration: none;
-      font-family: inherit;
-      cursor: pointer;
-    }
-    .ribbon-tabs li.active a,
-    .ribbon-tabs li.active button {
-      background: var(--ribbon-bg);
-      border-bottom-color: var(--word-blue);
-      font-weight: 600;
-    }
-    .ribbon-fake {
-      background: var(--ribbon-bg);
-      border-bottom: 1px solid var(--border);
-      padding: 6px 12px;
-      font-size: 10px;
-      color: var(--muted);
-      display: flex; gap: 16px; flex-wrap: wrap;
-    }
-    .ribbon-fake span { padding: 2px 6px; background: #fff; border-radius: 3px; border: 1px solid #e0e0e0; }
-
-    .platform-shell {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 14px 16px 20px;
-      display: grid;
-      grid-template-columns: 1fr 270px;
-      gap: 16px;
-      align-items: start;
-    }
-    @media (max-width: 960px) {
-      .platform-shell { grid-template-columns: 1fr; }
-    }
-    .hero {
-      grid-column: 1 / -1;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .hero-text h2 {
-      margin: 0 0 4px;
-      font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+      padding: 9px 16px;
+      font-size: 13px;
       color: var(--word-blue);
-      display: flex; align-items: center; gap: 8px;
-    }
-    .hero-text .w-icon {
-      width: 32px; height: 32px;
-      background: linear-gradient(135deg, #2B579A, #41a5ee);
-      color: #fff; font-weight: 800;
-      display: flex; align-items: center; justify-content: center;
-      border-radius: 5px; font-size: 18px;
-    }
-    .hero-text p { margin: 0; color: var(--muted); font-size: 0.9rem; }
-    .main-panel {
-      background: var(--card);
-      border-radius: 12px;
-      padding: 16px;
-      box-shadow: 0 2px 10px rgba(0,0,0,.08);
-      border: 1px solid rgba(0,0,0,.06);
-    }
-    .main-panel > p.hint-line {
-      margin: 0 0 14px;
-      font-size: 0.88rem;
-      color: var(--muted);
-    }
-    .categories-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-    @media (max-width: 640px) {
-      .categories-grid { grid-template-columns: 1fr; }
-    }
-    .category-block {
-      background: var(--cat-tint);
-      border: 2px solid var(--cat-color);
-      border-radius: 10px;
-      padding: 10px 10px 12px;
-    }
-    .category-header {
-      display: flex; align-items: center; gap: 8px;
-      margin-bottom: 10px;
-    }
-    .category-number {
-      width: 24px; height: 24px; border-radius: 50%;
-      background: var(--cat-color); color: #fff;
-      font-size: 11px; font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .category-header h3 {
-      margin: 0; font-size: 0.68rem; font-weight: 800;
-      letter-spacing: 0.04em; color: var(--cat-color);
-    }
-    .category-tools {
-      display: flex; flex-wrap: wrap; gap: 8px;
-    }
-    .tool-card {
-      display: flex; flex-direction: column; align-items: center;
-      width: 78px;
-      padding: 8px 4px;
-      background: #fff;
-      border: 1px solid rgba(0,0,0,.08);
-      border-radius: 8px;
+      font-weight: 700;
       text-decoration: none;
-      color: var(--text);
-      transition: transform .15s, box-shadow .15s, border-color .15s;
-    }
-    .tool-card:hover, .tool-card:focus-visible {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 14px rgba(0,0,0,.12);
-      border-color: var(--cat-color);
-      outline: none;
-    }
-    .tool-card img {
-      width: 44px; height: 44px;
-      object-fit: contain;
-      margin-bottom: 4px;
-    }
-    .tool-label {
-      font-size: 10px;
-      text-align: center;
-      line-height: 1.2;
-      font-weight: 600;
-    }
-    .sidebar { display: flex; flex-direction: column; gap: 12px; }
-    .sidebar-card {
-      background: var(--card);
-      border-radius: 10px;
-      padding: 14px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.07);
-      border: 1px solid rgba(0,0,0,.05);
-    }
-    .welcome-card {
-      background: linear-gradient(145deg, #2B579A, #1e4080);
-      color: #fff;
-    }
-    .welcome-card h3 { margin: 0 0 8px; font-size: 1rem; }
-    .welcome-card p { margin: 0 0 12px; font-size: 0.8rem; line-height: 1.45; opacity: .95; }
-    .btn-start {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 8px 14px;
-      background: #fff; color: var(--word-blue);
-      border: none; border-radius: 6px;
-      font-weight: 700; font-size: 0.85rem;
-      text-decoration: none;
-      font-family: inherit;
-      cursor: pointer;
-    }
-    .sidebar-card h3 { margin: 0 0 10px; font-size: 0.95rem; }
-    .progress-bar {
-      height: 8px; background: #e8ecf0;
-      border-radius: 4px; overflow: hidden;
-      margin-bottom: 10px;
-    }
-    .progress-bar span {
-      display: block; height: 100%; width: 35%;
-      background: #0f7b3f; border-radius: 4px;
-    }
-    .progress-list { list-style: none; margin: 0; padding: 0; font-size: 0.78rem; }
-    .progress-list li {
-      display: flex; align-items: center; gap: 6px;
-      padding: 5px 0; border-bottom: 1px solid #f0f0f0;
-      color: var(--muted);
-    }
-    .progress-list li.done { color: #0f7b3f; font-weight: 600; }
-    .progress-list li.current { color: var(--word-blue); font-weight: 600; }
-    .progress-list a { text-decoration: none; color: inherit; }
-    .btn-lsc {
-      display: block; width: 100%;
-      padding: 10px; text-align: center;
-      background: var(--word-blue); color: #fff;
-      border: none; border-radius: 6px;
-      font-weight: 600; font-size: 0.85rem;
-      font-family: inherit;
-      cursor: pointer;
+      border-bottom: 3px solid var(--word-blue);
     }
 
+    /* ── CABECERA DE LA HERRAMIENTA ── */
     .detail-header {
       background: linear-gradient(135deg, var(--word-blue), #1e3f6e);
       color: #fff;
@@ -260,71 +87,177 @@
       padding: 3px 8px; border-radius: 4px;
       font-size: 11px; font-weight: 600;
     }
+
+    /* ── CONTENIDO PRINCIPAL ── */
     .detail-body {
       max-width: 800px; margin: 0 auto;
       padding: 16px 16px 24px;
     }
-    .ribbon-path, .block, .extra-zone {
+
+    .block {
       background: #fff;
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 14px 16px;
+      margin-bottom: 16px;
+    }
+    .block h2 {
+      margin: 0 0 12px;
+      font-size: 1rem;
+      color: var(--word-blue);
+    }
+
+    /* ── VIDEO ── */
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: 8px;
+      background: #000;
+    }
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    /* ── ACTIVIDAD: JUEGO ORTOGRAFÍA Y GRAMÁTICA ── */
+    .extra-zone {
+      background: #fff;
+      border: 1px solid var(--word-blue);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+    }
+    .extra-zone h2 { margin: 0 0 8px; font-size: 1rem; color: var(--word-blue); }
+    .extra-zone p.hint { margin: 0 0 6px; font-size: 0.85rem; color: var(--muted); }
+
+    .review-card {
+      background: #fff;
+      border: 1px solid #d7e6f5;
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 8px 24px rgba(43,87,154,.08);
+      margin-top: 10px;
+      max-width: 760px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .review-card-top {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 12px; flex-wrap: wrap;
+    }
+    .review-card-top h3 { margin: 0; color: var(--word-blue); font-size: 1.05rem; }
+    .review-card-top p { margin: 0; font-size: 0.92rem; color: var(--muted); }
+    .review-score { color: var(--word-blue); font-weight: 700; }
+
+    .review-box {
+      background: #f4f8ff;
+      border: 1px solid #cfd8e5;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 14px;
+      color: #1a1a1a;
+    }
+    .review-text { font-size: 0.95rem; line-height: 1.7; }
+    .review-highlight {
+      background: rgba(43,87,154,.08);
+      color: #0f407e;
+      border: none;
+      padding: 2px 4px;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: underline;
+      font-weight: 700;
+      font-family: inherit;
+    }
+    .review-highlight.selected { background: rgba(43,87,154,.16); }
+
+    .review-issues {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
       margin-bottom: 12px;
     }
-    .ribbon-path { border-left: 4px solid var(--word-blue); }
-    .block h2, .extra-zone h2 { margin: 0 0 8px; font-size: 1rem; color: var(--word-blue); }
-    .block p, .block li { line-height: 1.55; }
-    .block ol { margin: 0; padding-left: 1.25rem; }
-    .before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    @media (max-width: 500px) { .before-after { grid-template-columns: 1fr; } }
-    .ba-card { padding: 10px; border-radius: 6px; font-size: 13px; }
-    .ba-card.before { background: #fff4ce; }
-    .ba-card.after { background: #dff6dd; }
-    .ba-card h3 { margin: 0 0 4px; font-size: 11px; text-transform: uppercase; }
-    .placeholder-box {
-      min-height: 120px;
-      border: 2px dashed #c8c6c4;
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      text-align: center; color: var(--muted);
-      font-size: 13px; padding: 12px;
-      background: #faf9f8;
-    }
-    .placeholder-box.lsc { border-color: var(--word-blue); background: #f0f6fc; }
-    .extra-zone {
-      border-style: dashed;
-      border-color: var(--word-blue);
-      background: #fafcfe;
-      min-height: 80px;
-    }
-    .extra-zone p.hint { margin: 0; font-size: 0.85rem; color: var(--muted); }
-
-    .tool-tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
+    .issue-chip {
+      border: 1px solid #cfd8e5;
+      background: #eef5ff;
+      color: var(--word-dark);
+      border-radius: 999px;
       padding: 8px 12px;
+      cursor: pointer;
+      font-weight: 700;
+      font-family: inherit;
+      font-size: 0.85rem;
+    }
+    .issue-chip.selected {
+      background: #d7e6ff;
+      border-color: #2b579a;
+      color: #0d305d;
+    }
+
+    .review-suggestions {
+      border: 1px solid #cfd8e5;
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 14px;
+      background: #fcfdff;
+    }
+    .suggestion-header {
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--word-dark);
+    }
+    .suggestion-list {
+      display: grid;
+      gap: 10px;
+    }
+    .suggestion-item {
+      border: 1px solid #cbd4e7;
       background: #fff;
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 20;
+      border-radius: 10px;
+      padding: 10px 12px;
+      cursor: pointer;
+      color: var(--word-dark);
+      font-weight: 600;
+      font-family: inherit;
+      transition: background .15s, border-color .15s;
     }
-    .tool-tabs a {
-      padding: 6px 10px;
-      font-size: 11px;
-      text-decoration: none;
-      border-radius: 4px;
-      color: var(--muted);
-      border: 1px solid transparent;
+    .suggestion-item:hover { background: #eef5ff; }
+    .suggestion-item.selected {
+      border-color: #2b579a;
+      background: #d7e6ff;
     }
-    .tool-tabs a:hover { background: var(--ribbon-bg); color: var(--text); }
-    .tool-tabs a.active {
+
+    .review-controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .review-btn {
+      padding: 10px 14px;
       background: var(--word-blue);
       color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      font-family: inherit;
+      cursor: pointer;
+    }
+    .review-btn.gray { background: #fff; color: var(--word-blue); border: 1px solid #d7e6ff; }
+    .review-feedback {
+      min-height: 24px;
       font-weight: 600;
+      color: #555;
+      font-size: 0.95rem;
     }
 
+    /* ── NAV ENTRE HERRAMIENTAS ── */
     .detail-nav-bar {
       position: fixed;
       bottom: var(--nav-h);
@@ -358,6 +291,7 @@
       cursor: not-allowed;
     }
 
+    /* ── NAV INFERIOR ── */
     .bottom-nav {
       position: fixed; bottom: 0; left: 0; right: 0;
       height: var(--nav-h);
@@ -366,54 +300,37 @@
       z-index: 100;
       box-shadow: 0 -2px 12px rgba(0,0,0,.2);
     }
-    .bottom-nav a, .bottom-nav button {
+    .bottom-nav a {
       flex: 1; max-width: 130px;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       gap: 2px;
-      border: none; background: transparent;
       color: rgba(255,255,255,.8);
       text-decoration: none;
       font-size: 0.62rem; font-weight: 500;
       padding: 4px;
-      font-family: inherit;
-      cursor: pointer;
     }
-    .bottom-nav a:hover, .bottom-nav button:hover { color: #fff; background: rgba(255,255,255,.08); }
-    .bottom-nav a.active { background: rgba(255,255,255,.15); color: #fff; font-weight: 700; }
+    .bottom-nav a:hover { color: #fff; background: rgba(255,255,255,.08); }
     .bottom-nav .nav-icon { font-size: 1.15rem; }
-</style>
+  </style>
 </head>
-<body data-tool-id="8" data-tool-slug="ortografia-y-gramatica">
+<body>
 
+  <!-- BARRA SUPERIOR: solo logo + título -->
   <header class="title-bar">
     <a class="word-logo" href="../index.html" title="Inicio">W</a>
     <h1><a class="title-link" href="../index.html">Ortografía y gramática — Word Básico</a></h1>
   </header>
 
-  <nav aria-label="Pestañas Word">
+  <!-- SOLO PESTAÑA INICIO -->
+  <nav aria-label="Menú Word">
     <ul class="ribbon-tabs">
-      <li class="active"><a href="../index.html">Inicio</a></li>
-      <li><button type="button">Insertar</button></li>
-      <li><button type="button">Diseño</button></li>
-      <li><button type="button">Disposición</button></li>
-      <li><button type="button">Referencias</button></li>
-      <li><button type="button">Revisar</button></li>
-      <li><button type="button">Vista</button></li>
+      <li><a href="../index.html">Inicio</a></li>
     </ul>
   </nav>
-  <div class="ribbon-fake" aria-hidden="true">
-    <span>Portapapeles</span><span>Fuente</span><span>Párrafo</span><span>Estilos</span>
-  </div>
-<nav class="tool-tabs" aria-label="Pestañas de esta herramienta">
-    <a href="#leccion" class="active">📖 Lección</a>
-    <a href="#lsc">🤟 LSC</a>
-    <a href="#captura">🖼️ Captura Word</a>
-    <a href="#ejercicios">✏️ Ejercicios</a>
-    <a href="#extra">➕ Actividades</a>
-  </nav>
 
-  <header class="detail-header" id="leccion">
+  <!-- CABECERA DE LA HERRAMIENTA -->
+  <header class="detail-header">
     <img src="../icons/Ortografia.png" alt="Ortografía y gramática" width="64" height="64" />
     <div>
       <span class="detail-cat">Edición básica</span>
@@ -422,78 +339,221 @@
   </header>
 
   <div class="detail-body">
-    <div class="ribbon-path"><strong>Ruta en la cinta:</strong> Revisar → Ortografía</div>
 
-    <article class="block">
-      <h2>¿Qué significa?</h2>
-      <p>Revisa errores de escritura.</p>
-    </article>
+    <!-- VIDEO DE YOUTUBE (mismo video usado en Cortar y Rehacer) -->
+    <div class="block">
+      <h2>🎥 Video explicativo</h2>
+      <div class="video-wrapper">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/P9iN27fH-6U?si=vY5R1M0Qna5JojmU&amp;start=29" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>      </div>
+    </div>
 
-    <article class="block">
-      <h2>Antes / Después</h2>
-      <div class="before-after">
-        <div class="ba-card before"><h3>Antes</h3><p>Puede haber palabras subrayadas.</p></div>
-        <div class="ba-card after"><h3>Después</h3><p>El texto queda corregido.</p></div>
+    <!-- ACTIVIDAD: JUEGO ORTOGRAFÍA Y GRAMÁTICA -->
+    <div class="extra-zone">
+      <h2>✏️ Actividad</h2>
+      <p class="hint"><strong>Instrucción:</strong> Selecciona cada palabra subrayada, elige la mejor sugerencia y acepta la corrección.</p>
+
+      <div class="review-card">
+        <div class="review-card-top">
+          <div>
+            <h3>Juego Ortografía y gramática</h3>
+            <p>Selecciona cada subrayado y elige la mejor sugerencia.</p>
+          </div>
+          <div class="review-score">Puntos: <span id="review-score">0</span></div>
+        </div>
+
+        <div class="review-box">
+          <div class="review-text" id="review-paragraph"></div>
+        </div>
+
+        <div class="review-issues" id="review-issues"></div>
+
+        <div class="review-suggestions">
+          <div class="suggestion-header">Sugerencias</div>
+          <div id="suggestion-list" class="suggestion-list"></div>
+        </div>
+
+        <div class="review-controls">
+          <button class="review-btn" onclick="applyGrammarCorrection()">✅ Aceptar</button>
+          <button class="review-btn gray" onclick="ignoreIssue()">🚫 Ignorar</button>
+          <button class="review-btn gray" onclick="resetReviewGame()">🔄 Reiniciar</button>
+        </div>
+
+        <div id="review-feedback" class="review-feedback">Selecciona un error para ver sugerencias.</div>
       </div>
-    </article>
+    </div>
 
-    <article class="block">
-      <h2>Pasos para usarlo</h2>
-      <ol><li>Pestaña Revisar.</li>
-<li>Ortografía y gramática.</li>
-<li>Lee sugerencias.</li>
-<li>Acepta o ignora.</li></ol>
-    </article>
+  </div><!-- /detail-body -->
 
-    <article class="block" id="lsc">
-      <h2>Referente en LSC</h2>
-      <div class="placeholder-box lsc">Espacio para foto o video de la seña en Lengua de Señas Colombiana (LSC).</div>
-    </article>
-
-    <article class="block" id="captura">
-      <h2>Captura en Word 2021</h2>
-      <div class="placeholder-box">Espacio para captura de pantalla real de Microsoft Word 2021.</div>
-    </article>
-
-    <section class="extra-zone" id="ejercicios">
-      <h2>Ejercicios</h2>
-      <p class="hint">Zona lista para agregar actividades de esta herramienta más adelante.</p>
-    </section>
-
-    <section class="extra-zone" id="extra">
-      <h2>Actividades extra</h2>
-      <p class="hint">Puedes editar solo este archivo (<code>08-ortografia-y-gramatica.html</code>) sin tocar las demás lecciones.</p>
-    </section>
-  </div>
-
+  <!-- NAV ENTRE HERRAMIENTAS -->
   <nav class="detail-nav-bar" aria-label="Navegación entre herramientas">
     <a href="07-rehacer.html">◀ Rehacer</a>
     <a href="../index.html" class="btn-gray">🏠 Ver todas</a>
-    <a href="09-subrayado.html">Subrayado ▶</a>
+    <a href="negrita.html">Negrita ▶</a>
   </nav>
 
-
+  <!-- NAV INFERIOR: solo Inicio -->
   <nav class="bottom-nav" aria-label="Menú principal">
     <a href="../index.html"><span class="nav-icon">🏠</span>Inicio</a>
-    <a href="../index.html#categories-grid" class="active"><span class="nav-icon">📚</span>Lecciones</a>
-    <a href="#ejercicios"><span class="nav-icon">✏️</span>Ejercicios</a>
-    <a href="#evaluaciones"><span class="nav-icon">📋</span>Evaluaciones</a>
-    <a href="#ayuda"><span class="nav-icon">❓</span>Ayuda</a>
   </nav>
 
   <script>
-    /* Página: 08-ortografia-y-gramatica.html | Herramienta: Ortografía y gramática */
     (function () {
-      var tabs = document.querySelectorAll(".tool-tabs a");
-      var hash = location.hash || "#leccion";
-      tabs.forEach(function (a) {
-        a.classList.toggle("active", a.getAttribute("href") === hash);
-        a.addEventListener("click", function () {
-          tabs.forEach(function (t) { t.classList.remove("active"); });
-          a.classList.add("active");
+      var issues = {
+        '1': {
+          id: '1',
+          text: 'estabamos',
+          correct: 'estábamos',
+          type: 'Ortografía',
+          reason: 'Falta tilde en la palabra.',
+          options: ['estabamos', 'estábamos', 'estebamos']
+        },
+        '2': {
+          id: '2',
+          text: 'tiene',
+          correct: 'tienen',
+          type: 'Gramática',
+          reason: 'El sujeto plural necesita verbo en plural.',
+          options: ['tiene', 'tienen', 'tener']
+        },
+        '3': {
+          id: '3',
+          text: 'A donde',
+          correct: '¿A dónde',
+          type: 'Ortografía',
+          reason: 'Falta acento y signo de interrogación.',
+          options: ['A donde', 'A dónde', '¿A donde', '¿A dónde']
+        }
+      };
+      var baseText = 'Pablo y yo estabamos en el parque. Mi amigo y ella tiene mucha tarea. A donde vamos después?';
+      var state = {
+        selectedIssue: '1',
+        selectedOption: null,
+        score: 0,
+        resolved: {}
+      };
+      var scoreEl = document.getElementById('review-score');
+      var paragraphEl = document.getElementById('review-paragraph');
+      var issuesEl = document.getElementById('review-issues');
+      var suggestionsEl = document.getElementById('suggestion-list');
+      var feedbackEl = document.getElementById('review-feedback');
+
+      function setFeedback(message, color) {
+        if (feedbackEl) {
+          feedbackEl.textContent = message;
+          feedbackEl.style.color = color || '#555';
+        }
+      }
+
+      function updateScore() {
+        if (scoreEl) { scoreEl.textContent = state.score; }
+      }
+
+      function renderParagraph() {
+        var html = baseText;
+        Object.keys(issues).forEach(function (key) {
+          var issue = issues[key];
+          var resolved = state.resolved[issue.id];
+          if (resolved === 'fixed') {
+            html = html.replace(issue.text, issue.correct);
+          } else {
+            html = html.replace(issue.text, '<button type="button" class="review-highlight" onclick="selectIssue(\'' + issue.id + '\')">' + issue.text + '</button>');
+          }
         });
-      });
+        if (paragraphEl) { paragraphEl.innerHTML = html; }
+      }
+
+      function renderIssueChips() {
+        if (!issuesEl) { return; }
+        issuesEl.innerHTML = Object.keys(issues).map(function (key) {
+          var issue = issues[key];
+          var resolved = state.resolved[issue.id];
+          var classes = 'issue-chip' + (state.selectedIssue === issue.id ? ' selected' : '');
+          var label = issue.text + (resolved === 'fixed' ? ' ✓' : resolved === 'ignored' ? ' ✗' : '');
+          return '<button type="button" class="' + classes + '" onclick="selectIssue(\'' + issue.id + '\')">' + label + '</button>';
+        }).join('');
+      }
+
+      function renderSuggestions() {
+        if (!suggestionsEl) { return; }
+        var issue = issues[state.selectedIssue];
+        state.selectedOption = null;
+        suggestionsEl.innerHTML = issue.options.map(function (option) {
+          return '<button type="button" class="suggestion-item" onclick="selectSuggestion(\'' + option.replace(/'/g, "\\'") + '\')">' + option + '</button>';
+        }).join('');
+        setFeedback(issue.type + ': ' + issue.reason, '#0b662f');
+      }
+
+      window.selectIssue = function (issueId) {
+        state.selectedIssue = issueId;
+        state.selectedOption = null;
+        renderIssueChips();
+        renderSuggestions();
+      };
+
+      window.selectSuggestion = function (option) {
+        state.selectedOption = option;
+        var buttons = suggestionsEl.querySelectorAll('.suggestion-item');
+        buttons.forEach(function (button) {
+          button.classList.toggle('selected', button.textContent === option);
+        });
+        setFeedback('Opción seleccionada: ' + option + '. Pulsa Aceptar para aplicar.', '#0b662f');
+      };
+
+      window.applyGrammarCorrection = function () {
+        var issue = issues[state.selectedIssue];
+        if (!state.selectedOption) {
+          setFeedback('Selecciona primero una sugerencia.', 'red');
+          return;
+        }
+        if (state.resolved[issue.id]) {
+          setFeedback('Esta corrección ya fue procesada.', 'red');
+          return;
+        }
+        if (state.selectedOption === issue.correct) {
+          state.resolved[issue.id] = 'fixed';
+          state.score += 1;
+          updateScore();
+          renderParagraph();
+          renderIssueChips();
+          setFeedback('¡Muy bien! ' + issue.type + ' corregida.', '#0b662f');
+          if (Object.keys(state.resolved).length === 3) {
+            try { localStorage.setItem('score-tool-08-ortografia-y-gramatica', '1'); } catch (e) {}
+          }
+        } else {
+          setFeedback('No es la mejor corrección. Intenta otra sugerencia.', 'red');
+        }
+      };
+
+      window.ignoreIssue = function () {
+        var issue = issues[state.selectedIssue];
+        if (state.resolved[issue.id]) {
+          setFeedback('Ya procesaste este error.', 'red');
+          return;
+        }
+        state.resolved[issue.id] = 'ignored';
+        renderParagraph();
+        renderIssueChips();
+        setFeedback('Ignorado. Puedes continuar con otro error.', '#b8860b');
+      };
+
+      window.resetReviewGame = function () {
+        state.selectedIssue = '1';
+        state.selectedOption = null;
+        state.score = 0;
+        state.resolved = {};
+        updateScore();
+        renderParagraph();
+        renderIssueChips();
+        renderSuggestions();
+        setFeedback('Selecciona un error para ver sugerencias.', '#555');
+      };
+
+      renderParagraph();
+      renderIssueChips();
+      renderSuggestions();
+      updateScore();
     })();
   </script>
+
 </body>
 </html>

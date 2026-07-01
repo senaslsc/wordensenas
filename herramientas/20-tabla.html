@@ -9,9 +9,7 @@
     :root {
       --word-blue: #2B579A;
       --word-dark: #0b2d5c;
-      --ribbon-bg: #f3f2f1;
       --page-bg: #eef2f6;
-      --card: #fff;
       --text: #1a1a1a;
       --muted: #5c5c5c;
       --border: #d1d1d1;
@@ -21,399 +19,236 @@
     }
     html { scroll-behavior: smooth; }
     body {
-      margin: 0;
-      font-family: var(--font);
-      color: var(--text);
-      background: var(--page-bg);
-      padding-bottom: calc(var(--nav-h) + var(--tool-nav-h));
+      margin: 0; font-family: var(--font);
+      color: var(--text); background: var(--page-bg);
+      padding-bottom: calc(var(--nav-h) + var(--tool-nav-h) + 20px);
     }
-    a { color: inherit; }
-    img { display: block; max-width: 100%; }
 
+    /* BARRA SUPERIOR */
     .title-bar {
-      background: var(--word-blue);
-      color: #fff;
-      padding: 6px 14px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 12px;
+      background: var(--word-blue); color: #fff;
+      padding: 6px 14px; display: flex; align-items: center; gap: 10px; font-size: 12px;
     }
     .word-logo {
-      width: 24px; height: 24px;
-      background: #fff;
-      color: var(--word-blue);
-      font-weight: 800;
-      font-size: 15px;
+      width: 24px; height: 24px; background: #fff; color: var(--word-blue);
+      font-weight: 800; font-size: 15px;
       display: flex; align-items: center; justify-content: center;
-      border-radius: 3px;
-      text-decoration: none;
+      border-radius: 3px; text-decoration: none;
     }
     .title-bar h1 { margin: 0; font-size: 13px; font-weight: 600; }
     .title-bar a.title-link { color: #fff; text-decoration: none; }
     .title-bar a.title-link:hover { text-decoration: underline; }
 
+    /* Solo Inicio */
     .ribbon-tabs {
-      display: flex; flex-wrap: wrap;
-      list-style: none; margin: 0; padding: 0 6px;
-      background: #fff;
-      border-bottom: 1px solid var(--border);
+      display: flex; list-style: none; margin: 0; padding: 0 6px;
+      background: #fff; border-bottom: 2px solid var(--word-blue);
     }
-    .ribbon-tabs a, .ribbon-tabs button {
-      display: block;
-      border: none; background: transparent;
-      padding: 9px 12px; font-size: 12px; color: var(--text);
-      border-bottom: 2px solid transparent;
-      text-decoration: none;
-      font-family: inherit;
-      cursor: pointer;
-    }
-    .ribbon-tabs li.active a,
-    .ribbon-tabs li.active button {
-      background: var(--ribbon-bg);
-      border-bottom-color: var(--word-blue);
-      font-weight: 600;
-    }
-    .ribbon-fake {
-      background: var(--ribbon-bg);
-      border-bottom: 1px solid var(--border);
-      padding: 6px 12px;
-      font-size: 10px;
-      color: var(--muted);
-      display: flex; gap: 16px; flex-wrap: wrap;
-    }
-    .ribbon-fake span { padding: 2px 6px; background: #fff; border-radius: 3px; border: 1px solid #e0e0e0; }
-
-    .platform-shell {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 14px 16px 20px;
-      display: grid;
-      grid-template-columns: 1fr 270px;
-      gap: 16px;
-      align-items: start;
-    }
-    @media (max-width: 960px) {
-      .platform-shell { grid-template-columns: 1fr; }
-    }
-    .hero {
-      grid-column: 1 / -1;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .hero-text h2 {
-      margin: 0 0 4px;
-      font-size: clamp(1.25rem, 2.5vw, 1.75rem);
-      color: var(--word-blue);
-      display: flex; align-items: center; gap: 8px;
-    }
-    .hero-text .w-icon {
-      width: 32px; height: 32px;
-      background: linear-gradient(135deg, #2B579A, #41a5ee);
-      color: #fff; font-weight: 800;
-      display: flex; align-items: center; justify-content: center;
-      border-radius: 5px; font-size: 18px;
-    }
-    .hero-text p { margin: 0; color: var(--muted); font-size: 0.9rem; }
-    .main-panel {
-      background: var(--card);
-      border-radius: 12px;
-      padding: 16px;
-      box-shadow: 0 2px 10px rgba(0,0,0,.08);
-      border: 1px solid rgba(0,0,0,.06);
-    }
-    .main-panel > p.hint-line {
-      margin: 0 0 14px;
-      font-size: 0.88rem;
-      color: var(--muted);
-    }
-    .categories-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-    @media (max-width: 640px) {
-      .categories-grid { grid-template-columns: 1fr; }
-    }
-    .category-block {
-      background: var(--cat-tint);
-      border: 2px solid var(--cat-color);
-      border-radius: 10px;
-      padding: 10px 10px 12px;
-    }
-    .category-header {
-      display: flex; align-items: center; gap: 8px;
-      margin-bottom: 10px;
-    }
-    .category-number {
-      width: 24px; height: 24px; border-radius: 50%;
-      background: var(--cat-color); color: #fff;
-      font-size: 11px; font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .category-header h3 {
-      margin: 0; font-size: 0.68rem; font-weight: 800;
-      letter-spacing: 0.04em; color: var(--cat-color);
-    }
-    .category-tools {
-      display: flex; flex-wrap: wrap; gap: 8px;
-    }
-    .tool-card {
-      display: flex; flex-direction: column; align-items: center;
-      width: 78px;
-      padding: 8px 4px;
-      background: #fff;
-      border: 1px solid rgba(0,0,0,.08);
-      border-radius: 8px;
-      text-decoration: none;
-      color: var(--text);
-      transition: transform .15s, box-shadow .15s, border-color .15s;
-    }
-    .tool-card:hover, .tool-card:focus-visible {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 14px rgba(0,0,0,.12);
-      border-color: var(--cat-color);
-      outline: none;
-    }
-    .tool-card img {
-      width: 44px; height: 44px;
-      object-fit: contain;
-      margin-bottom: 4px;
-    }
-    .tool-label {
-      font-size: 10px;
-      text-align: center;
-      line-height: 1.2;
-      font-weight: 600;
-    }
-    .sidebar { display: flex; flex-direction: column; gap: 12px; }
-    .sidebar-card {
-      background: var(--card);
-      border-radius: 10px;
-      padding: 14px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.07);
-      border: 1px solid rgba(0,0,0,.05);
-    }
-    .welcome-card {
-      background: linear-gradient(145deg, #2B579A, #1e4080);
-      color: #fff;
-    }
-    .welcome-card h3 { margin: 0 0 8px; font-size: 1rem; }
-    .welcome-card p { margin: 0 0 12px; font-size: 0.8rem; line-height: 1.45; opacity: .95; }
-    .btn-start {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 8px 14px;
-      background: #fff; color: var(--word-blue);
-      border: none; border-radius: 6px;
-      font-weight: 700; font-size: 0.85rem;
-      text-decoration: none;
-      font-family: inherit;
-      cursor: pointer;
-    }
-    .sidebar-card h3 { margin: 0 0 10px; font-size: 0.95rem; }
-    .progress-bar {
-      height: 8px; background: #e8ecf0;
-      border-radius: 4px; overflow: hidden;
-      margin-bottom: 10px;
-    }
-    .progress-bar span {
-      display: block; height: 100%; width: 35%;
-      background: #0f7b3f; border-radius: 4px;
-    }
-    .progress-list { list-style: none; margin: 0; padding: 0; font-size: 0.78rem; }
-    .progress-list li {
-      display: flex; align-items: center; gap: 6px;
-      padding: 5px 0; border-bottom: 1px solid #f0f0f0;
-      color: var(--muted);
-    }
-    .progress-list li.done { color: #0f7b3f; font-weight: 600; }
-    .progress-list li.current { color: var(--word-blue); font-weight: 600; }
-    .progress-list a { text-decoration: none; color: inherit; }
-    .btn-lsc {
-      display: block; width: 100%;
-      padding: 10px; text-align: center;
-      background: var(--word-blue); color: #fff;
-      border: none; border-radius: 6px;
-      font-weight: 600; font-size: 0.85rem;
-      font-family: inherit;
-      cursor: pointer;
+    .ribbon-tabs li a {
+      display: block; padding: 9px 16px; font-size: 13px;
+      color: var(--word-blue); font-weight: 700; text-decoration: none;
+      border-bottom: 3px solid var(--word-blue);
     }
 
+    /* CABECERA */
     .detail-header {
       background: linear-gradient(135deg, var(--word-blue), #1e3f6e);
-      color: #fff;
-      padding: 20px 16px;
-      display: flex; align-items: center; gap: 16px;
+      color: #fff; padding: 20px 16px; display: flex; align-items: center; gap: 16px;
     }
     .detail-header img {
       width: 64px; height: 64px; object-fit: contain;
-      background: rgba(255,255,255,.15);
-      border-radius: 8px; padding: 6px;
+      background: rgba(255,255,255,.15); border-radius: 8px; padding: 6px;
     }
     .detail-header h1 { margin: 0 0 4px; font-size: 1.4rem; }
     .detail-cat {
-      display: inline-block;
-      background: rgba(255,255,255,.2);
-      padding: 3px 8px; border-radius: 4px;
-      font-size: 11px; font-weight: 600;
+      display: inline-block; background: rgba(255,255,255,.2);
+      padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;
     }
-    .detail-body {
-      max-width: 800px; margin: 0 auto;
-      padding: 16px 16px 24px;
+
+    /* CONTENIDO */
+    .detail-body { max-width: 800px; margin: 0 auto; padding: 16px 16px 24px; }
+    .block {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: 8px; padding: 14px 16px; margin-bottom: 16px;
     }
-    .ribbon-path, .block, .extra-zone {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 14px 16px;
-      margin-bottom: 12px;
+    .block h2 { margin: 0 0 12px; font-size: 1rem; color: var(--word-blue); }
+
+    /* VIDEO */
+    .video-btn-wrap {
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; background: #f0f4fa;
+      border: 2px solid var(--word-blue); border-radius: 12px;
+      padding: 32px 20px; gap: 14px; text-align: center;
     }
-    .ribbon-path { border-left: 4px solid var(--word-blue); }
-    .block h2, .extra-zone h2 { margin: 0 0 8px; font-size: 1rem; color: var(--word-blue); }
-    .block p, .block li { line-height: 1.55; }
-    .block ol { margin: 0; padding-left: 1.25rem; }
-    .before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    @media (max-width: 500px) { .before-after { grid-template-columns: 1fr; } }
-    .ba-card { padding: 10px; border-radius: 6px; font-size: 13px; }
-    .ba-card.before { background: #fff4ce; }
-    .ba-card.after { background: #dff6dd; }
-    .ba-card h3 { margin: 0 0 4px; font-size: 11px; text-transform: uppercase; }
-    .placeholder-box {
-      min-height: 120px;
-      border: 2px dashed #c8c6c4;
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      text-align: center; color: var(--muted);
-      font-size: 13px; padding: 12px;
-      background: #faf9f8;
+    .video-btn-wrap p { margin: 0; color: var(--muted); font-size: 0.88rem; }
+    .btn-youtube {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: #FF0000; color: #fff; font-weight: 700; font-size: 1rem;
+      padding: 12px 24px; border-radius: 8px; text-decoration: none;
+      font-family: inherit; box-shadow: 0 4px 12px rgba(255,0,0,.3);
+      transition: background .2s, transform .15s;
     }
-    .placeholder-box.lsc { border-color: var(--word-blue); background: #f0f6fc; }
+    .btn-youtube:hover { background: #cc0000; transform: translateY(-2px); }
+
+    /* ACTIVIDAD */
     .extra-zone {
-      border-style: dashed;
-      border-color: var(--word-blue);
-      background: #fafcfe;
+      background: #fff; border: 1px solid var(--word-blue);
+      border-radius: 8px; padding: 14px 16px; margin-bottom: 16px;
+    }
+    .extra-zone h2 { margin: 0 0 8px; font-size: 1rem; color: var(--word-blue); }
+    .extra-zone p.hint { margin: 0 0 10px; font-size: 0.85rem; color: var(--muted); }
+
+    /* JUEGO TABLA */
+    .tabla-card {
+      background: #f8fbff; border: 1px solid #d7e6f5;
+      border-radius: 14px; padding: 16px;
+      box-shadow: 0 4px 16px rgba(43,87,154,.08);
+      max-width: 760px; margin: 0 auto; display: grid; gap: 14px;
+    }
+    .task-label {
+      font-size: 0.88rem; color: var(--word-dark); font-weight: 600;
+      background: #e8f0ff; border: 1px solid #cad9f5;
+      border-radius: 8px; padding: 8px 12px;
+    }
+    .score-row {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .score-row strong { color: var(--word-blue); font-size: 0.95rem; }
+
+    /* Toolbar grilla */
+    .table-toolbar {
+      display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+      background: #f3f2f1; border: 1px solid #d1d1d1;
+      border-radius: 10px; padding: 12px 14px;
+    }
+    .group-label {
+      font-size: 0.78rem; color: #505050;
+      text-transform: uppercase; letter-spacing: .12em; font-weight: 700;
+    }
+    .table-grid {
+      display: grid; grid-template-columns: repeat(6, 30px);
+      gap: 4px; padding: 8px; background: #fff;
+      border: 1px solid #c6d0db; border-radius: 8px;
+    }
+    .table-grid-cell {
+      width: 30px; height: 30px; background: #f8f9fb;
+      border: 1px solid #d8dfe8; border-radius: 4px;
+      cursor: pointer; transition: background .12s, border-color .12s;
+    }
+    .table-grid-cell:hover { background: #e6efff; }
+    .table-grid-cell.active { background: #2b579a; border-color: #224d8f; }
+    .table-selection { font-size: 0.95rem; font-weight: 700; color: var(--word-dark); }
+
+    /* Preview documentos */
+    .table-preview {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+    }
+    @media (max-width: 600px) {
+      .table-preview { grid-template-columns: 1fr; }
+      .table-toolbar { flex-direction: column; align-items: stretch; }
+    }
+    .table-card-doc {
+      border: 1px solid #d9e2eb; border-radius: 12px;
+      background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.05);
+      cursor: pointer; overflow: hidden; min-height: 200px;
+      display: flex; flex-direction: column;
+      transition: border-color .15s, transform .15s;
+    }
+    .table-card-doc:hover, .table-card-doc.selected {
+      border-color: var(--word-blue); transform: translateY(-1px);
+    }
+    .table-card-header {
+      padding: 10px 12px 8px; border-bottom: 1px solid #e4eaf0; background: #fbfdff;
+    }
+    .table-card-header h3 { margin: 0; font-size: 0.88rem; color: var(--word-blue); }
+    .table-card-body {
+      padding: 12px; flex: 1; display: flex;
+      flex-direction: column; gap: 8px; align-items: center; justify-content: center;
+    }
+    .table-placeholder {
+      width: 100%; flex: 1; border: 2px dashed #d0d8e3; border-radius: 10px;
+      display: grid; place-items: center; color: #60708d;
+      font-size: 0.85rem; text-align: center; background: #fdfefe; padding: 10px;
       min-height: 80px;
     }
-    .extra-zone p.hint { margin: 0; font-size: 0.85rem; color: var(--muted); }
+    .inserted-table { width: 100%; border-collapse: collapse; border: 1px solid #c8d2df; }
+    .inserted-table th, .inserted-table td {
+      border: 1px solid #d5dee9; padding: 5px 8px; font-size: 0.75rem;
+    }
+    .inserted-table th { background: #eef4ff; color: var(--word-dark); font-weight: 700; }
+    .inserted-table td { background: #fff; color: #333; }
 
-    .tool-tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-      padding: 8px 12px;
-      background: #fff;
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 20;
+    /* Acciones */
+    .table-actions {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      background: #f3f2f1; border: 1px solid #d1d1d1;
+      border-radius: 10px; padding: 10px 14px;
     }
-    .tool-tabs a {
-      padding: 6px 10px;
-      font-size: 11px;
-      text-decoration: none;
-      border-radius: 4px;
-      color: var(--muted);
-      border: 1px solid transparent;
+    .boton {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 9px 16px; border-radius: 6px; border: 1px solid #ccc;
+      background: #fff; font-family: inherit; font-size: 0.85rem;
+      font-weight: 600; cursor: pointer; transition: background .15s;
     }
-    .tool-tabs a:hover { background: var(--ribbon-bg); color: var(--text); }
-    .tool-tabs a.active {
-      background: var(--word-blue);
-      color: #fff;
-      font-weight: 600;
+    .boton:hover { background: #f3f3f3; }
+    .boton.insertar  { border-color: var(--word-blue); color: var(--word-blue); }
+    .boton.comprobar { border-color: #0f7b3f; color: #0f7b3f; }
+
+    .tabla-feedback { font-size: 0.9rem; color: var(--muted); min-height: 1.3em; }
+    .tabla-score {
+      padding: 10px 12px; border-radius: 8px;
+      background: #e9f5ff; border: 1px solid #b7d5ff;
+      color: var(--word-dark); font-weight: 700; font-size: 0.9rem;
     }
 
+    /* NAV ENTRE HERRAMIENTAS */
     .detail-nav-bar {
-      position: fixed;
-      bottom: var(--nav-h);
-      left: 0; right: 0;
-      background: #fff;
-      border-top: 1px solid var(--border);
-      padding: 8px 12px;
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      z-index: 99;
-      min-height: var(--tool-nav-h);
-      align-items: center;
-    }
-    .detail-nav-bar a, .detail-nav-bar span.disabled {
-      padding: 8px 14px;
-      border-radius: 6px;
-      font-weight: 600;
-      font-size: 13px;
-      text-decoration: none;
+      position: fixed; bottom: var(--nav-h); left: 0; right: 0;
+      background: #fff; border-top: 1px solid var(--border);
+      padding: 8px 12px; display: flex; justify-content: center;
+      gap: 8px; flex-wrap: wrap; z-index: 99;
+      min-height: var(--tool-nav-h); align-items: center;
     }
     .detail-nav-bar a {
-      background: var(--word-blue);
-      color: #fff;
+      padding: 8px 14px; border-radius: 6px;
+      font-weight: 600; font-size: 13px; text-decoration: none;
+      background: var(--word-blue); color: #fff;
     }
     .detail-nav-bar a.btn-gray { background: #605e5c; }
-    .detail-nav-bar span.disabled {
-      background: #e0e0e0;
-      color: #888;
-      cursor: not-allowed;
-    }
 
+    /* NAV INFERIOR */
     .bottom-nav {
-      position: fixed; bottom: 0; left: 0; right: 0;
-      height: var(--nav-h);
-      background: var(--word-dark);
-      display: flex; justify-content: center;
-      z-index: 100;
-      box-shadow: 0 -2px 12px rgba(0,0,0,.2);
+      position: fixed; bottom: 0; left: 0; right: 0; height: var(--nav-h);
+      background: var(--word-dark); display: flex; justify-content: center;
+      z-index: 100; box-shadow: 0 -2px 12px rgba(0,0,0,.2);
     }
-    .bottom-nav a, .bottom-nav button {
-      flex: 1; max-width: 130px;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 2px;
-      border: none; background: transparent;
-      color: rgba(255,255,255,.8);
-      text-decoration: none;
-      font-size: 0.62rem; font-weight: 500;
-      padding: 4px;
-      font-family: inherit;
-      cursor: pointer;
+    .bottom-nav a {
+      flex: 1; max-width: 130px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 2px;
+      color: rgba(255,255,255,.8); text-decoration: none;
+      font-size: 0.62rem; font-weight: 500; padding: 4px;
     }
-    .bottom-nav a:hover, .bottom-nav button:hover { color: #fff; background: rgba(255,255,255,.08); }
-    .bottom-nav a.active { background: rgba(255,255,255,.15); color: #fff; font-weight: 700; }
+    .bottom-nav a:hover { color: #fff; background: rgba(255,255,255,.08); }
     .bottom-nav .nav-icon { font-size: 1.15rem; }
-</style>
+  </style>
 </head>
-<body data-tool-id="20" data-tool-slug="tabla">
+<body>
 
+  <!-- BARRA SUPERIOR -->
   <header class="title-bar">
     <a class="word-logo" href="../index.html" title="Inicio">W</a>
     <h1><a class="title-link" href="../index.html">Tabla — Word Básico</a></h1>
   </header>
 
-  <nav aria-label="Pestañas Word">
+  <!-- SOLO INICIO -->
+  <nav aria-label="Menú Word">
     <ul class="ribbon-tabs">
-      <li class="active"><a href="../index.html">Inicio</a></li>
-      <li><button type="button">Insertar</button></li>
-      <li><button type="button">Diseño</button></li>
-      <li><button type="button">Disposición</button></li>
-      <li><button type="button">Referencias</button></li>
-      <li><button type="button">Revisar</button></li>
-      <li><button type="button">Vista</button></li>
+      <li><a href="../index.html">Inicio</a></li>
     </ul>
   </nav>
-  <div class="ribbon-fake" aria-hidden="true">
-    <span>Portapapeles</span><span>Fuente</span><span>Párrafo</span><span>Estilos</span>
-  </div>
-<nav class="tool-tabs" aria-label="Pestañas de esta herramienta">
-    <a href="#leccion" class="active">📖 Lección</a>
-    <a href="#lsc">🤟 LSC</a>
-    <a href="#captura">🖼️ Captura Word</a>
-    <a href="#ejercicios">✏️ Ejercicios</a>
-    <a href="#extra">➕ Actividades</a>
-  </nav>
 
-  <header class="detail-header" id="leccion">
+  <!-- CABECERA -->
+  <header class="detail-header">
     <img src="../icons/Tabla.png" alt="Tabla" width="64" height="64" />
     <div>
       <span class="detail-cat">Elementos visuales</span>
@@ -422,78 +257,227 @@
   </header>
 
   <div class="detail-body">
-    <div class="ribbon-path"><strong>Ruta en la cinta:</strong> Insertar → Tabla</div>
 
-    <article class="block">
-      <h2>¿Qué significa?</h2>
-      <p>Filas y columnas para datos.</p>
-    </article>
-
-    <article class="block">
-      <h2>Antes / Después</h2>
-      <div class="before-after">
-        <div class="ba-card before"><h3>Antes</h3><p>Texto suelto.</p></div>
-        <div class="ba-card after"><h3>Después</h3><p>Cuadrícula con celdas.</p></div>
+    <!-- VIDEO -->
+    <div class="block">
+      <h2>🎥 Video explicativo</h2>
+      <div class="video-btn-wrap">
+        <p>Haz clic para ver el video explicativo sobre <strong>Tabla en Word</strong></p>
+        <a class="btn-youtube" href="<iframe width="560" height="315" src="https://www.youtube.com/embed/jxB6HVKlEHA?si=oxCAoK0UsTI3rKCc&amp;start=29" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>" target="_blank">
+          &#9654; Ver video en YouTube
+        </a>
+        <p>Se abrirá en una pestaña nueva</p>
       </div>
-    </article>
+    </div>
 
-    <article class="block">
-      <h2>Pasos para usarlo</h2>
-      <ol><li>Insertar → Tabla.</li>
-<li>Elige tamaño.</li>
-<li>Clic.</li>
-<li>Escribe en celdas.</li></ol>
-    </article>
+    <!-- ACTIVIDAD -->
+    <div class="extra-zone">
+      <h2>✏️ Actividad</h2>
+      <p class="hint"><strong>Instrucción:</strong> Selecciona el tamaño de tabla indicado, elige la página correcta y pulsa <strong>Insertar tabla</strong>. Luego pulsa <strong>Comprobar</strong>.</p>
 
-    <article class="block" id="lsc">
-      <h2>Referente en LSC</h2>
-      <div class="placeholder-box lsc">Espacio para foto o video de la seña en Lengua de Señas Colombiana (LSC).</div>
-    </article>
+      <div class="tabla-card">
+        <div class="score-row">
+          <strong>📊 Juego: Insertar tabla</strong>
+          <span style="font-weight:700;color:var(--word-blue);">Puntos: <span id="tabla-pts">0</span> / 3</span>
+        </div>
 
-    <article class="block" id="captura">
-      <h2>Captura en Word 2021</h2>
-      <div class="placeholder-box">Espacio para captura de pantalla real de Microsoft Word 2021.</div>
-    </article>
+        <div class="task-label" id="table-task">Tarea 1 de 3: cargando...</div>
 
-    <section class="extra-zone" id="ejercicios">
-      <h2>Ejercicios</h2>
-      <p class="hint">Zona lista para agregar actividades de esta herramienta más adelante.</p>
-    </section>
+        <!-- Grilla de selección -->
+        <div class="table-toolbar">
+          <span class="group-label">Tabla</span>
+          <div class="table-grid" id="table-grid" aria-label="Seleccionar filas y columnas"></div>
+          <span class="table-selection" id="table-selection">Seleccionado: 2 × 2</span>
+        </div>
 
-    <section class="extra-zone" id="extra">
-      <h2>Actividades extra</h2>
-      <p class="hint">Puedes editar solo este archivo (<code>20-tabla.html</code>) sin tocar las demás lecciones.</p>
-    </section>
+        <!-- Documentos -->
+        <div class="table-preview" id="table-preview"></div>
+
+        <!-- Botones -->
+        <div class="table-actions">
+          <button class="boton insertar"  id="insert-table">📊 Insertar tabla</button>
+          <button class="boton comprobar" id="check-table">✅ Comprobar</button>
+          <button class="boton"           id="reset-table">🔄 Reiniciar</button>
+        </div>
+        <div class="tabla-feedback" id="table-feedback">Selecciona filas y columnas para comenzar.</div>
+        <div class="tabla-score"    id="table-score">Puntaje del juego: 0 puntos</div>
+      </div>
+    </div>
+
   </div>
 
+  <!-- NAV ENTRE HERRAMIENTAS -->
   <nav class="detail-nav-bar" aria-label="Navegación entre herramientas">
     <a href="19-insertar-imagen.html">◀ Insertar imagen</a>
     <a href="../index.html" class="btn-gray">🏠 Ver todas</a>
-    <a href="21-figura.html">Figura ▶</a>
+    <a href="21-formas.html">Formas ▶</a>
   </nav>
 
-
+  <!-- NAV INFERIOR -->
   <nav class="bottom-nav" aria-label="Menú principal">
     <a href="../index.html"><span class="nav-icon">🏠</span>Inicio</a>
-    <a href="../index.html#categories-grid" class="active"><span class="nav-icon">📚</span>Lecciones</a>
-    <a href="#ejercicios"><span class="nav-icon">✏️</span>Ejercicios</a>
-    <a href="#evaluaciones"><span class="nav-icon">📋</span>Evaluaciones</a>
-    <a href="#ayuda"><span class="nav-icon">❓</span>Ayuda</a>
   </nav>
 
   <script>
-    /* Página: 20-tabla.html | Herramienta: Tabla */
     (function () {
-      var tabs = document.querySelectorAll(".tool-tabs a");
-      var hash = location.hash || "#leccion";
-      tabs.forEach(function (a) {
-        a.classList.toggle("active", a.getAttribute("href") === hash);
-        a.addEventListener("click", function () {
-          tabs.forEach(function (t) { t.classList.remove("active"); });
-          a.classList.add("active");
+      var tasks = [
+        { instruction: 'Tarea 1 de 3: Inserta una tabla de 3 columnas × 4 filas en el Reporte de ventas.',  expected: { rows: 4, cols: 3 }, page: 'page1' },
+        { instruction: 'Tarea 2 de 3: Inserta una tabla de 4 columnas × 3 filas en el Calendario.',         expected: { rows: 3, cols: 4 }, page: 'page2' },
+        { instruction: 'Tarea 3 de 3: Inserta una tabla de 4 columnas × 2 filas en el Resumen mensual.',    expected: { rows: 2, cols: 4 }, page: 'page3' }
+      ];
+
+      var pageData = {
+        page1: { title: 'Reporte de ventas', placeholder: 'Tabla aquí' },
+        page2: { title: 'Calendario',         placeholder: 'Tabla aquí' },
+        page3: { title: 'Resumen mensual',    placeholder: 'Tabla aquí' }
+      };
+
+      var state = {
+        currentTask: 0, rows: 2, cols: 2,
+        selectedPage: 'page1',
+        inserted: { page1: null, page2: null, page3: null },
+        score: 0, gameScore: 0
+      };
+
+      function setFeedback(msg, color) {
+        var el = document.getElementById('table-feedback');
+        if (el) { el.textContent = msg; el.style.color = color || '#555'; }
+      }
+
+      function updateScoreUI() {
+        document.getElementById('tabla-pts').textContent = state.score;
+        var el = document.getElementById('table-score');
+        if (!el) return;
+        if (state.gameScore === 1)       { el.textContent = 'Puntaje del juego: +1 punto'; el.style.color = '#0f7b3f'; }
+        else if (state.gameScore === -1) { el.textContent = 'Puntaje del juego: -1 punto'; el.style.color = '#d9534f'; }
+        else                             { el.textContent = 'Puntaje del juego: 0 puntos';  el.style.color = '#0b2d5c'; }
+      }
+
+      function renderGrid() {
+        var grid = document.getElementById('table-grid');
+        grid.innerHTML = '';
+        for (var r = 1; r <= 4; r++) {
+          for (var c = 1; c <= 6; c++) {
+            var cell = document.createElement('button');
+            cell.type = 'button';
+            cell.className = 'table-grid-cell' + (r <= state.rows && c <= state.cols ? ' active' : '');
+            cell.setAttribute('data-r', r);
+            cell.setAttribute('data-c', c);
+            cell.setAttribute('aria-label', r + ' filas × ' + c + ' columnas');
+            cell.addEventListener('click', function() {
+              state.rows = Number(this.getAttribute('data-r'));
+              state.cols = Number(this.getAttribute('data-c'));
+              renderGrid();
+              document.getElementById('table-selection').textContent = 'Seleccionado: ' + state.cols + ' × ' + state.rows;
+              setFeedback('Tabla ' + state.cols + ' col × ' + state.rows + ' fil. Elige la página y pulsa Insertar tabla.', '#174a97');
+            });
+            grid.appendChild(cell);
+          }
+        }
+      }
+
+      function renderInsertedTable(rows, cols) {
+        var html = '<table class="inserted-table"><thead><tr>';
+        for (var c = 1; c <= cols; c++) html += '<th>Col ' + c + '</th>';
+        html += '</tr></thead><tbody>';
+        for (var r = 1; r <= rows; r++) {
+          html += '<tr>';
+          for (var c = 1; c <= cols; c++) html += '<td>Dato</td>';
+          html += '</tr>';
+        }
+        html += '</tbody></table>';
+        return html;
+      }
+
+      function renderDocPreview() {
+        var container = document.getElementById('table-preview');
+        container.innerHTML = Object.keys(pageData).map(function(pageId) {
+          var page = pageData[pageId];
+          var selected = state.selectedPage === pageId ? ' selected' : '';
+          var inserted = state.inserted[pageId];
+          var content = inserted
+            ? renderInsertedTable(inserted.rows, inserted.cols)
+            : '<div class="table-placeholder">' + page.placeholder + '</div>';
+          return '<div class="table-card-doc' + selected + '" data-page="' + pageId + '">' +
+                 '  <div class="table-card-header"><h3>' + page.title + '</h3></div>' +
+                 '  <div class="table-card-body">' + content + '</div>' +
+                 '</div>';
+        }).join('');
+
+        container.querySelectorAll('.table-card-doc').forEach(function(card) {
+          card.addEventListener('click', function() {
+            state.selectedPage = card.getAttribute('data-page');
+            renderDocPreview();
+            setFeedback('Página seleccionada. Ahora pulsa Insertar tabla.', '#174a97');
+          });
         });
+      }
+
+      function updateTaskLabel() {
+        document.getElementById('table-task').textContent = tasks[state.currentTask].instruction;
+      }
+
+      document.getElementById('insert-table').addEventListener('click', function() {
+        state.inserted[state.selectedPage] = { rows: state.rows, cols: state.cols };
+        renderDocPreview();
+        setFeedback('Tabla insertada. Pulsa Comprobar para verificar.', '#0b662f');
       });
+
+      document.getElementById('check-table').addEventListener('click', function() {
+        var task = tasks[state.currentTask];
+        var inserted = state.inserted[task.page];
+        if (!inserted) {
+          setFeedback('❗ No hay tabla en la página indicada.', 'red');
+          state.gameScore = -1; updateScoreUI(); return;
+        }
+        if (inserted.rows === task.expected.rows && inserted.cols === task.expected.cols && state.selectedPage === task.page) {
+          state.score += 1;
+          if (state.gameScore !== -1) state.gameScore = 1;
+          updateScoreUI();
+          try { localStorage.setItem('score-tool-20-tabla', '1'); } catch(e) {}
+          if (state.currentTask + 1 < tasks.length) {
+            setFeedback('🎉 ¡Correcto! Pasando a la siguiente tarea...', '#0b662f');
+            setTimeout(function() {
+              state.currentTask += 1;
+              state.selectedPage = tasks[state.currentTask].page;
+              state.rows = 2; state.cols = 2;
+              state.inserted = { page1: null, page2: null, page3: null };
+              renderGrid();
+              document.getElementById('table-selection').textContent = 'Seleccionado: 2 × 2';
+              renderDocPreview();
+              updateTaskLabel();
+              setFeedback('Selecciona filas y columnas para comenzar.', '#555');
+            }, 1000);
+          } else {
+            document.getElementById('table-task').textContent = '🏆 ¡Completaste todas las tareas! Puntaje: ' + state.score + ' / 3';
+            setFeedback('¡Excelente! Terminaste la actividad.', '#0b662f');
+          }
+        } else {
+          state.gameScore = -1; updateScoreUI();
+          setFeedback('❌ No es correcto. Revisa la página y las dimensiones de la tabla.', '#b22222');
+        }
+      });
+
+      document.getElementById('reset-table').addEventListener('click', function() {
+        state.currentTask = 0; state.rows = 2; state.cols = 2;
+        state.selectedPage = 'page1';
+        state.inserted = { page1: null, page2: null, page3: null };
+        state.score = 0; state.gameScore = 0;
+        renderGrid();
+        document.getElementById('table-selection').textContent = 'Seleccionado: 2 × 2';
+        renderDocPreview();
+        updateTaskLabel();
+        updateScoreUI();
+        setFeedback('Juego reiniciado. Selecciona filas y columnas para empezar.', '#555');
+      });
+
+      // Inicio
+      renderGrid();
+      renderDocPreview();
+      updateTaskLabel();
+      updateScoreUI();
     })();
   </script>
+
 </body>
 </html>

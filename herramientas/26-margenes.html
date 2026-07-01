@@ -299,6 +299,31 @@
     }
     .extra-zone p.hint { margin: 0; font-size: 0.85rem; color: var(--muted); }
 
+    /* Exercise styles: margins */
+    .exercise-shell { display: grid; grid-template-columns: 1fr 320px; gap: 18px; }
+    @media (max-width: 920px) { .exercise-shell { grid-template-columns: 1fr; } }
+    .exercise-panel { background:#fff; border:1px solid rgba(0,0,0,.06); border-radius:12px; padding:16px; }
+    .margin-choices { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; }
+    .margin-choices button { padding:10px 12px; border-radius:8px; border:1px solid var(--border); background:#fff; cursor:pointer; }
+    .margin-choices button.active { background:#f3f7ff; border-color:var(--word-blue); box-shadow:0 8px 18px rgba(43,87,154,.08); }
+    .page-select { display:flex; gap:8px; margin-bottom:12px; }
+    .page-select button { padding:10px; border-radius:8px; border:1px solid var(--border); background:#fff; cursor:pointer; }
+    .page-select button.active { border-color:var(--word-blue); background:#f3f7ff; }
+    .actions { display:flex; gap:10px; margin-bottom:12px; }
+    .actions button { flex:1; padding:10px 12px; border-radius:8px; border:none; color:#fff; font-weight:700; cursor:pointer; }
+    .actions .apply { background:var(--word-blue); }
+    .actions .check { background:#0f7b3f; }
+    .actions .reset { background:#605e5c; }
+    .feedback { padding:10px 12px; border-radius:8px; border:1px solid transparent; min-height:44px; display:flex; align-items:center; }
+    .feedback.success { background:#f0fbf3; border-color:#81c784; color:#16542a; }
+    .feedback.warn { background:#fff8e6; border-color:#f8c471; color:#7f5a1a; }
+
+    .doc-preview { display:flex; flex-direction:column; gap:12px; align-items:center; }
+    .doc-surface.preview { width:280px; min-height:240px; background:#fdfdfc; border:1px solid #d8d8d4; border-radius:12px; padding:22px; box-shadow:0 12px 22px rgba(0,0,0,.06); }
+    .doc-surface.preview .doc-content { font-size:0.85rem; color:#333; }
+    .doc-surface.preview.small { max-width:260px; }
+    .mini-label { font-weight:700; color:var(--word-blue); margin-bottom:8px; }
+
     .tool-tabs {
       display: flex;
       flex-wrap: wrap;
@@ -456,8 +481,37 @@
     </article>
 
     <section class="extra-zone" id="ejercicios">
-      <h2>Ejercicios</h2>
-      <p class="hint">Zona lista para agregar actividades de esta herramienta más adelante.</p>
+      <h2>✏️ Ejercicio interactivo: Márgenes</h2>
+      <p class="hint">Selecciona el margen <strong style="color:var(--word-blue)">Moderado</strong>, presiona <strong>Aplicar margen</strong> y luego <strong>Comprobar</strong>.</p>
+
+      <div class="exercise-shell">
+        <div class="exercise-panel">
+          <div style="margin-bottom:12px;">
+            <div style="font-weight:700;color:var(--word-blue);margin-bottom:8px">Elegir márgenes</div>
+            <div class="margin-choices" id="marginChoices"></div>
+          </div>
+
+          <div style="margin-bottom:12px;">
+            <div style="font-weight:700;color:var(--word-blue);margin-bottom:8px">Seleccionar página</div>
+            <div class="page-select" id="pageSelect"></div>
+          </div>
+
+          <div class="actions">
+            <button class="apply" id="applyBtn">Aplicar margen</button>
+            <button class="check" id="checkBtn">Comprobar</button>
+            <button class="reset" id="resetBtn">Reiniciar</button>
+          </div>
+
+          <div class="feedback" id="feedback">Selecciona un margen y una página, luego pulsa Aplicar.</div>
+        </div>
+
+        <aside class="exercise-panel doc-preview">
+          <div class="mini-label">Vista previa</div>
+          <div id="previewArea">
+            <!-- previews inserted by JS -->
+          </div>
+        </aside>
+      </div>
     </section>
 
     <section class="extra-zone" id="extra">
@@ -482,7 +536,7 @@
   </nav>
 
   <script>
-    /* Página: 26-margenes.html | Herramienta: Márgenes */
+    /* Página: 26-margenes.html | Herramienta: Márgenes - Interactivo */
     (function () {
       var tabs = document.querySelectorAll(".tool-tabs a");
       var hash = location.hash || "#leccion";
@@ -493,6 +547,146 @@
           a.classList.add("active");
         });
       });
+
+      // Margin presets (visual px values for preview)
+      var marginPresets = {
+        normal: { label: 'Normal', top:22, right:22, bottom:22, left:22 },
+        estrecho: { label: 'Estrecho', top:10, right:10, bottom:10, left:10 },
+        moderado: { label: 'Moderado', top:18, right:28, bottom:18, left:28 },
+        amplio: { label: 'Amplio', top:36, right:36, bottom:36, left:36 }
+      };
+
+      var tasks = [
+        { page: 0, preset: 'moderado', label: 'Aplica márgenes "Moderado" en la Página de ejemplo.' }
+      ];
+
+      var state = {
+        selectedPreset: 'normal',
+        selectedPage: 0,
+        applied: {}, // page index -> preset key
+        currentTask: 0,
+        score: 0,
+        pagesCount: 1
+      };
+
+      var marginChoicesEl = document.getElementById('marginChoices');
+      var pageSelectEl = document.getElementById('pageSelect');
+      var applyBtn = document.getElementById('applyBtn');
+      var checkBtn = document.getElementById('checkBtn');
+      var resetBtn = document.getElementById('resetBtn');
+      var feedback = document.getElementById('feedback');
+      var previewArea = document.getElementById('previewArea');
+
+      function setFeedback(text, type) {
+        feedback.textContent = text;
+        feedback.className = 'feedback';
+        if (type) feedback.classList.add(type);
+      }
+
+      function renderMarginChoices() {
+        marginChoicesEl.innerHTML = '';
+        Object.keys(marginPresets).forEach(function (key) {
+          var p = marginPresets[key];
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.textContent = p.label;
+          btn.className = (state.selectedPreset === key) ? 'active' : '';
+          btn.addEventListener('click', function () {
+            state.selectedPreset = key;
+            renderMarginChoices();
+            setFeedback('Presets: ' + p.label + ' seleccionado.', 'warn');
+          });
+          marginChoicesEl.appendChild(btn);
+        });
+      }
+
+      function renderPageSelect() {
+        // Si solo hay una página, ocultamos el selector
+        if (state.pagesCount <= 1) {
+          pageSelectEl.style.display = 'none';
+          return;
+        }
+        pageSelectEl.style.display = '';
+        pageSelectEl.innerHTML = '';
+        for (var i = 0; i < state.pagesCount; i++) {
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.textContent = 'Página ' + (i + 1);
+          btn.className = (state.selectedPage === i) ? 'active' : '';
+          (function (idx) { btn.addEventListener('click', function () { state.selectedPage = idx; renderPageSelect(); renderPreview(); setFeedback('Página ' + (idx+1) + ' seleccionada.', 'warn'); }); })(i);
+          pageSelectEl.appendChild(btn);
+        }
+      }
+
+      function renderPreview() {
+        previewArea.innerHTML = '';
+        for (var i = 0; i < state.pagesCount; i++) {
+          var container = document.createElement('div');
+          var label = document.createElement('div'); label.className = 'mini-label'; label.textContent = 'Página ' + (i+1);
+          var surface = document.createElement('div'); surface.className = 'doc-surface preview';
+          var appliedKey = state.applied[i] || 'normal';
+          var m = marginPresets[appliedKey];
+          surface.style.padding = m.top + 'px ' + m.right + 'px ' + m.bottom + 'px ' + m.left + 'px';
+          var content = document.createElement('div'); content.className = 'doc-content';
+          content.innerHTML = '<p><strong>Ejemplo de texto en la página ' + (i+1) + '.</strong></p><p>Los márgenes controlan la distancia entre el borde y el texto.</p>';
+          surface.appendChild(content);
+          container.appendChild(label);
+          container.appendChild(surface);
+          previewArea.appendChild(container);
+        }
+      }
+
+      function applyMargin() {
+        state.applied[state.selectedPage] = state.selectedPreset;
+        renderPreview();
+        setFeedback('Margen ' + marginPresets[state.selectedPreset].label + ' aplicado en Página ' + (state.selectedPage+1) + '.', 'success');
+      }
+
+      function checkTask() {
+        var t = tasks[state.currentTask];
+        if (!t) {
+          setFeedback('🎉 ¡Correcto! Aplicaste el margen bien. Resultado: 1/1 punto.', 'success');
+          localStorage.setItem('score-tool-26-margenes', '1');
+          return;
+        }
+        var applied = state.applied[t.page];
+        if (applied === t.preset) {
+          state.score += 1;
+          state.currentTask += 1;
+          // Si era la última tarea, mostrar resultado final
+          if (state.currentTask >= tasks.length) {
+            setFeedback('🎉 ¡Correcto! Aplicaste el margen bien. Resultado: 1/1 punto.', 'success');
+            localStorage.setItem('score-tool-26-margenes', '1');
+          } else {
+            setFeedback('✅ Correcto. Siguiente tarea.', 'success');
+          }
+        } else {
+          setFeedback('❌ Incorrecto. Revisa que hayas seleccionado "Moderado" y presionado Aplicar.', 'warn');
+        }
+      }
+
+      function resetExercise() {
+        state.selectedPreset = 'normal';
+        state.selectedPage = 0;
+        state.applied = {};
+        state.currentTask = 0;
+        state.score = 0;
+        renderMarginChoices();
+        renderPageSelect();
+        renderPreview();
+        setFeedback('Ejercicio reiniciado.', 'warn');
+      }
+
+      applyBtn.addEventListener('click', applyMargin);
+      checkBtn.addEventListener('click', checkTask);
+      resetBtn.addEventListener('click', resetExercise);
+
+      // Initialize
+      renderMarginChoices();
+      renderPageSelect();
+      renderPreview();
+      setFeedback('Selecciona un margen y una página, luego pulsa Aplicar.', 'warn');
+
     })();
   </script>
 </body>

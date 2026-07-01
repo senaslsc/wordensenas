@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Subrayado — Word Básico | Grado 702</title>
+  <title>Negrita — Word Básico | Grado 702</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; }
     :root {
@@ -123,7 +123,7 @@
       border: none;
     }
 
-    /* ── ACTIVIDAD: JUEGO SUBRAYADO ── */
+    /* ── ACTIVIDAD: JUEGO NEGRITA ── */
     .extra-zone {
       background: #fff;
       border: 1px solid var(--word-blue);
@@ -134,7 +134,7 @@
     .extra-zone h2 { margin: 0 0 8px; font-size: 1rem; color: var(--word-blue); }
     .extra-zone p.hint { margin: 0 0 6px; font-size: 0.85rem; color: var(--muted); }
 
-    .underline-card {
+    .bold-card {
       background: #f8fbff;
       border: 1px solid #d7e6f5;
       border-radius: 14px;
@@ -149,7 +149,6 @@
       margin: 0 0 12px;
       font-size: 0.9rem;
       color: var(--muted);
-      font-weight: 600;
     }
     .editor-toolbar {
       display: flex;
@@ -192,9 +191,8 @@
       background: rgba(43,87,154,.12);
       color: #0f407e;
     }
-    .editor-segment.underlined {
-      text-decoration: underline;
-      text-decoration-thickness: 2px;
+    .editor-segment.bold {
+      font-weight: 700;
     }
     .editor-segment.incorrect {
       background: rgba(255,0,0,.1);
@@ -270,7 +268,7 @@
   <!-- BARRA SUPERIOR: solo logo + título -->
   <header class="title-bar">
     <a class="word-logo" href="../index.html" title="Inicio">W</a>
-    <h1><a class="title-link" href="../index.html">Subrayado — Word Básico</a></h1>
+    <h1><a class="title-link" href="../index.html">Negrita — Word Básico</a></h1>
   </header>
 
   <!-- SOLO PESTAÑA INICIO -->
@@ -282,37 +280,38 @@
 
   <!-- CABECERA DE LA HERRAMIENTA -->
   <header class="detail-header">
-    <img src="../icons/Subrayado.png" alt="Subrayado" width="64" height="64" />
+    <img src="../icons/Negrita.png" alt="Negrita" width="64" height="64" />
     <div>
       <span class="detail-cat">Formato de texto</span>
-      <h1>Subrayado</h1>
+      <h1>Negrita</h1>
     </div>
   </header>
 
   <div class="detail-body">
 
-    <!-- VIDEO DE YOUTUBE (mismo video usado en las herramientas anteriores) -->
+    <!-- VIDEO DE YOUTUBE (mismo video usado en Cortar, Rehacer y Ortografía) -->
     <div class="block">
       <h2>🎥 Video explicativo</h2>
       <div class="video-wrapper">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/DjpkDk22BOA?si=IaPNS2G2lErsy1VA&amp;start=29" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>      </div>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/piBxlvFNIZk?si=IDUkNpkXOnjRhB31&amp;start=29" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
     </div>
 
-    <!-- ACTIVIDAD: JUEGO SUBRAYADO -->
+    <!-- ACTIVIDAD: JUEGO NEGRITA -->
     <div class="extra-zone">
       <h2>✏️ Actividad</h2>
-      <p class="hint"><strong>Instrucción:</strong> Selecciona el texto correcto y aplica Subrayado. Son 2 tareas en total.</p>
+      <p class="hint"><strong>Instrucción:</strong> Selecciona la palabra más importante y aplícale Negrita, como en Word.</p>
 
-      <div class="underline-card">
-        <div class="task-summary" id="subrayado-task-summary">Tarea 1 de 2: Subraya la frase correcta usando el botón U.</div>
+      <div class="bold-card">
+        <div class="task-summary" id="bold-task-summary">Selecciona la palabra más importante y aplica Negrita.</div>
         <div class="editor-toolbar">
-          <button id="underline-btn" class="editor-btn">U Subrayado</button>
-          <button id="remove-underline-btn" class="editor-btn gray">Quitar subrayado</button>
+          <button id="bold-btn" class="editor-btn">Negrita</button>
+          <button id="remove-bold-btn" class="editor-btn gray">Quitar negrita</button>
           <button id="check-btn" class="editor-btn">Comprobar</button>
           <button id="reset-btn" class="editor-btn gray">Reiniciar</button>
         </div>
-        <div class="editor-area" id="subrayado-editor" aria-label="Editor simulado de Word"></div>
-        <div class="editor-feedback" id="subrayado-feedback">Selecciona un segmento de texto para comenzar.</div>
+        <div class="editor-area" id="bold-editor" aria-label="Editor simulado de Word"></div>
+        <div class="editor-feedback" id="bold-feedback">Selecciona un segmento de texto para comenzar.</div>
       </div>
     </div>
 
@@ -320,9 +319,9 @@
 
   <!-- NAV ENTRE HERRAMIENTAS -->
   <nav class="detail-nav-bar" aria-label="Navegación entre herramientas">
-    <a href="cursiva.html">◀ Cursiva</a>
+    <a href="08-ortografia-y-gramatica.html">◀ Ortografía y gramática</a>
     <a href="../index.html" class="btn-gray">🏠 Ver todas</a>
-    <a href="10-fuente.html">Fuente ▶</a>
+    <a href="cursiva.html">Cursiva ▶</a>
   </nav>
 
   <!-- NAV INFERIOR: solo Inicio -->
@@ -332,62 +331,43 @@
 
   <script>
     (function () {
-      var tasks = [
-        {
-          id: '1',
-          instructions: 'Subraya solo el nombre del lugar que aparece en la frase.',
-          segments: [
-            { id: 'a', text: 'El', correct: false, underlined: false },
-            { id: 'b', text: 'parque central', correct: true, underlined: false },
-            { id: 'c', text: 'está', correct: false, underlined: false },
-            { id: 'd', text: 'abierto', correct: false, underlined: false },
-            { id: 'e', text: 'hoy.', correct: false, underlined: false }
-          ]
-        },
-        {
-          id: '2',
-          instructions: 'Quita el subrayado del verbo. Debe quedar subrayado solo el sustantivo principal.',
-          segments: [
-            { id: 'a', text: 'La', correct: false, underlined: false },
-            { id: 'b', text: 'casa', correct: true, underlined: false },
-            { id: 'c', text: 'está', correct: false, underlined: true },
-            { id: 'd', text: 'lista.', correct: false, underlined: false }
-          ]
-        }
-      ];
-
-      var state = {
-        currentTask: 0,
-        selectedId: null,
-        score: 0
+      var task = {
+        instructions: 'Selecciona la palabra importante y aplícale Negrita.',
+        segments: [
+          { id: 'a', text: 'La', correct: false, bold: false },
+          { id: 'b', text: 'presentación', correct: true, bold: false },
+          { id: 'c', text: 'es', correct: false, bold: false },
+          { id: 'd', text: 'para', correct: false, bold: false },
+          { id: 'e', text: 'el', correct: false, bold: false },
+          { id: 'f', text: 'proyecto.', correct: false, bold: false }
+        ]
       };
 
-      var editor = document.getElementById('subrayado-editor');
-      var feedback = document.getElementById('subrayado-feedback');
-      var taskSummary = document.getElementById('subrayado-task-summary');
-      var underlineBtn = document.getElementById('underline-btn');
-      var removeUnderlineBtn = document.getElementById('remove-underline-btn');
+      var state = {
+        selectedId: null,
+        completed: false
+      };
+
+      var editor = document.getElementById('bold-editor');
+      var feedback = document.getElementById('bold-feedback');
+      var taskSummary = document.getElementById('bold-task-summary');
+      var boldBtn = document.getElementById('bold-btn');
+      var removeBoldBtn = document.getElementById('remove-bold-btn');
       var checkBtn = document.getElementById('check-btn');
       var resetBtn = document.getElementById('reset-btn');
 
       function setFeedback(message, color) {
-        if (!feedback) { return; }
         feedback.textContent = message;
         feedback.style.color = color || '#555';
       }
 
-      function getCurrentTask() {
-        return tasks[state.currentTask];
-      }
-
       function renderEditor() {
-        var task = getCurrentTask();
-        if (!task) { return; }
-
-        taskSummary.textContent = 'Tarea ' + (state.currentTask + 1) + ' de ' + tasks.length + ': ' + task.instructions;
+        taskSummary.textContent = task.instructions;
         editor.innerHTML = task.segments.map(function (segment) {
-          var classes = 'editor-segment' + (segment.underlined ? ' underlined' : '');
-          if (state.selectedId === segment.id) { classes += ' selected'; }
+          var classes = 'editor-segment' + (segment.bold ? ' bold' : '');
+          if (state.selectedId === segment.id) {
+            classes += ' selected';
+          }
           return '<span class="' + classes + '" data-id="' + segment.id + '">' + segment.text + '</span>';
         }).join(' ');
 
@@ -395,21 +375,19 @@
           span.addEventListener('click', function () {
             state.selectedId = span.getAttribute('data-id');
             renderEditor();
-            setFeedback('Texto seleccionado. Usa Subrayado o Quitar subrayado.', '#0b662f');
+            setFeedback('Segmento seleccionado. Usa Negrita o Quitar negrita.', '#0b662f');
           });
         });
       }
 
-      function toggleUnderline(apply) {
-        var task = getCurrentTask();
-        if (!task) { return; }
+      function updateBold(apply) {
         if (!state.selectedId) {
           setFeedback('Selecciona primero un segmento de texto.', 'red');
           return;
         }
         task.segments = task.segments.map(function (segment) {
           if (segment.id === state.selectedId) {
-            segment.underlined = apply;
+            segment.bold = apply;
           }
           return segment;
         });
@@ -417,68 +395,52 @@
       }
 
       function checkTask() {
-        var task = getCurrentTask();
-        if (!task) { return; }
         var wrong = [];
         task.segments.forEach(function (segment) {
-          if (segment.correct && !segment.underlined) {
-            wrong.push('falta subrayar "' + segment.text + '"');
+          if (segment.correct && !segment.bold) {
+            wrong.push('"' + segment.text + '" debe estar en negrita');
           }
-          if (!segment.correct && segment.underlined) {
-            wrong.push('no debe subrayarse "' + segment.text + '"');
+          if (!segment.correct && segment.bold) {
+            wrong.push('"' + segment.text + '" no debe estar en negrita');
           }
         });
 
         if (wrong.length === 0) {
-          state.score += 1;
-          if (state.currentTask + 1 < tasks.length) {
-            setFeedback('¡Perfecto! Tarea completada. Pasando a la siguiente.', '#0f7b3f');
-            state.currentTask += 1;
-            state.selectedId = null;
-            renderEditor();
-          } else {
-            setFeedback('¡Excelente! Has completado todas las tareas.', '#0f7b3f');
-            taskSummary.textContent = 'Actividad terminada. Puntaje: ' + state.score + ' / ' + tasks.length + '.';
-            try { localStorage.setItem('score-tool-09-subrayado', '1'); } catch (e) {}
-          }
+          setFeedback('¡Perfecto! Negrita aplicada correctamente.', '#0f7b3f');
+          state.completed = true;
+          try { localStorage.setItem('score-tool-negrita', '1'); } catch (e) {}
           return;
         }
-
-        setFeedback('Revisa tu selección: ' + wrong.join(', ') + '.', 'red');
+        setFeedback(wrong.join('. ') + '.', 'red');
         highlightIncorrect();
       }
 
       function highlightIncorrect() {
-        var task = getCurrentTask();
-        if (!task) { return; }
         editor.querySelectorAll('.editor-segment').forEach(function (span) {
           var id = span.getAttribute('data-id');
           var segment = task.segments.find(function (s) { return s.id === id; });
           if (!segment) { return; }
-          span.classList.toggle('incorrect', segment.correct !== segment.underlined);
+          span.classList.toggle('incorrect', segment.correct !== segment.bold);
         });
       }
 
-      function resetGame() {
-        tasks.forEach(function (task) {
-          task.segments.forEach(function (segment) {
-            segment.underlined = false;
-          });
+      function resetTask() {
+        task.segments.forEach(function (segment) {
+          segment.bold = false;
         });
-        state.currentTask = 0;
         state.selectedId = null;
-        state.score = 0;
+        state.completed = false;
         renderEditor();
-        setFeedback('Juego reiniciado. Selecciona un texto para comenzar.', '#555');
+        setFeedback('Juego reiniciado. Selecciona el texto correcto.', '#555');
       }
 
-      underlineBtn.addEventListener('click', function () { toggleUnderline(true); });
-      removeUnderlineBtn.addEventListener('click', function () { toggleUnderline(false); });
+      boldBtn.addEventListener('click', function () { updateBold(true); });
+      removeBoldBtn.addEventListener('click', function () { updateBold(false); });
       checkBtn.addEventListener('click', checkTask);
-      resetBtn.addEventListener('click', resetGame);
+      resetBtn.addEventListener('click', resetTask);
 
       renderEditor();
-      setFeedback('Selecciona un segmento de texto para comenzar.', '#555');
+      setFeedback('Selecciona un texto para comenzar.', '#555');
     })();
   </script>
 

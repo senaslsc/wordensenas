@@ -9,7 +9,6 @@
     :root {
       --word-blue: #2B579A;
       --word-dark: #0b2d5c;
-      --ribbon-bg: #f3f2f1;
       --page-bg: #eef2f6;
       --card: #fff;
       --text: #1a1a1a;
@@ -25,11 +24,10 @@
       font-family: var(--font);
       color: var(--text);
       background: var(--page-bg);
-      padding-bottom: calc(var(--nav-h) + var(--tool-nav-h));
+      padding-bottom: calc(var(--nav-h) + var(--tool-nav-h) + 10px);
     }
-    a { color: inherit; }
-    img { display: block; max-width: 100%; }
 
+    /* ── BARRA SUPERIOR ── */
     .title-bar {
       background: var(--word-blue);
       color: #fff;
@@ -53,195 +51,24 @@
     .title-bar a.title-link { color: #fff; text-decoration: none; }
     .title-bar a.title-link:hover { text-decoration: underline; }
 
+    /* Solo pestaña Inicio */
     .ribbon-tabs {
-      display: flex; flex-wrap: wrap;
+      display: flex;
       list-style: none; margin: 0; padding: 0 6px;
       background: #fff;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 2px solid var(--word-blue);
     }
-    .ribbon-tabs a, .ribbon-tabs button {
+    .ribbon-tabs li a {
       display: block;
-      border: none; background: transparent;
-      padding: 9px 12px; font-size: 12px; color: var(--text);
-      border-bottom: 2px solid transparent;
-      text-decoration: none;
-      font-family: inherit;
-      cursor: pointer;
-    }
-    .ribbon-tabs li.active a,
-    .ribbon-tabs li.active button {
-      background: var(--ribbon-bg);
-      border-bottom-color: var(--word-blue);
-      font-weight: 600;
-    }
-    .ribbon-fake {
-      background: var(--ribbon-bg);
-      border-bottom: 1px solid var(--border);
-      padding: 6px 12px;
-      font-size: 10px;
-      color: var(--muted);
-      display: flex; gap: 16px; flex-wrap: wrap;
-    }
-    .ribbon-fake span { padding: 2px 6px; background: #fff; border-radius: 3px; border: 1px solid #e0e0e0; }
-
-    .platform-shell {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 14px 16px 20px;
-      display: grid;
-      grid-template-columns: 1fr 270px;
-      gap: 16px;
-      align-items: start;
-    }
-    @media (max-width: 960px) {
-      .platform-shell { grid-template-columns: 1fr; }
-    }
-    .hero {
-      grid-column: 1 / -1;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .hero-text h2 {
-      margin: 0 0 4px;
-      font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+      padding: 9px 16px;
+      font-size: 13px;
       color: var(--word-blue);
-      display: flex; align-items: center; gap: 8px;
-    }
-    .hero-text .w-icon {
-      width: 32px; height: 32px;
-      background: linear-gradient(135deg, #2B579A, #41a5ee);
-      color: #fff; font-weight: 800;
-      display: flex; align-items: center; justify-content: center;
-      border-radius: 5px; font-size: 18px;
-    }
-    .hero-text p { margin: 0; color: var(--muted); font-size: 0.9rem; }
-    .main-panel {
-      background: var(--card);
-      border-radius: 12px;
-      padding: 16px;
-      box-shadow: 0 2px 10px rgba(0,0,0,.08);
-      border: 1px solid rgba(0,0,0,.06);
-    }
-    .main-panel > p.hint-line {
-      margin: 0 0 14px;
-      font-size: 0.88rem;
-      color: var(--muted);
-    }
-    .categories-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-    @media (max-width: 640px) {
-      .categories-grid { grid-template-columns: 1fr; }
-    }
-    .category-block {
-      background: var(--cat-tint);
-      border: 2px solid var(--cat-color);
-      border-radius: 10px;
-      padding: 10px 10px 12px;
-    }
-    .category-header {
-      display: flex; align-items: center; gap: 8px;
-      margin-bottom: 10px;
-    }
-    .category-number {
-      width: 24px; height: 24px; border-radius: 50%;
-      background: var(--cat-color); color: #fff;
-      font-size: 11px; font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .category-header h3 {
-      margin: 0; font-size: 0.68rem; font-weight: 800;
-      letter-spacing: 0.04em; color: var(--cat-color);
-    }
-    .category-tools {
-      display: flex; flex-wrap: wrap; gap: 8px;
-    }
-    .tool-card {
-      display: flex; flex-direction: column; align-items: center;
-      width: 78px;
-      padding: 8px 4px;
-      background: #fff;
-      border: 1px solid rgba(0,0,0,.08);
-      border-radius: 8px;
+      font-weight: 700;
       text-decoration: none;
-      color: var(--text);
-      transition: transform .15s, box-shadow .15s, border-color .15s;
-    }
-    .tool-card:hover, .tool-card:focus-visible {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 14px rgba(0,0,0,.12);
-      border-color: var(--cat-color);
-      outline: none;
-    }
-    .tool-card img {
-      width: 44px; height: 44px;
-      object-fit: contain;
-      margin-bottom: 4px;
-    }
-    .tool-label {
-      font-size: 10px;
-      text-align: center;
-      line-height: 1.2;
-      font-weight: 600;
-    }
-    .sidebar { display: flex; flex-direction: column; gap: 12px; }
-    .sidebar-card {
-      background: var(--card);
-      border-radius: 10px;
-      padding: 14px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.07);
-      border: 1px solid rgba(0,0,0,.05);
-    }
-    .welcome-card {
-      background: linear-gradient(145deg, #2B579A, #1e4080);
-      color: #fff;
-    }
-    .welcome-card h3 { margin: 0 0 8px; font-size: 1rem; }
-    .welcome-card p { margin: 0 0 12px; font-size: 0.8rem; line-height: 1.45; opacity: .95; }
-    .btn-start {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 8px 14px;
-      background: #fff; color: var(--word-blue);
-      border: none; border-radius: 6px;
-      font-weight: 700; font-size: 0.85rem;
-      text-decoration: none;
-      font-family: inherit;
-      cursor: pointer;
-    }
-    .sidebar-card h3 { margin: 0 0 10px; font-size: 0.95rem; }
-    .progress-bar {
-      height: 8px; background: #e8ecf0;
-      border-radius: 4px; overflow: hidden;
-      margin-bottom: 10px;
-    }
-    .progress-bar span {
-      display: block; height: 100%; width: 35%;
-      background: #0f7b3f; border-radius: 4px;
-    }
-    .progress-list { list-style: none; margin: 0; padding: 0; font-size: 0.78rem; }
-    .progress-list li {
-      display: flex; align-items: center; gap: 6px;
-      padding: 5px 0; border-bottom: 1px solid #f0f0f0;
-      color: var(--muted);
-    }
-    .progress-list li.done { color: #0f7b3f; font-weight: 600; }
-    .progress-list li.current { color: var(--word-blue); font-weight: 600; }
-    .progress-list a { text-decoration: none; color: inherit; }
-    .btn-lsc {
-      display: block; width: 100%;
-      padding: 10px; text-align: center;
-      background: var(--word-blue); color: #fff;
-      border: none; border-radius: 6px;
-      font-weight: 600; font-size: 0.85rem;
-      font-family: inherit;
-      cursor: pointer;
+      border-bottom: 3px solid var(--word-blue);
     }
 
+    /* ── CABECERA DE LA HERRAMIENTA ── */
     .detail-header {
       background: linear-gradient(135deg, var(--word-blue), #1e3f6e);
       color: #fff;
@@ -260,71 +87,256 @@
       padding: 3px 8px; border-radius: 4px;
       font-size: 11px; font-weight: 600;
     }
+
+    /* ── CONTENIDO PRINCIPAL ── */
     .detail-body {
       max-width: 800px; margin: 0 auto;
       padding: 16px 16px 24px;
     }
-    .ribbon-path, .block, .extra-zone {
+
+    .block {
       background: #fff;
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 14px 16px;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
-    .ribbon-path { border-left: 4px solid var(--word-blue); }
-    .block h2, .extra-zone h2 { margin: 0 0 8px; font-size: 1rem; color: var(--word-blue); }
-    .block p, .block li { line-height: 1.55; }
-    .block ol { margin: 0; padding-left: 1.25rem; }
-    .before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    @media (max-width: 500px) { .before-after { grid-template-columns: 1fr; } }
-    .ba-card { padding: 10px; border-radius: 6px; font-size: 13px; }
-    .ba-card.before { background: #fff4ce; }
-    .ba-card.after { background: #dff6dd; }
-    .ba-card h3 { margin: 0 0 4px; font-size: 11px; text-transform: uppercase; }
-    .placeholder-box {
-      min-height: 120px;
-      border: 2px dashed #c8c6c4;
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      text-align: center; color: var(--muted);
-      font-size: 13px; padding: 12px;
-      background: #faf9f8;
+    .block h2 {
+      margin: 0 0 12px;
+      font-size: 1rem;
+      color: var(--word-blue);
     }
-    .placeholder-box.lsc { border-color: var(--word-blue); background: #f0f6fc; }
-    .extra-zone {
-      border-style: dashed;
-      border-color: var(--word-blue);
-      background: #fafcfe;
-      min-height: 80px;
-    }
-    .extra-zone p.hint { margin: 0; font-size: 0.85rem; color: var(--muted); }
 
-    .tool-tabs {
+    /* ── VIDEO ── */
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: 8px;
+      background: #000;
+    }
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    /* ── ACTIVIDAD: JUEGO NUMERACIÓN ── */
+    .extra-zone {
+      background: #fff;
+      border: 1px solid var(--word-blue);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+    }
+    .extra-zone h2 { margin: 0 0 8px; font-size: 1rem; color: var(--word-blue); }
+    .extra-zone p.hint { margin: 0 0 6px; font-size: 0.85rem; color: var(--muted); }
+
+    .numbering-activity {
+      display: grid;
+      gap: 16px;
+      margin-top: 10px;
+    }
+    .numbering-toolbar {
+      display: grid;
+      gap: 14px;
+      padding: 14px;
+      background: #f8fbff;
+      border: 1px solid #d8d8d8;
+      border-radius: 14px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.8), 0 1px 2px rgba(0,0,0,.04);
+    }
+    .numbering-toolbar .tool-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #4b5563;
+      letter-spacing: .08em;
+    }
+    .numbering-style-list {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .numbering-style-button {
+      padding: 12px 16px;
+      border: 1px solid #c8c8c8;
+      background: #f8f9fb;
+      color: #1f2937;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform .15s, border-color .15s, background .15s;
+      font-size: 0.95rem;
+      min-width: 100px;
+      text-align: center;
+      font-family: inherit;
+    }
+    .numbering-style-button:hover {
+      transform: translateY(-1px);
+      background: #fff;
+      border-color: #8aa1cb;
+    }
+    .numbering-style-button.active {
+      border-color: var(--word-blue);
+      background: #eff4ff;
+      color: var(--word-blue);
+      box-shadow: 0 0 0 4px rgba(43,87,154,.08);
+    }
+    .numbering-pages {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(170px, 1fr));
+      gap: 14px;
+    }
+    @media (max-width: 700px) {
+      .numbering-pages { grid-template-columns: 1fr; }
+    }
+    .numbering-page-card {
+      background: #fff;
+      border: 1px solid #d9e2eb;
+      border-radius: 14px;
+      box-shadow: 0 2px 10px rgba(0,0,0,.05);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      transition: transform .15s, border-color .15s;
+      min-height: 240px;
+      overflow: hidden;
+    }
+    .numbering-page-card:hover,
+    .numbering-page-card.selected {
+      border-color: var(--word-blue);
+      transform: translateY(-1px);
+    }
+    .numbering-page-header {
+      padding: 12px 14px;
+      border-bottom: 1px solid #e7edf3;
+      background: #f7f9fb;
+    }
+    .numbering-page-header h3 {
+      margin: 0;
+      font-size: 0.95rem;
+      color: var(--word-dark);
+    }
+    .numbering-page-body {
+      padding: 14px;
+      flex: 1;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+    .doc-preview {
+      width: 100%;
+      min-height: 170px;
+      background: #fff;
+      border: 1px solid #dfe6ed;
+      border-radius: 14px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: inset 0 0 0 1px rgba(227,233,239,.8);
+    }
+    .doc-preview::before {
+      content: '';
+      position: absolute;
+      top: 16px; left: 14px; right: 14px;
+      height: 18px;
+      border-bottom: 1px solid rgba(92,112,134,.16);
+    }
+    .doc-preview::after {
+      content: '';
+      position: absolute;
+      top: 42px; left: 18px; right: 18px;
+      height: 8px;
+      background: linear-gradient(90deg, rgba(92,112,134,.12) 15%, rgba(92,112,134,0) 15%);
+      background-size: 22px 8px;
+      opacity: .45;
+    }
+    .doc-canvas {
+      position: absolute;
+      inset: 18px 18px 20px;
+      display: grid;
+      gap: 8px;
+    }
+    .doc-line {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      color: #475569;
+      font-size: 0.9rem;
+    }
+    .doc-line span {
+      width: 24px;
+      text-align: right;
+      color: #9ca3af;
+      font-weight: 700;
+    }
+    .doc-line span.visible {
+      color: #1f2937;
+    }
+    .doc-text {
+      flex: 1;
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .numbering-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 4px;
-      padding: 8px 12px;
-      background: #fff;
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 20;
+      gap: 10px;
+      align-items: center;
     }
-    .tool-tabs a {
-      padding: 6px 10px;
-      font-size: 11px;
-      text-decoration: none;
-      border-radius: 4px;
-      color: var(--muted);
-      border: 1px solid transparent;
-    }
-    .tool-tabs a:hover { background: var(--ribbon-bg); color: var(--text); }
-    .tool-tabs a.active {
+    .editor-btn {
+      min-width: 120px;
+      padding: 10px 14px;
       background: var(--word-blue);
       color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      font-family: inherit;
+      cursor: pointer;
+    }
+    .editor-btn.gray { background: #fff; color: var(--word-blue); border: 1px solid #d7e6ff; }
+    .numbering-sidebar {
+      display: grid;
+      gap: 10px;
+    }
+    .numbering-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      background: #fff;
+      color: #374151;
+      font-size: 0.9rem;
+    }
+    .numbering-page-note {
+      margin-top: 10px;
+      font-size: 0.82rem;
+      color: #51607d;
+    }
+    .numbering-feedback {
+      min-height: 24px;
       font-weight: 600;
+      color: #555;
+      font-size: 0.95rem;
+    }
+    .game-score {
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: #e9f5ff;
+      border: 1px solid #b7d5ff;
+      color: #0b2d5c;
+      font-weight: 700;
+      font-size: 0.9rem;
     }
 
+    /* ── NAV ENTRE HERRAMIENTAS ── */
     .detail-nav-bar {
       position: fixed;
       bottom: var(--nav-h);
@@ -358,6 +370,7 @@
       cursor: not-allowed;
     }
 
+    /* ── NAV INFERIOR ── */
     .bottom-nav {
       position: fixed; bottom: 0; left: 0; right: 0;
       height: var(--nav-h);
@@ -366,54 +379,37 @@
       z-index: 100;
       box-shadow: 0 -2px 12px rgba(0,0,0,.2);
     }
-    .bottom-nav a, .bottom-nav button {
+    .bottom-nav a {
       flex: 1; max-width: 130px;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       gap: 2px;
-      border: none; background: transparent;
       color: rgba(255,255,255,.8);
       text-decoration: none;
       font-size: 0.62rem; font-weight: 500;
       padding: 4px;
-      font-family: inherit;
-      cursor: pointer;
     }
-    .bottom-nav a:hover, .bottom-nav button:hover { color: #fff; background: rgba(255,255,255,.08); }
-    .bottom-nav a.active { background: rgba(255,255,255,.15); color: #fff; font-weight: 700; }
+    .bottom-nav a:hover { color: #fff; background: rgba(255,255,255,.08); }
     .bottom-nav .nav-icon { font-size: 1.15rem; }
-</style>
+  </style>
 </head>
-<body data-tool-id="22" data-tool-slug="numeracion">
+<body>
 
+  <!-- BARRA SUPERIOR: solo logo + título -->
   <header class="title-bar">
     <a class="word-logo" href="../index.html" title="Inicio">W</a>
     <h1><a class="title-link" href="../index.html">Numeración — Word Básico</a></h1>
   </header>
 
-  <nav aria-label="Pestañas Word">
+  <!-- SOLO PESTAÑA INICIO -->
+  <nav aria-label="Menú Word">
     <ul class="ribbon-tabs">
-      <li class="active"><a href="../index.html">Inicio</a></li>
-      <li><button type="button">Insertar</button></li>
-      <li><button type="button">Diseño</button></li>
-      <li><button type="button">Disposición</button></li>
-      <li><button type="button">Referencias</button></li>
-      <li><button type="button">Revisar</button></li>
-      <li><button type="button">Vista</button></li>
+      <li><a href="../index.html">Inicio</a></li>
     </ul>
   </nav>
-  <div class="ribbon-fake" aria-hidden="true">
-    <span>Portapapeles</span><span>Fuente</span><span>Párrafo</span><span>Estilos</span>
-  </div>
-<nav class="tool-tabs" aria-label="Pestañas de esta herramienta">
-    <a href="#leccion" class="active">📖 Lección</a>
-    <a href="#lsc">🤟 LSC</a>
-    <a href="#captura">🖼️ Captura Word</a>
-    <a href="#ejercicios">✏️ Ejercicios</a>
-    <a href="#extra">➕ Actividades</a>
-  </nav>
 
-  <header class="detail-header" id="leccion">
+  <!-- CABECERA DE LA HERRAMIENTA -->
+  <header class="detail-header">
     <img src="../icons/Numeraci%C3%B3n.png" alt="Numeración" width="64" height="64" />
     <div>
       <span class="detail-cat">Organización del contenido</span>
@@ -422,78 +418,229 @@
   </header>
 
   <div class="detail-body">
-    <div class="ribbon-path"><strong>Ruta en la cinta:</strong> Inicio → Numeración</div>
 
-    <article class="block">
-      <h2>¿Qué significa?</h2>
-      <p>Lista con números 1, 2, 3…</p>
-    </article>
-
-    <article class="block">
-      <h2>Antes / Después</h2>
-      <div class="before-after">
-        <div class="ba-card before"><h3>Antes</h3><p>Sin números.</p></div>
-        <div class="ba-card after"><h3>Después</h3><p>Lista numerada automática.</p></div>
+    <!-- VIDEO DE YOUTUBE (mismo video usado en las herramientas anteriores) -->
+    <div class="block">
+      <h2>🎥 Video explicativo</h2>
+      <div class="video-wrapper">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/8XgEhFqBbWo?si=dzvu44WmEW2-sm9R&amp;start=29" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
       </div>
-    </article>
+    </div>
 
-    <article class="block">
-      <h2>Pasos para usarlo</h2>
-      <ol><li>Escribe cada ítem.</li>
-<li>Selecciona líneas.</li>
-<li>Numeración.</li>
-<li>Enter para seguir.</li></ol>
-    </article>
+    <!-- ACTIVIDAD: JUEGO NUMERACIÓN -->
+    <div class="extra-zone">
+      <h2>✏️ Actividad</h2>
+      <p class="hint"><strong>Instrucción:</strong> Selecciona un estilo de numeración y aplícalo en la página correcta. Son 3 tareas en total.</p>
 
-    <article class="block" id="lsc">
-      <h2>Referente en LSC</h2>
-      <div class="placeholder-box lsc">Espacio para foto o video de la seña en Lengua de Señas Colombiana (LSC).</div>
-    </article>
+      <div class="numbering-activity">
+        <div class="numbering-toolbar">
+          <div><strong class="tool-label">Estilo de numeración</strong></div>
+          <div class="numbering-style-list" id="numbering-style-list"></div>
+          <div class="numbering-actions">
+            <button id="apply-numbering" class="editor-btn">Aplicar numeración</button>
+            <button id="check-numbering" class="editor-btn">Comprobar</button>
+            <button id="reset-numbering" class="editor-btn gray">Reiniciar</button>
+          </div>
+        </div>
 
-    <article class="block" id="captura">
-      <h2>Captura en Word 2021</h2>
-      <div class="placeholder-box">Espacio para captura de pantalla real de Microsoft Word 2021.</div>
-    </article>
+        <div class="numbering-sidebar">
+          <div class="numbering-chip">Lista: <strong id="selected-style-label">1, 2, 3</strong></div>
+          <div class="numbering-chip">Página: <strong id="selected-page-label">Capítulo</strong></div>
+        </div>
 
-    <section class="extra-zone" id="ejercicios">
-      <h2>Ejercicios</h2>
-      <p class="hint">Zona lista para agregar actividades de esta herramienta más adelante.</p>
-    </section>
+        <div class="numbering-pages" id="numbering-pages"></div>
 
-    <section class="extra-zone" id="extra">
-      <h2>Actividades extra</h2>
-      <p class="hint">Puedes editar solo este archivo (<code>22-numeracion.html</code>) sin tocar las demás lecciones.</p>
-    </section>
-  </div>
+        <div class="numbering-feedback" id="numbering-feedback">Elige un estilo y una página, luego aplica la numeración.</div>
+        <div class="game-score" id="numbering-score">Puntaje: 0</div>
+      </div>
+    </div>
 
+  </div><!-- /detail-body -->
+
+  <!-- NAV ENTRE HERRAMIENTAS -->
   <nav class="detail-nav-bar" aria-label="Navegación entre herramientas">
-    <a href="21-figura.html">◀ Figura</a>
+    <a href="21-formas.html">◀ Formas</a>
     <a href="../index.html" class="btn-gray">🏠 Ver todas</a>
     <a href="23-vinetas.html">Viñetas ▶</a>
   </nav>
 
-
+  <!-- NAV INFERIOR: solo Inicio -->
   <nav class="bottom-nav" aria-label="Menú principal">
     <a href="../index.html"><span class="nav-icon">🏠</span>Inicio</a>
-    <a href="../index.html#categories-grid" class="active"><span class="nav-icon">📚</span>Lecciones</a>
-    <a href="#ejercicios"><span class="nav-icon">✏️</span>Ejercicios</a>
-    <a href="#evaluaciones"><span class="nav-icon">📋</span>Evaluaciones</a>
-    <a href="#ayuda"><span class="nav-icon">❓</span>Ayuda</a>
   </nav>
 
   <script>
-    /* Página: 22-numeracion.html | Herramienta: Numeración */
     (function () {
-      var tabs = document.querySelectorAll(".tool-tabs a");
-      var hash = location.hash || "#leccion";
-      tabs.forEach(function (a) {
-        a.classList.toggle("active", a.getAttribute("href") === hash);
-        a.addEventListener("click", function () {
-          tabs.forEach(function (t) { t.classList.remove("active"); });
-          a.classList.add("active");
+      var styles = [
+        { id: 'decimal', label: '1, 2, 3', format: function (i) { return i + '.'; } },
+        { id: 'lower-alpha', label: 'a, b, c', format: function (i) { return String.fromCharCode(96 + i) + '.'; } },
+        { id: 'upper-roman', label: 'I, II, III', format: function (i) { var romans = ['I', 'II', 'III', 'IV', 'V']; return romans[i - 1] + '.'; } }
+      ];
+
+      var pages = [
+        { id: 'page1', title: 'Capítulo', note: 'Numerar los títulos del capítulo con 1, 2, 3.', expected: 'decimal' },
+        { id: 'page2', title: 'Lista de compras', note: 'Numerar los items con a, b, c.', expected: 'lower-alpha' },
+        { id: 'page3', title: 'Pasos', note: 'Numerar las instrucciones con I, II, III.', expected: 'upper-roman' }
+      ];
+
+      var state = {
+        selectedStyle: 'decimal',
+        selectedPage: 'page1',
+        applied: { page1: null, page2: null, page3: null },
+        currentTask: 0,
+        score: 0,
+        gameScore: 0
+      };
+
+      var styleList = document.getElementById('numbering-style-list');
+      var pagesContainer = document.getElementById('numbering-pages');
+      var selectedStyleLabel = document.getElementById('selected-style-label');
+      var selectedPageLabel = document.getElementById('selected-page-label');
+      var feedback = document.getElementById('numbering-feedback');
+      var score = document.getElementById('numbering-score');
+      var applyButton = document.getElementById('apply-numbering');
+      var checkButton = document.getElementById('check-numbering');
+      var resetButton = document.getElementById('reset-numbering');
+
+      function task() { return pages[state.currentTask]; }
+      function saveScore() { try { localStorage.setItem('score-tool-22-numeracion', state.gameScore); } catch (e) {} }
+      function loadScore() {
+        var value = null;
+        try { value = localStorage.getItem('score-tool-22-numeracion'); } catch (e) {}
+        state.gameScore = value !== null ? Number(value) : 0;
+      }
+      function updateScore() {
+        if (state.gameScore === 1) { score.textContent = 'Puntaje: +1'; score.style.color = '#0f7b3f'; }
+        else if (state.gameScore === -1) { score.textContent = 'Puntaje: -1'; score.style.color = '#c0392b'; }
+        else { score.textContent = 'Puntaje: 0'; score.style.color = '#0b2d5c'; }
+      }
+      function setFeedback(text, color) { feedback.textContent = text; feedback.style.color = color || '#555'; }
+
+      function currentStyle() { return styles.find(function (style) { return style.id === state.selectedStyle; }); }
+      function currentPage() { return pages.find(function (page) { return page.id === state.selectedPage; }); }
+
+      function renderStyles() {
+        styleList.innerHTML = styles.map(function (style) {
+          var active = style.id === state.selectedStyle ? ' active' : '';
+          return '<button type="button" class="numbering-style-button' + active + '" data-style="' + style.id + '">' + style.label + '</button>';
+        }).join('');
+        styleList.querySelectorAll('.numbering-style-button').forEach(function (button) {
+          button.addEventListener('click', function () {
+            state.selectedStyle = this.getAttribute('data-style');
+            renderStyles();
+            updateLabels();
+            setFeedback('Estilo seleccionado: ' + currentStyle().label + '.', '#0b662f');
+          });
         });
+      }
+
+      function renderPages() {
+        pagesContainer.innerHTML = pages.map(function (page) {
+          var active = state.selectedPage === page.id ? ' selected' : '';
+          var preview = state.applied[page.id] ? renderNumberedPage(page.id) : renderEmptyPage(page.id);
+          return '<div class="numbering-page-card' + active + '" data-page="' + page.id + '">' +
+                   '<div class="numbering-page-header"><h3>' + page.title + '</h3></div>' +
+                   '<div class="numbering-page-body">' + preview + '</div>' +
+                   '<div class="numbering-page-note">' + page.note + '</div>' +
+                 '</div>';
+        }).join('');
+        pagesContainer.querySelectorAll('.numbering-page-card').forEach(function (card) {
+          card.addEventListener('click', function () {
+            state.selectedPage = this.getAttribute('data-page');
+            renderPages();
+            updateLabels();
+            setFeedback('Página seleccionada: ' + currentPage().title + '.', '#0b662f');
+          });
+        });
+      }
+
+      function renderEmptyPage(pageId) {
+        var items = getPageItems(pageId);
+        return '<div class="doc-preview"><div class="doc-canvas">' +
+               items.map(function (text) { return '<div class="doc-line"><span></span><div class="doc-text">' + text + '</div></div>'; }).join('') +
+               '</div></div>';
+      }
+
+      function renderNumberedPage(pageId) {
+        var items = getPageItems(pageId);
+        var applied = state.applied[pageId];
+        var style = styles.find(function (style) { return applied && style.id === applied.style; }) || currentStyle();
+        return '<div class="doc-preview"><div class="doc-canvas">' +
+               items.map(function (text, index) { return '<div class="doc-line"><span class="visible">' + style.format(index + 1) + '</span><div class="doc-text">' + text + '</div></div>'; }).join('') +
+               '</div></div>';
+      }
+
+      function getPageItems(pageId) {
+        return {
+          page1: ['Introducción', 'Objetivo', 'Resumen'],
+          page2: ['Pan', 'Leche', 'Huevos'],
+          page3: ['Abrir Word', 'Escribir texto', 'Guardar documento']
+        }[pageId];
+      }
+
+      function updateLabels() {
+        selectedStyleLabel.textContent = currentStyle().label;
+        selectedPageLabel.textContent = currentPage().title;
+      }
+
+      applyButton.addEventListener('click', function () {
+        state.applied[state.selectedPage] = { style: state.selectedStyle };
+        renderPages();
+        setFeedback('Numeración aplicada en ' + currentPage().title + '.', '#0b662f');
       });
+
+      checkButton.addEventListener('click', function () {
+        var current = currentPage();
+        var applied = state.applied[current.id];
+        var expected = current.expected;
+        if (applied && applied.style === expected) {
+          state.score += 1;
+          state.gameScore = state.gameScore !== -1 ? 1 : -1;
+          saveScore();
+          updateScore();
+          if (state.currentTask + 1 < pages.length) {
+            state.currentTask += 1;
+            state.selectedPage = pages[state.currentTask].id;
+            state.selectedStyle = pages[state.currentTask].expected;
+            renderStyles();
+            renderPages();
+            updateLabels();
+            setFeedback('¡Correcto! Ahora numera la página: ' + currentPage().title + '.', '#0f7b3f');
+          } else {
+            setFeedback('¡Perfecto! Todas las listas están numeradas.', '#0f7b3f');
+            score.textContent = 'Final: ' + state.score + ' / ' + pages.length;
+          }
+        } else {
+          state.gameScore = -1;
+          saveScore();
+          updateScore();
+          setFeedback('No es correcto. Revisa el estilo de numeración y la página seleccionada.', '#c0392b');
+        }
+      });
+
+      resetButton.addEventListener('click', function () {
+        state.selectedStyle = 'decimal';
+        state.selectedPage = 'page1';
+        state.applied = { page1: null, page2: null, page3: null };
+        state.currentTask = 0;
+        state.score = 0;
+        state.gameScore = 0;
+        saveScore();
+        renderStyles();
+        renderPages();
+        updateLabels();
+        updateScore();
+        setFeedback('Actividad reiniciada. Selecciona estilo y página.', '#555');
+      });
+
+      loadScore();
+      renderStyles();
+      renderPages();
+      updateLabels();
+      updateScore();
+      setFeedback('Selecciona un estilo, luego aplica numeración en la página correcta.', '#555');
     })();
   </script>
+
 </body>
 </html>
