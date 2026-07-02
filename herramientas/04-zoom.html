@@ -15,12 +15,13 @@
       --border: #d1d1d1;
       --font: "Segoe UI", Calibri, system-ui, sans-serif;
       --nav-h: 54px;
+      --tool-nav-h: 48px;
     }
     html { scroll-behavior: smooth; }
     body {
       margin: 0; font-family: var(--font);
       color: var(--text); background: var(--page-bg);
-      padding-bottom: calc(var(--nav-h) + 20px);
+      padding-bottom: calc(var(--nav-h) + var(--tool-nav-h) + 20px);
     }
 
     /* BARRA SUPERIOR */
@@ -161,6 +162,25 @@
       font-size: 0.9rem; color: var(--muted); min-height: 1.3em; flex: 1;
     }
 
+
+    /* NAV ENTRE HERRAMIENTAS */
+    .detail-nav-bar {
+      position: fixed; bottom: var(--nav-h); left: 0; right: 0;
+      background: #fff; border-top: 1px solid var(--border);
+      padding: 8px 12px; display: flex; justify-content: center;
+      gap: 8px; flex-wrap: wrap; z-index: 99;
+      min-height: var(--tool-nav-h); align-items: center;
+    }
+    .detail-nav-bar a {
+      padding: 8px 18px; border-radius: 6px;
+      font-weight: 700; font-size: 13px; text-decoration: none;
+      background: var(--word-blue); color: #fff;
+      transition: background .15s;
+    }
+    .detail-nav-bar a:hover { background: var(--word-dark); }
+    .detail-nav-bar a.btn-gray { background: #605e5c; }
+    .detail-nav-bar a.btn-gray:hover { background: #3e3d3c; }
+
     /* NAV INFERIOR */
     .bottom-nav {
       position: fixed; bottom: 0; left: 0; right: 0; height: var(--nav-h);
@@ -208,7 +228,7 @@
       <h2>🎥 Video explicativo</h2>
       <div class="video-btn-wrap">
         <p>Haz clic para ver el video explicativo sobre <strong>Zoom en Word</strong></p>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/pGrqddfaLTE?si=GATYIhZyB25jnrk8&amp;start=29" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <a class="btn-youtube" href="https://www.youtube.com/watch?v=pGrqddfaLTE&t=29" target="_blank">
           &#9654; Ver video en YouTube
         </a>
         <p>Se abrirá en una pestaña nueva</p>
@@ -261,6 +281,13 @@
     </div>
 
   </div>
+
+  <!-- NAV ENTRE HERRAMIENTAS -->
+  <nav class="detail-nav-bar" aria-label="Navegación entre herramientas">
+    <a href="03-pegar.html">◀ Pegar</a>
+    <a href="../index.html" class="btn-gray">🏠 Ver todas</a>
+    <a href="05-guardar.html">Guardar ▶</a>
+  </nav>
 
   <!-- NAV INFERIOR -->
   <nav class="bottom-nav" aria-label="Menú principal">
