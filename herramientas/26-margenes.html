@@ -9,9 +9,7 @@
     :root {
       --word-blue: #2B579A;
       --word-dark: #0b2d5c;
-      --ribbon-bg: #f3f2f1;
       --page-bg: #eef2f6;
-      --card: #fff;
       --text: #1a1a1a;
       --muted: #5c5c5c;
       --border: #d1d1d1;
@@ -21,425 +19,194 @@
     }
     html { scroll-behavior: smooth; }
     body {
-      margin: 0;
-      font-family: var(--font);
-      color: var(--text);
-      background: var(--page-bg);
-      padding-bottom: calc(var(--nav-h) + var(--tool-nav-h));
+      margin: 0; font-family: var(--font);
+      color: var(--text); background: var(--page-bg);
+      padding-bottom: calc(var(--nav-h) + var(--tool-nav-h) + 20px);
     }
-    a { color: inherit; }
-    img { display: block; max-width: 100%; }
 
+    /* BARRA SUPERIOR */
     .title-bar {
-      background: var(--word-blue);
-      color: #fff;
-      padding: 6px 14px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 12px;
+      background: var(--word-blue); color: #fff;
+      padding: 6px 14px; display: flex; align-items: center; gap: 10px; font-size: 12px;
     }
     .word-logo {
-      width: 24px; height: 24px;
-      background: #fff;
-      color: var(--word-blue);
-      font-weight: 800;
-      font-size: 15px;
+      width: 24px; height: 24px; background: #fff; color: var(--word-blue);
+      font-weight: 800; font-size: 15px;
       display: flex; align-items: center; justify-content: center;
-      border-radius: 3px;
-      text-decoration: none;
+      border-radius: 3px; text-decoration: none;
     }
     .title-bar h1 { margin: 0; font-size: 13px; font-weight: 600; }
     .title-bar a.title-link { color: #fff; text-decoration: none; }
     .title-bar a.title-link:hover { text-decoration: underline; }
 
+    /* Solo Inicio */
     .ribbon-tabs {
-      display: flex; flex-wrap: wrap;
-      list-style: none; margin: 0; padding: 0 6px;
-      background: #fff;
-      border-bottom: 1px solid var(--border);
+      display: flex; list-style: none; margin: 0; padding: 0 6px;
+      background: #fff; border-bottom: 2px solid var(--word-blue);
     }
-    .ribbon-tabs a, .ribbon-tabs button {
-      display: block;
-      border: none; background: transparent;
-      padding: 9px 12px; font-size: 12px; color: var(--text);
-      border-bottom: 2px solid transparent;
-      text-decoration: none;
-      font-family: inherit;
-      cursor: pointer;
-    }
-    .ribbon-tabs li.active a,
-    .ribbon-tabs li.active button {
-      background: var(--ribbon-bg);
-      border-bottom-color: var(--word-blue);
-      font-weight: 600;
-    }
-    .ribbon-fake {
-      background: var(--ribbon-bg);
-      border-bottom: 1px solid var(--border);
-      padding: 6px 12px;
-      font-size: 10px;
-      color: var(--muted);
-      display: flex; gap: 16px; flex-wrap: wrap;
-    }
-    .ribbon-fake span { padding: 2px 6px; background: #fff; border-radius: 3px; border: 1px solid #e0e0e0; }
-
-    .platform-shell {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 14px 16px 20px;
-      display: grid;
-      grid-template-columns: 1fr 270px;
-      gap: 16px;
-      align-items: start;
-    }
-    @media (max-width: 960px) {
-      .platform-shell { grid-template-columns: 1fr; }
-    }
-    .hero {
-      grid-column: 1 / -1;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .hero-text h2 {
-      margin: 0 0 4px;
-      font-size: clamp(1.25rem, 2.5vw, 1.75rem);
-      color: var(--word-blue);
-      display: flex; align-items: center; gap: 8px;
-    }
-    .hero-text .w-icon {
-      width: 32px; height: 32px;
-      background: linear-gradient(135deg, #2B579A, #41a5ee);
-      color: #fff; font-weight: 800;
-      display: flex; align-items: center; justify-content: center;
-      border-radius: 5px; font-size: 18px;
-    }
-    .hero-text p { margin: 0; color: var(--muted); font-size: 0.9rem; }
-    .main-panel {
-      background: var(--card);
-      border-radius: 12px;
-      padding: 16px;
-      box-shadow: 0 2px 10px rgba(0,0,0,.08);
-      border: 1px solid rgba(0,0,0,.06);
-    }
-    .main-panel > p.hint-line {
-      margin: 0 0 14px;
-      font-size: 0.88rem;
-      color: var(--muted);
-    }
-    .categories-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-    @media (max-width: 640px) {
-      .categories-grid { grid-template-columns: 1fr; }
-    }
-    .category-block {
-      background: var(--cat-tint);
-      border: 2px solid var(--cat-color);
-      border-radius: 10px;
-      padding: 10px 10px 12px;
-    }
-    .category-header {
-      display: flex; align-items: center; gap: 8px;
-      margin-bottom: 10px;
-    }
-    .category-number {
-      width: 24px; height: 24px; border-radius: 50%;
-      background: var(--cat-color); color: #fff;
-      font-size: 11px; font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .category-header h3 {
-      margin: 0; font-size: 0.68rem; font-weight: 800;
-      letter-spacing: 0.04em; color: var(--cat-color);
-    }
-    .category-tools {
-      display: flex; flex-wrap: wrap; gap: 8px;
-    }
-    .tool-card {
-      display: flex; flex-direction: column; align-items: center;
-      width: 78px;
-      padding: 8px 4px;
-      background: #fff;
-      border: 1px solid rgba(0,0,0,.08);
-      border-radius: 8px;
-      text-decoration: none;
-      color: var(--text);
-      transition: transform .15s, box-shadow .15s, border-color .15s;
-    }
-    .tool-card:hover, .tool-card:focus-visible {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 14px rgba(0,0,0,.12);
-      border-color: var(--cat-color);
-      outline: none;
-    }
-    .tool-card img {
-      width: 44px; height: 44px;
-      object-fit: contain;
-      margin-bottom: 4px;
-    }
-    .tool-label {
-      font-size: 10px;
-      text-align: center;
-      line-height: 1.2;
-      font-weight: 600;
-    }
-    .sidebar { display: flex; flex-direction: column; gap: 12px; }
-    .sidebar-card {
-      background: var(--card);
-      border-radius: 10px;
-      padding: 14px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.07);
-      border: 1px solid rgba(0,0,0,.05);
-    }
-    .welcome-card {
-      background: linear-gradient(145deg, #2B579A, #1e4080);
-      color: #fff;
-    }
-    .welcome-card h3 { margin: 0 0 8px; font-size: 1rem; }
-    .welcome-card p { margin: 0 0 12px; font-size: 0.8rem; line-height: 1.45; opacity: .95; }
-    .btn-start {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 8px 14px;
-      background: #fff; color: var(--word-blue);
-      border: none; border-radius: 6px;
-      font-weight: 700; font-size: 0.85rem;
-      text-decoration: none;
-      font-family: inherit;
-      cursor: pointer;
-    }
-    .sidebar-card h3 { margin: 0 0 10px; font-size: 0.95rem; }
-    .progress-bar {
-      height: 8px; background: #e8ecf0;
-      border-radius: 4px; overflow: hidden;
-      margin-bottom: 10px;
-    }
-    .progress-bar span {
-      display: block; height: 100%; width: 35%;
-      background: #0f7b3f; border-radius: 4px;
-    }
-    .progress-list { list-style: none; margin: 0; padding: 0; font-size: 0.78rem; }
-    .progress-list li {
-      display: flex; align-items: center; gap: 6px;
-      padding: 5px 0; border-bottom: 1px solid #f0f0f0;
-      color: var(--muted);
-    }
-    .progress-list li.done { color: #0f7b3f; font-weight: 600; }
-    .progress-list li.current { color: var(--word-blue); font-weight: 600; }
-    .progress-list a { text-decoration: none; color: inherit; }
-    .btn-lsc {
-      display: block; width: 100%;
-      padding: 10px; text-align: center;
-      background: var(--word-blue); color: #fff;
-      border: none; border-radius: 6px;
-      font-weight: 600; font-size: 0.85rem;
-      font-family: inherit;
-      cursor: pointer;
+    .ribbon-tabs li a {
+      display: block; padding: 9px 16px; font-size: 13px;
+      color: var(--word-blue); font-weight: 700; text-decoration: none;
+      border-bottom: 3px solid var(--word-blue);
     }
 
+    /* CABECERA */
     .detail-header {
       background: linear-gradient(135deg, var(--word-blue), #1e3f6e);
-      color: #fff;
-      padding: 20px 16px;
-      display: flex; align-items: center; gap: 16px;
+      color: #fff; padding: 20px 16px; display: flex; align-items: center; gap: 16px;
     }
     .detail-header img {
       width: 64px; height: 64px; object-fit: contain;
-      background: rgba(255,255,255,.15);
-      border-radius: 8px; padding: 6px;
+      background: rgba(255,255,255,.15); border-radius: 8px; padding: 6px;
     }
     .detail-header h1 { margin: 0 0 4px; font-size: 1.4rem; }
     .detail-cat {
-      display: inline-block;
-      background: rgba(255,255,255,.2);
-      padding: 3px 8px; border-radius: 4px;
-      font-size: 11px; font-weight: 600;
+      display: inline-block; background: rgba(255,255,255,.2);
+      padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;
     }
-    .detail-body {
-      max-width: 800px; margin: 0 auto;
-      padding: 16px 16px 24px;
+
+    /* CONTENIDO */
+    .detail-body { max-width: 800px; margin: 0 auto; padding: 16px 16px 24px; }
+    .block {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: 8px; padding: 14px 16px; margin-bottom: 16px;
     }
-    .ribbon-path, .block, .extra-zone {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 14px 16px;
-      margin-bottom: 12px;
+    .block h2 { margin: 0 0 12px; font-size: 1rem; color: var(--word-blue); }
+
+    /* VIDEO */
+    .video-btn-wrap {
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; background: #f0f4fa;
+      border: 2px solid var(--word-blue); border-radius: 12px;
+      padding: 32px 20px; gap: 14px; text-align: center;
     }
-    .ribbon-path { border-left: 4px solid var(--word-blue); }
-    .block h2, .extra-zone h2 { margin: 0 0 8px; font-size: 1rem; color: var(--word-blue); }
-    .block p, .block li { line-height: 1.55; }
-    .block ol { margin: 0; padding-left: 1.25rem; }
-    .before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    @media (max-width: 500px) { .before-after { grid-template-columns: 1fr; } }
-    .ba-card { padding: 10px; border-radius: 6px; font-size: 13px; }
-    .ba-card.before { background: #fff4ce; }
-    .ba-card.after { background: #dff6dd; }
-    .ba-card h3 { margin: 0 0 4px; font-size: 11px; text-transform: uppercase; }
-    .placeholder-box {
-      min-height: 120px;
-      border: 2px dashed #c8c6c4;
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      text-align: center; color: var(--muted);
-      font-size: 13px; padding: 12px;
-      background: #faf9f8;
+    .video-btn-wrap p { margin: 0; color: var(--muted); font-size: 0.88rem; }
+    .btn-youtube {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: #FF0000; color: #fff; font-weight: 700; font-size: 1rem;
+      padding: 12px 24px; border-radius: 8px; text-decoration: none;
+      font-family: inherit; box-shadow: 0 4px 12px rgba(255,0,0,.3);
+      transition: background .2s, transform .15s;
     }
-    .placeholder-box.lsc { border-color: var(--word-blue); background: #f0f6fc; }
+    .btn-youtube:hover { background: #cc0000; transform: translateY(-2px); }
+
+    /* ACTIVIDAD */
     .extra-zone {
-      border-style: dashed;
-      border-color: var(--word-blue);
-      background: #fafcfe;
-      min-height: 80px;
+      background: #fff; border: 1px solid var(--word-blue);
+      border-radius: 8px; padding: 14px 16px; margin-bottom: 16px;
     }
-    .extra-zone p.hint { margin: 0; font-size: 0.85rem; color: var(--muted); }
+    .extra-zone h2 { margin: 0 0 8px; font-size: 1rem; color: var(--word-blue); }
+    .extra-zone p.hint { margin: 0 0 10px; font-size: 0.85rem; color: var(--muted); }
 
-    /* Exercise styles: margins */
-    .exercise-shell { display: grid; grid-template-columns: 1fr 320px; gap: 18px; }
-    @media (max-width: 920px) { .exercise-shell { grid-template-columns: 1fr; } }
-    .exercise-panel { background:#fff; border:1px solid rgba(0,0,0,.06); border-radius:12px; padding:16px; }
-    .margin-choices { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; }
-    .margin-choices button { padding:10px 12px; border-radius:8px; border:1px solid var(--border); background:#fff; cursor:pointer; }
-    .margin-choices button.active { background:#f3f7ff; border-color:var(--word-blue); box-shadow:0 8px 18px rgba(43,87,154,.08); }
-    .page-select { display:flex; gap:8px; margin-bottom:12px; }
-    .page-select button { padding:10px; border-radius:8px; border:1px solid var(--border); background:#fff; cursor:pointer; }
-    .page-select button.active { border-color:var(--word-blue); background:#f3f7ff; }
-    .actions { display:flex; gap:10px; margin-bottom:12px; }
-    .actions button { flex:1; padding:10px 12px; border-radius:8px; border:none; color:#fff; font-weight:700; cursor:pointer; }
-    .actions .apply { background:var(--word-blue); }
-    .actions .check { background:#0f7b3f; }
-    .actions .reset { background:#605e5c; }
-    .feedback { padding:10px 12px; border-radius:8px; border:1px solid transparent; min-height:44px; display:flex; align-items:center; }
-    .feedback.success { background:#f0fbf3; border-color:#81c784; color:#16542a; }
-    .feedback.warn { background:#fff8e6; border-color:#f8c471; color:#7f5a1a; }
-
-    .doc-preview { display:flex; flex-direction:column; gap:12px; align-items:center; }
-    .doc-surface.preview { width:280px; min-height:240px; background:#fdfdfc; border:1px solid #d8d8d4; border-radius:12px; padding:22px; box-shadow:0 12px 22px rgba(0,0,0,.06); }
-    .doc-surface.preview .doc-content { font-size:0.85rem; color:#333; }
-    .doc-surface.preview.small { max-width:260px; }
-    .mini-label { font-weight:700; color:var(--word-blue); margin-bottom:8px; }
-
-    .tool-tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-      padding: 8px 12px;
-      background: #fff;
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 20;
+    /* JUEGO MÁRGENES */
+    .margin-card {
+      background: #f8fbff; border: 1px solid #d7e6f5;
+      border-radius: 14px; padding: 16px;
+      box-shadow: 0 4px 16px rgba(43,87,154,.08);
+      display: grid; gap: 14px;
     }
-    .tool-tabs a {
-      padding: 6px 10px;
-      font-size: 11px;
-      text-decoration: none;
-      border-radius: 4px;
+    .margin-card-header {
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+    }
+    .margin-card-header strong { color: var(--word-blue); font-size: 0.95rem; }
+
+    /* Botones de preset */
+    .margin-choices { display: flex; flex-wrap: wrap; gap: 8px; }
+    .margin-choices button {
+      padding: 8px 16px; border-radius: 8px;
+      border: 1px solid var(--border); background: #fff;
+      font-family: inherit; font-size: 0.85rem; font-weight: 600;
+      cursor: pointer; color: var(--word-dark);
+      transition: background .15s, border-color .15s;
+    }
+    .margin-choices button:hover { background: #eef4ff; border-color: var(--word-blue); }
+    .margin-choices button.active {
+      background: var(--word-blue); color: #fff; border-color: var(--word-blue);
+    }
+
+    /* Vista previa */
+    .preview-area { display: flex; justify-content: center; }
+    .doc-surface {
+      background: #fff; border: 1px solid #c8d2df;
+      border-radius: 6px; width: 100%; max-width: 320px; min-height: 160px;
+      box-shadow: 0 4px 14px rgba(43,87,154,.1);
+      transition: padding .3s;
+    }
+    .doc-content p { margin: 0 0 8px; font-size: 0.82rem; color: #444; line-height: 1.5; }
+
+    /* Acciones */
+    .margin-actions {
+      display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+      border-top: 1px solid #e0e0e0; padding-top: 12px;
+    }
+    .boton {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 9px 16px; border-radius: 6px; border: 1px solid #ccc;
+      background: #fff; font-family: inherit; font-size: 0.85rem;
+      font-weight: 600; cursor: pointer; transition: background .15s;
+    }
+    .boton:hover { background: #f3f3f3; }
+    .boton.aplicar  { border-color: var(--word-blue); color: var(--word-blue); }
+    .boton.comprobar { border-color: #0f7b3f; color: #0f7b3f; }
+
+    .margin-feedback {
+      font-size: 0.9rem; min-height: 1.3em; flex: 1;
       color: var(--muted);
-      border: 1px solid transparent;
     }
-    .tool-tabs a:hover { background: var(--ribbon-bg); color: var(--text); }
-    .tool-tabs a.active {
-      background: var(--word-blue);
-      color: #fff;
-      font-weight: 600;
-    }
+    .margin-feedback.success { color: #0b662f; }
+    .margin-feedback.warn    { color: #b22222; }
 
+    /* NAV ENTRE HERRAMIENTAS */
     .detail-nav-bar {
-      position: fixed;
-      bottom: var(--nav-h);
-      left: 0; right: 0;
-      background: #fff;
-      border-top: 1px solid var(--border);
-      padding: 8px 12px;
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      z-index: 99;
-      min-height: var(--tool-nav-h);
-      align-items: center;
-    }
-    .detail-nav-bar a, .detail-nav-bar span.disabled {
-      padding: 8px 14px;
-      border-radius: 6px;
-      font-weight: 600;
-      font-size: 13px;
-      text-decoration: none;
+      position: fixed; bottom: var(--nav-h); left: 0; right: 0;
+      background: #fff; border-top: 1px solid var(--border);
+      padding: 8px 12px; display: flex; justify-content: center;
+      gap: 8px; flex-wrap: wrap; z-index: 99;
+      min-height: var(--tool-nav-h); align-items: center;
     }
     .detail-nav-bar a {
-      background: var(--word-blue);
-      color: #fff;
+      padding: 8px 18px; border-radius: 6px;
+      font-weight: 700; font-size: 13px; text-decoration: none;
+      background: var(--word-blue); color: #fff; transition: background .15s;
     }
+    .detail-nav-bar a:hover { background: var(--word-dark); }
     .detail-nav-bar a.btn-gray { background: #605e5c; }
-    .detail-nav-bar span.disabled {
-      background: #e0e0e0;
-      color: #888;
-      cursor: not-allowed;
-    }
+    .detail-nav-bar a.btn-gray:hover { background: #3e3d3c; }
 
+    /* NAV INFERIOR */
     .bottom-nav {
-      position: fixed; bottom: 0; left: 0; right: 0;
-      height: var(--nav-h);
-      background: var(--word-dark);
-      display: flex; justify-content: center;
-      z-index: 100;
-      box-shadow: 0 -2px 12px rgba(0,0,0,.2);
+      position: fixed; bottom: 0; left: 0; right: 0; height: var(--nav-h);
+      background: var(--word-dark); display: flex; justify-content: center;
+      z-index: 100; box-shadow: 0 -2px 12px rgba(0,0,0,.2);
     }
-    .bottom-nav a, .bottom-nav button {
-      flex: 1; max-width: 130px;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 2px;
-      border: none; background: transparent;
-      color: rgba(255,255,255,.8);
-      text-decoration: none;
-      font-size: 0.62rem; font-weight: 500;
-      padding: 4px;
-      font-family: inherit;
-      cursor: pointer;
+    .bottom-nav a {
+      flex: 1; max-width: 130px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 2px;
+      color: rgba(255,255,255,.8); text-decoration: none;
+      font-size: 0.62rem; font-weight: 500; padding: 4px;
     }
-    .bottom-nav a:hover, .bottom-nav button:hover { color: #fff; background: rgba(255,255,255,.08); }
-    .bottom-nav a.active { background: rgba(255,255,255,.15); color: #fff; font-weight: 700; }
+    .bottom-nav a:hover { color: #fff; background: rgba(255,255,255,.08); }
     .bottom-nav .nav-icon { font-size: 1.15rem; }
-</style>
+  </style>
 </head>
-<body data-tool-id="26" data-tool-slug="margenes">
+<body>
 
+  <!-- BARRA SUPERIOR -->
   <header class="title-bar">
     <a class="word-logo" href="../index.html" title="Inicio">W</a>
     <h1><a class="title-link" href="../index.html">Márgenes — Word Básico</a></h1>
   </header>
 
-  <nav aria-label="Pestañas Word">
+  <!-- SOLO INICIO -->
+  <nav aria-label="Menú Word">
     <ul class="ribbon-tabs">
-      <li class="active"><a href="../index.html">Inicio</a></li>
-      <li><button type="button">Insertar</button></li>
-      <li><button type="button">Diseño</button></li>
-      <li><button type="button">Disposición</button></li>
-      <li><button type="button">Referencias</button></li>
-      <li><button type="button">Revisar</button></li>
-      <li><button type="button">Vista</button></li>
+      <li><a href="../index.html">Inicio</a></li>
     </ul>
   </nav>
-  <div class="ribbon-fake" aria-hidden="true">
-    <span>Portapapeles</span><span>Fuente</span><span>Párrafo</span><span>Estilos</span>
-  </div>
-<nav class="tool-tabs" aria-label="Pestañas de esta herramienta">
-    <a href="#leccion" class="active">📖 Lección</a>
-    <a href="#lsc">🤟 LSC</a>
-    <a href="#captura">🖼️ Captura Word</a>
-    <a href="#ejercicios">✏️ Ejercicios</a>
-    <a href="#extra">➕ Actividades</a>
-  </nav>
 
-  <header class="detail-header" id="leccion">
-    <img src="../icons/MArgenes.png" alt="Márgenes" width="64" height="64" />
+  <!-- CABECERA -->
+  <header class="detail-header">
+    <img src="../icons/M%C3%A1rgenes.png" alt="Márgenes" width="64" height="64" />
     <div>
       <span class="detail-cat">Configuración de la página</span>
       <h1>Márgenes</h1>
@@ -447,247 +214,143 @@
   </header>
 
   <div class="detail-body">
-    <div class="ribbon-path"><strong>Ruta en la cinta:</strong> Disposición → Márgenes</div>
 
-    <article class="block">
-      <h2>¿Qué significa?</h2>
-      <p>Espacio entre borde y texto.</p>
-    </article>
-
-    <article class="block">
-      <h2>Antes / Después</h2>
-      <div class="before-after">
-        <div class="ba-card before"><h3>Antes</h3><p>Texto muy pegado al borde.</p></div>
-        <div class="ba-card after"><h3>Después</h3><p>Márgenes ajustados.</p></div>
+    <!-- VIDEO -->
+    <div class="block">
+      <h2>🎥 Video explicativo</h2>
+      <div class="video-btn-wrap">
+        <p>Haz clic para ver el video explicativo sobre <strong>Márgenes en Word</strong></p>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/Th_vF1duWUM?si=yQqur03zRYEHCPvc&amp;start=29" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </a>
+        <p>Se abrirá en una pestaña nueva</p>
       </div>
-    </article>
+    </div>
 
-    <article class="block">
-      <h2>Pasos para usarlo</h2>
-      <ol><li>Disposición → Márgenes.</li>
-<li>Normal, estrecho o moderado.</li>
-<li>O personalizados.</li>
-<li>Aceptar.</li></ol>
-    </article>
+    <!-- ACTIVIDAD -->
+    <div class="extra-zone">
+      <h2>✏️ Actividad</h2>
+      <p class="hint"><strong>Instrucción:</strong> Selecciona el margen <strong>Moderado</strong>, pulsa <strong>Aplicar margen</strong> y luego <strong>Comprobar</strong>.</p>
 
-    <article class="block" id="lsc">
-      <h2>Referente en LSC</h2>
-      <div class="placeholder-box lsc">Espacio para foto o video de la seña en Lengua de Señas Colombiana (LSC).</div>
-    </article>
-
-    <article class="block" id="captura">
-      <h2>Captura en Word 2021</h2>
-      <div class="placeholder-box">Espacio para captura de pantalla real de Microsoft Word 2021.</div>
-    </article>
-
-    <section class="extra-zone" id="ejercicios">
-      <h2>✏️ Ejercicio interactivo: Márgenes</h2>
-      <p class="hint">Selecciona el margen <strong style="color:var(--word-blue)">Moderado</strong>, presiona <strong>Aplicar margen</strong> y luego <strong>Comprobar</strong>.</p>
-
-      <div class="exercise-shell">
-        <div class="exercise-panel">
-          <div style="margin-bottom:12px;">
-            <div style="font-weight:700;color:var(--word-blue);margin-bottom:8px">Elegir márgenes</div>
-            <div class="margin-choices" id="marginChoices"></div>
-          </div>
-
-          <div style="margin-bottom:12px;">
-            <div style="font-weight:700;color:var(--word-blue);margin-bottom:8px">Seleccionar página</div>
-            <div class="page-select" id="pageSelect"></div>
-          </div>
-
-          <div class="actions">
-            <button class="apply" id="applyBtn">Aplicar margen</button>
-            <button class="check" id="checkBtn">Comprobar</button>
-            <button class="reset" id="resetBtn">Reiniciar</button>
-          </div>
-
-          <div class="feedback" id="feedback">Selecciona un margen y una página, luego pulsa Aplicar.</div>
+      <div class="margin-card">
+        <div class="margin-card-header">
+          <strong>📐 Juego: Seleccionar márgenes</strong>
+          <span style="font-weight:700;color:var(--word-blue);">Puntos: <span id="margin-pts">0</span> / 1</span>
         </div>
 
-        <aside class="exercise-panel doc-preview">
-          <div class="mini-label">Vista previa</div>
-          <div id="previewArea">
-            <!-- previews inserted by JS -->
-          </div>
-        </aside>
-      </div>
-    </section>
+        <!-- Opciones de margen -->
+        <div>
+          <div style="font-weight:700;color:var(--word-blue);margin-bottom:8px;font-size:0.88rem;">Elegir margen:</div>
+          <div class="margin-choices" id="marginChoices"></div>
+        </div>
 
-    <section class="extra-zone" id="extra">
-      <h2>Actividades extra</h2>
-      <p class="hint">Puedes editar solo este archivo (<code>26-margenes.html</code>) sin tocar las demás lecciones.</p>
-    </section>
+        <!-- Vista previa -->
+        <div class="preview-area">
+          <div class="doc-surface" id="docSurface">
+            <div class="doc-content">
+              <p><strong>Ejemplo de texto.</strong></p>
+              <p>Los márgenes controlan la distancia entre el borde y el texto.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Controles -->
+        <div class="margin-actions">
+          <button class="boton aplicar"   id="applyBtn">📐 Aplicar margen</button>
+          <button class="boton comprobar" id="checkBtn">✅ Comprobar</button>
+          <button class="boton"           id="resetBtn">🔄 Reiniciar</button>
+          <div class="margin-feedback" id="feedback">Selecciona un margen y pulsa Aplicar.</div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
+  <!-- NAV ENTRE HERRAMIENTAS -->
   <nav class="detail-nav-bar" aria-label="Navegación entre herramientas">
     <a href="25-salto-de-pagina.html">◀ Salto de página</a>
     <a href="../index.html" class="btn-gray">🏠 Ver todas</a>
     <a href="27-orientacion.html">Orientación ▶</a>
   </nav>
 
-
+  <!-- NAV INFERIOR -->
   <nav class="bottom-nav" aria-label="Menú principal">
     <a href="../index.html"><span class="nav-icon">🏠</span>Inicio</a>
-    <a href="../index.html#categories-grid" class="active"><span class="nav-icon">📚</span>Lecciones</a>
-    <a href="#ejercicios"><span class="nav-icon">✏️</span>Ejercicios</a>
-    <a href="#evaluaciones"><span class="nav-icon">📋</span>Evaluaciones</a>
-    <a href="#ayuda"><span class="nav-icon">❓</span>Ayuda</a>
   </nav>
 
   <script>
-    /* Página: 26-margenes.html | Herramienta: Márgenes - Interactivo */
     (function () {
-      var tabs = document.querySelectorAll(".tool-tabs a");
-      var hash = location.hash || "#leccion";
-      tabs.forEach(function (a) {
-        a.classList.toggle("active", a.getAttribute("href") === hash);
-        a.addEventListener("click", function () {
-          tabs.forEach(function (t) { t.classList.remove("active"); });
-          a.classList.add("active");
-        });
-      });
-
-      // Margin presets (visual px values for preview)
       var marginPresets = {
-        normal: { label: 'Normal', top:22, right:22, bottom:22, left:22 },
-        estrecho: { label: 'Estrecho', top:10, right:10, bottom:10, left:10 },
-        moderado: { label: 'Moderado', top:18, right:28, bottom:18, left:28 },
-        amplio: { label: 'Amplio', top:36, right:36, bottom:36, left:36 }
+        normal:   { label: 'Normal',   top: 22, right: 22, bottom: 22, left: 22 },
+        estrecho: { label: 'Estrecho', top: 10, right: 10, bottom: 10, left: 10 },
+        moderado: { label: 'Moderado', top: 18, right: 28, bottom: 18, left: 28 },
+        amplio:   { label: 'Amplio',   top: 36, right: 36, bottom: 36, left: 36 }
       };
 
-      var tasks = [
-        { page: 0, preset: 'moderado', label: 'Aplica márgenes "Moderado" en la Página de ejemplo.' }
-      ];
+      var state = { selectedPreset: 'normal', appliedPreset: null, score: 0, checked: false };
 
-      var state = {
-        selectedPreset: 'normal',
-        selectedPage: 0,
-        applied: {}, // page index -> preset key
-        currentTask: 0,
-        score: 0,
-        pagesCount: 1
-      };
+      var choicesEl  = document.getElementById('marginChoices');
+      var docSurface = document.getElementById('docSurface');
+      var feedback   = document.getElementById('feedback');
 
-      var marginChoicesEl = document.getElementById('marginChoices');
-      var pageSelectEl = document.getElementById('pageSelect');
-      var applyBtn = document.getElementById('applyBtn');
-      var checkBtn = document.getElementById('checkBtn');
-      var resetBtn = document.getElementById('resetBtn');
-      var feedback = document.getElementById('feedback');
-      var previewArea = document.getElementById('previewArea');
-
-      function setFeedback(text, type) {
-        feedback.textContent = text;
-        feedback.className = 'feedback';
-        if (type) feedback.classList.add(type);
+      function setFeedback(msg, type) {
+        feedback.textContent = msg;
+        feedback.className   = 'margin-feedback' + (type ? ' ' + type : '');
       }
 
-      function renderMarginChoices() {
-        marginChoicesEl.innerHTML = '';
+      function renderChoices() {
+        choicesEl.innerHTML = '';
         Object.keys(marginPresets).forEach(function (key) {
-          var p = marginPresets[key];
           var btn = document.createElement('button');
-          btn.type = 'button';
-          btn.textContent = p.label;
-          btn.className = (state.selectedPreset === key) ? 'active' : '';
+          btn.textContent = marginPresets[key].label;
+          btn.className   = state.selectedPreset === key ? 'active' : '';
           btn.addEventListener('click', function () {
             state.selectedPreset = key;
-            renderMarginChoices();
-            setFeedback('Presets: ' + p.label + ' seleccionado.', 'warn');
+            renderChoices();
+            setFeedback('"' + marginPresets[key].label + '" seleccionado. Pulsa Aplicar margen.', '');
           });
-          marginChoicesEl.appendChild(btn);
+          choicesEl.appendChild(btn);
         });
-      }
-
-      function renderPageSelect() {
-        // Si solo hay una página, ocultamos el selector
-        if (state.pagesCount <= 1) {
-          pageSelectEl.style.display = 'none';
-          return;
-        }
-        pageSelectEl.style.display = '';
-        pageSelectEl.innerHTML = '';
-        for (var i = 0; i < state.pagesCount; i++) {
-          var btn = document.createElement('button');
-          btn.type = 'button';
-          btn.textContent = 'Página ' + (i + 1);
-          btn.className = (state.selectedPage === i) ? 'active' : '';
-          (function (idx) { btn.addEventListener('click', function () { state.selectedPage = idx; renderPageSelect(); renderPreview(); setFeedback('Página ' + (idx+1) + ' seleccionada.', 'warn'); }); })(i);
-          pageSelectEl.appendChild(btn);
-        }
-      }
-
-      function renderPreview() {
-        previewArea.innerHTML = '';
-        for (var i = 0; i < state.pagesCount; i++) {
-          var container = document.createElement('div');
-          var label = document.createElement('div'); label.className = 'mini-label'; label.textContent = 'Página ' + (i+1);
-          var surface = document.createElement('div'); surface.className = 'doc-surface preview';
-          var appliedKey = state.applied[i] || 'normal';
-          var m = marginPresets[appliedKey];
-          surface.style.padding = m.top + 'px ' + m.right + 'px ' + m.bottom + 'px ' + m.left + 'px';
-          var content = document.createElement('div'); content.className = 'doc-content';
-          content.innerHTML = '<p><strong>Ejemplo de texto en la página ' + (i+1) + '.</strong></p><p>Los márgenes controlan la distancia entre el borde y el texto.</p>';
-          surface.appendChild(content);
-          container.appendChild(label);
-          container.appendChild(surface);
-          previewArea.appendChild(container);
-        }
       }
 
       function applyMargin() {
-        state.applied[state.selectedPage] = state.selectedPreset;
-        renderPreview();
-        setFeedback('Margen ' + marginPresets[state.selectedPreset].label + ' aplicado en Página ' + (state.selectedPage+1) + '.', 'success');
+        var m = marginPresets[state.selectedPreset];
+        docSurface.style.padding = m.top + 'px ' + m.right + 'px ' + m.bottom + 'px ' + m.left + 'px';
+        state.appliedPreset = state.selectedPreset;
+        setFeedback('Margen "' + m.label + '" aplicado. Pulsa Comprobar.', '');
       }
 
       function checkTask() {
-        var t = tasks[state.currentTask];
-        if (!t) {
-          setFeedback('🎉 ¡Correcto! Aplicaste el margen bien. Resultado: 1/1 punto.', 'success');
-          localStorage.setItem('score-tool-26-margenes', '1');
-          return;
-        }
-        var applied = state.applied[t.page];
-        if (applied === t.preset) {
-          state.score += 1;
-          state.currentTask += 1;
-          // Si era la última tarea, mostrar resultado final
-          if (state.currentTask >= tasks.length) {
-            setFeedback('🎉 ¡Correcto! Aplicaste el margen bien. Resultado: 1/1 punto.', 'success');
-            localStorage.setItem('score-tool-26-margenes', '1');
-          } else {
-            setFeedback('✅ Correcto. Siguiente tarea.', 'success');
+        if (!state.appliedPreset) { setFeedback('❗ Primero aplica un margen.', 'warn'); return; }
+        if (state.appliedPreset === 'moderado') {
+          if (!state.checked) {
+            state.score += 1;
+            state.checked = true;
+            document.getElementById('margin-pts').textContent = state.score;
+            try { localStorage.setItem('score-tool-26-margenes', '1'); } catch(e) {}
           }
+          setFeedback('🎉 ¡Correcto! Aplicaste el margen Moderado. Resultado: 1/1 punto.', 'success');
         } else {
-          setFeedback('❌ Incorrecto. Revisa que hayas seleccionado "Moderado" y presionado Aplicar.', 'warn');
+          setFeedback('❌ No es correcto. Selecciona el margen "Moderado" y vuelve a aplicar.', 'warn');
         }
       }
 
-      function resetExercise() {
-        state.selectedPreset = 'normal';
-        state.selectedPage = 0;
-        state.applied = {};
-        state.currentTask = 0;
-        state.score = 0;
-        renderMarginChoices();
-        renderPageSelect();
-        renderPreview();
-        setFeedback('Ejercicio reiniciado.', 'warn');
+      function resetGame() {
+        state.selectedPreset = 'normal'; state.appliedPreset = null;
+        state.score = 0; state.checked = false;
+        document.getElementById('margin-pts').textContent = '0';
+        docSurface.style.padding = '22px';
+        renderChoices();
+        setFeedback('Selecciona un margen y pulsa Aplicar.', '');
       }
 
-      applyBtn.addEventListener('click', applyMargin);
-      checkBtn.addEventListener('click', checkTask);
-      resetBtn.addEventListener('click', resetExercise);
+      document.getElementById('applyBtn').addEventListener('click', applyMargin);
+      document.getElementById('checkBtn').addEventListener('click', checkTask);
+      document.getElementById('resetBtn').addEventListener('click', resetGame);
 
-      // Initialize
-      renderMarginChoices();
-      renderPageSelect();
-      renderPreview();
-      setFeedback('Selecciona un margen y una página, luego pulsa Aplicar.', 'warn');
-
+      renderChoices();
+      docSurface.style.padding = '22px';
     })();
   </script>
+
 </body>
 </html>
