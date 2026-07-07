@@ -183,23 +183,44 @@
       line-height: 1.55;
       font-size: 0.95rem;
     }
-    .text-option {
-      display: inline;
-      color: #1f3f72;
-      cursor: pointer;
-      font-weight: 600;
-      text-decoration: underline;
-      transition: color .2s, background .2s;
+    
+    .option-grid{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:16px;
     }
-    .text-option + .text-option::before { content: " · "; color: #999; margin: 0 4px; }
-    .text-option:hover { color: #174a97; }
-    .text-option.selected {
-      color: #174a97;
-      background: #d8eaff;
-      border-radius: 4px;
-      padding: 0 3px;
+    .text-option{
+      border:2px solid #c8d6ea;
+      background:#fff;
+      color:#1f3f72;
+      border-radius:10px;
+      padding:12px 16px;
+      font-size:.95rem;
+      font-weight:700;
+      cursor:pointer;
+      transition:.2s ease;
+      box-shadow:0 2px 6px rgba(0,0,0,.06);
     }
-    .text-option.hidden { visibility: hidden; pointer-events: none; }
+    .text-option:hover{
+      background:#e7f1ff;
+      border-color:#2B579A;
+      transform:translateY(-2px);
+      box-shadow:0 6px 12px rgba(43,87,154,.18);
+    }
+    .text-option.selected{
+      background:#2B579A;
+      color:#fff;
+      border-color:#2B579A;
+      transform:scale(1.04);
+      box-shadow:0 0 0 3px rgba(43,87,154,.18);
+    }
+    .text-option.hidden{
+      opacity:0;
+      transform:scale(.9);
+      pointer-events:none;
+    }
+
 
     .game-sidebar {
       background: #f7f9fb;
@@ -213,6 +234,7 @@
     }
     .game-sidebar h3 { margin: 0; font-size: 0.95rem; color: #1d1d1d; }
     .paste-zone {
+      transition:all .25s ease;
       min-height: 80px;
       border: 2px dashed #a2a6ab;
       border-radius: 10px;
@@ -344,16 +366,18 @@
         <div class="game-area">
           <div class="game-doc">
             <p>Selecciona el texto correcto y usa <strong>✂ Cortar</strong>. Luego usa <strong>📋 Pegar</strong>.</p>
-            <p>
-              <span class="text-option" data-value="Microsoft Word"   onclick="selectTextOption(this)">Microsoft Word</span>
-              <span class="text-option" data-value="Word Básico"      onclick="selectTextOption(this)">Word Básico</span>
-              <span class="text-option" data-value="Portapapeles"     onclick="selectTextOption(this)">Portapapeles</span>
-              <span class="text-option" data-value="Inicio"           onclick="selectTextOption(this)">Inicio</span>
-              <span class="text-option" data-value="Cortar"           onclick="selectTextOption(this)">Cortar</span>
-            </p>
+            
+            <div class="option-grid">
+              <button type="button" class="text-option" data-value="Microsoft Word" onclick="selectTextOption(this)">📝 Microsoft Word</button>
+              <button type="button" class="text-option" data-value="Word Básico" onclick="selectTextOption(this)">📄 Word Básico</button>
+              <button type="button" class="text-option" data-value="Portapapeles" onclick="selectTextOption(this)">📋 Portapapeles</button>
+              <button type="button" class="text-option" data-value="Inicio" onclick="selectTextOption(this)">🏠 Inicio</button>
+              <button type="button" class="text-option" data-value="Cortar" onclick="selectTextOption(this)">✂️ Cortar</button>
+            </div>
+
           </div>
           <div class="game-sidebar">
-            <h3>Zona de pegado</h3>
+            <h3>Pegar acá</h3>
             <div id="paste-zone" class="paste-zone">Aquí debes pegar el texto cortado.</div>
           </div>
         </div>
@@ -413,7 +437,15 @@
       if (!gameState.cut)   { setMsg('❗ Primero corta el texto.', 'red'); return; }
       if (gameState.pasted) { setMsg('✅ Ya pegaste. Usa Reiniciar para volver a jugar.', '#1b672b'); return; }
       zone.textContent    = gameState.currentCut;
-      zone.style.color    = gameState.currentCut === 'Microsoft Word' ? '#174a97' : '#a02f2f';
+      if(gameState.currentCut==='Microsoft Word'){
+      zone.style.background='#eaf4ff';
+      zone.style.border='2px solid #2B579A';
+      zone.style.color='#174a97';
+    }else{
+      zone.style.background='#ffecec';
+      zone.style.border='2px solid #c0392b';
+      zone.style.color='#a02f2f';
+    }
       zone.style.fontWeight = '700';
       gameState.pasted = true;
       gameState.cut    = false;
@@ -434,7 +466,7 @@
       selectedOption = null;
       var zone = document.getElementById('paste-zone');
       zone.textContent    = 'Aquí debes pegar el texto cortado.';
-      zone.style.color    = '#616161';
+      zone.style.color='#616161'; zone.style.background='#fff'; zone.style.border='2px dashed #a2a6ab';
       zone.style.fontWeight = 'normal';
       gameState.cut = false; gameState.pasted = false; gameState.currentCut = null;
       setMsg('Juego reiniciado. Selecciona Microsoft Word y córtalo.', '#222');
