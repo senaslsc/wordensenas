@@ -180,6 +180,18 @@
       line-height: 1.8;
       font-size: 0.98rem;
       color: #1a1a1a;
+      cursor: text;
+      outline: none;
+      user-select: text;
+      -webkit-user-select: text;
+    }
+    .editor-area *::selection {
+      background: rgba(43,87,154,.22);
+      color: inherit;
+    }
+    .editor-area::selection {
+      background: rgba(43,87,154,.22);
+      color: inherit;
     }
     .editor-segment {
       cursor: pointer;

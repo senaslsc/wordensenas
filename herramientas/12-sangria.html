@@ -331,18 +331,17 @@
     <!-- ACTIVIDAD: JUEGO SANGRÍA -->
     <div class="extra-zone">
       <h2>✏️ Actividad</h2>
-      <p class="hint"><strong>Instrucción:</strong> Selecciona el párrafo correcto y aplícale el control de sangría indicado. Son 3 tareas en total.</p>
+      <p class="hint"><strong>Instrucción:</strong> Selecciona cada renglón y aplícale una sangría diferente. Los 3 renglones deben quedar con una sangría distinta cada uno.</p>
 
       <div class="indent-card">
-        <div class="task-summary" id="indent-task">Tarea 1 de 3: selecciona el párrafo correcto y aumenta la sangría.</div>
+        <div class="task-summary" id="indent-task">Selecciona un renglón y luego elige su sangría. Los 3 deben quedar diferentes entre sí.</div>
         <div class="indent-toolbar">
-          <button id="indent-increase" class="indent-button">Aumentar sangría</button>
-          <button id="indent-decrease" class="indent-button">Disminuir sangría</button>
+          <button id="indent-increase" class="indent-button">Sangría normal</button>
+          <button id="indent-decrease" class="indent-button">Sin sangría</button>
           <button id="indent-first-line" class="indent-button">Sangría francesa</button>
         </div>
         <div class="indent-editor" id="indent-editor" aria-label="Editor simulado de sangría"></div>
         <div class="indent-actions">
-          <button id="apply-indent" class="editor-btn">Aplicar al párrafo seleccionado</button>
           <button id="check-indent" class="editor-btn">Comprobar</button>
           <button id="reset-indent" class="editor-btn gray">Reiniciar</button>
         </div>
@@ -367,45 +366,19 @@
 
   <script>
     (function () {
-      var tasks = [
-        {
-          instruction: 'Selecciona el párrafo de la cita y aumenta la sangría.',
-          expectedIndent: 1,
-          expectedFirstLine: false,
-          paragraphs: [
-            { id: 'p1', text: 'Cita: “El aprendizaje del formato facilita la lectura.”', indent: 0, firstLine: false, correct: true },
-            { id: 'p2', text: 'Las instrucciones aparecen alineadas con el margen izquierdo.', indent: 0, firstLine: false, correct: false },
-            { id: 'p3', text: 'Este texto no debe cambiar de sangría en esta tarea.', indent: 0, firstLine: false, correct: false }
-          ]
-        },
-        {
-          instruction: 'Selecciona el párrafo del ejemplo y aplica sangría francesa.',
-          expectedIndent: 1,
-          expectedFirstLine: true,
-          paragraphs: [
-            { id: 'p1', text: 'Primera línea normal del párrafo que no cambia.', indent: 0, firstLine: false, correct: false },
-            { id: 'p2', text: 'Ejemplo: este párrafo debe mostrar sangría de primera línea.', indent: 0, firstLine: false, correct: true },
-            { id: 'p3', text: 'Aquí hay otro párrafo que se mantiene sin sangría especial.', indent: 0, firstLine: false, correct: false }
-          ]
-        },
-        {
-          instruction: 'Selecciona el párrafo indentado y reduce la sangría hasta el margen normal.',
-          expectedIndent: 0,
-          expectedFirstLine: false,
-          paragraphs: [
-            { id: 'p1', text: 'Este párrafo ya está indentado y necesita regresar al margen.', indent: 1, firstLine: false, correct: true },
-            { id: 'p2', text: 'Texto de ejemplo sin sangría adicional.', indent: 0, firstLine: false, correct: false },
-            { id: 'p3', text: 'Otro párrafo que no cambia en esta tarea.', indent: 0, firstLine: false, correct: false }
-          ]
-        }
+      // Un solo renglón por línea, sin una sangría "correcta" fija:
+      // la meta es que los 3 queden con una sangría distinta entre sí.
+      // mode: 'unset' (sin elegir), 'decrease' (sin sangría), 'increase' (sangría normal), 'firstLine' (sangría francesa)
+      var paragraphs = [
+        { id: 'p1', text: 'Cita: “El aprendizaje adecuado del formato de sangría facilita mucho la lectura de cualquier documento extenso y bien estructurado.”', mode: 'unset' },
+        { id: 'p2', text: 'Ejemplo de sangría francesa: la primera línea de este párrafo queda pegada al margen izquierdo, mientras que las líneas siguientes se desplazan hacia la derecha, tal como ocurre en una bibliografía.', mode: 'unset' },
+        { id: 'p3', text: 'Este otro párrafo también forma parte del documento de ejemplo y debe mostrar con claridad el efecto de la sangría que el estudiante decida aplicarle.', mode: 'unset' }
       ];
 
       var state = {
-        currentTask: 0,
         selectedParagraph: null,
-        activeMode: null,
-        score: 0,
-        gameScore: 0
+        gameScore: 0,
+        activityCompleted: false
       };
 
       var editor = document.getElementById('indent-editor');
@@ -417,12 +390,11 @@
         decrease: document.getElementById('indent-decrease'),
         firstLine: document.getElementById('indent-first-line')
       };
-      var applyButton = document.getElementById('apply-indent');
       var checkButton = document.getElementById('check-indent');
       var resetButton = document.getElementById('reset-indent');
 
-      function currentTask() {
-        return tasks[state.currentTask];
+      function findParagraph(id) {
+        return paragraphs.find(function (paragraph) { return paragraph.id === id; });
       }
 
       function setFeedback(message, color) {
@@ -454,134 +426,101 @@
         state.gameScore = stored !== null ? Number(stored) : 0;
       }
 
+      function getModeName(mode) {
+        var names = { unset: 'sin elegir', decrease: 'sin sangría', increase: 'sangría normal', firstLine: 'sangría francesa' };
+        return names[mode] || mode;
+      }
+
+      function getIndentStyle(mode) {
+        // Sangría normal: solo la primera línea se desplaza (text-indent positivo, sin padding).
+        if (mode === 'increase') { return { paddingLeft: '0', textIndent: '3.5em' }; }
+        // Sangría francesa: la primera línea queda en el margen y desde el 2° renglón en adelante se desplaza
+        // (se logra con padding-left en todo el bloque + text-indent negativo del mismo tamaño solo para la 1ra línea).
+        if (mode === 'firstLine') { return { paddingLeft: '3.5em', textIndent: '-3.5em' }; }
+        return { paddingLeft: '0', textIndent: '0' };
+      }
+
       function renderEditor() {
-        var task = currentTask();
-        taskLabel.textContent = 'Tarea ' + (state.currentTask + 1) + ' de ' + tasks.length + ': ' + task.instruction;
-        editor.innerHTML = task.paragraphs.map(function (paragraph) {
+        editor.innerHTML = paragraphs.map(function (paragraph) {
           var selected = state.selectedParagraph === paragraph.id ? ' selected' : '';
-          var indentEm = paragraph.indent * 1.5;
-          var textIndent = paragraph.firstLine ? '1.2em' : '0';
-          return '<div class="indent-paragraph' + selected + '" data-id="' + paragraph.id + '" style="margin-left:' + indentEm + 'em; text-indent:' + textIndent + ';">' + paragraph.text + '</div>';
+          var style = getIndentStyle(paragraph.mode);
+          var modeInfo = paragraph.mode === 'unset' ? ' [Sin sangría elegida]' : ' [Sangría: ' + getModeName(paragraph.mode) + ']';
+          return '<div class="indent-paragraph' + selected + '" data-id="' + paragraph.id + '" style="padding-left:' + style.paddingLeft + '; text-indent:' + style.textIndent + '; line-height: 1.9;">' +
+                 paragraph.text +
+                 '<span style="color: #999; font-size: 12px; display: block; margin-top: 4px; text-indent: 0; padding-left: 0;">' + modeInfo + '</span>' +
+                 '</div>';
         }).join('');
 
         editor.querySelectorAll('.indent-paragraph').forEach(function (element) {
           element.addEventListener('click', function () {
             state.selectedParagraph = element.getAttribute('data-id');
             renderEditor();
-            setFeedback('Párrafo seleccionado. Elige un control de sangría y pulsa aplicar.', '#0b662f');
+            setFeedback('✓ Renglón seleccionado. Elige un control de sangría para aplicarlo al instante.', '#0b662f');
           });
-        });
-      }
-
-      function updateButtonState() {
-        Object.keys(buttons).forEach(function (mode) {
-          buttons[mode].classList.toggle('active', state.activeMode === mode);
         });
       }
 
       Object.keys(buttons).forEach(function (mode) {
         buttons[mode].addEventListener('click', function () {
-          state.activeMode = mode;
-          updateButtonState();
-          var label = mode === 'increase' ? 'aumentar sangría' : mode === 'decrease' ? 'disminuir sangría' : 'sangría francesa';
-          setFeedback('Has elegido ' + label + '. Ahora aplica al párrafo seleccionado.', '#0b662f');
+          if (!state.selectedParagraph) {
+            setFeedback('⚠ Primero selecciona el renglón al que quieres aplicar la sangría.', '#d9534f');
+            return;
+          }
+          var paragraph = findParagraph(state.selectedParagraph);
+          paragraph.mode = mode;
+          renderEditor();
+          setFeedback('✓ ' + getModeName(mode) + ' aplicada.', '#0b662f');
         });
-      });
-
-      applyButton.addEventListener('click', function () {
-        if (!state.selectedParagraph) {
-          setFeedback('Selecciona primero un párrafo.', 'red');
-          return;
-        }
-        if (!state.activeMode) {
-          setFeedback('Selecciona primero un control de sangría.', 'red');
-          return;
-        }
-
-        var task = currentTask();
-        task.paragraphs = task.paragraphs.map(function (paragraph) {
-          if (paragraph.id !== state.selectedParagraph) {
-            return paragraph;
-          }
-
-          if (state.activeMode === 'increase') {
-            paragraph.indent = Math.min(3, paragraph.indent + 1);
-            paragraph.firstLine = false;
-          }
-          if (state.activeMode === 'decrease') {
-            paragraph.indent = Math.max(0, paragraph.indent - 1);
-            if (paragraph.indent === 0) {
-              paragraph.firstLine = false;
-            }
-          }
-          if (state.activeMode === 'firstLine') {
-            paragraph.firstLine = !paragraph.firstLine;
-            if (paragraph.firstLine && paragraph.indent === 0) {
-              paragraph.indent = 1;
-            }
-          }
-          return paragraph;
-        });
-
-        renderEditor();
-        setFeedback('Sangría aplicada. Pulsa comprobar cuando creas que está correcta.', '#0b662f');
       });
 
       checkButton.addEventListener('click', function () {
-        var task = currentTask();
-        var correctParagraph = task.paragraphs.find(function (paragraph) { return paragraph.correct; });
-        if (!correctParagraph) { return; }
+        if (state.activityCompleted) { return; }
 
-        if (correctParagraph.indent === task.expectedIndent && correctParagraph.firstLine === task.expectedFirstLine) {
-          state.score += 1;
-          if (state.gameScore !== -1) {
-            state.gameScore = 1;
-            saveGameScore();
-            updateGameScore();
-          }
-          if (state.currentTask + 1 < tasks.length) {
-            setFeedback('¡Muy bien! Pasamos a la siguiente tarea.', '#0f7b3f');
-            state.currentTask += 1;
-            state.selectedParagraph = null;
-            state.activeMode = null;
-            updateButtonState();
-            renderEditor();
-          } else {
-            setFeedback('¡Perfecto! Has completado todas las tareas.', '#0f7b3f');
-            taskLabel.textContent = 'Actividad terminada. Puntaje: ' + state.score + ' / ' + tasks.length + '.';
-          }
+        var allAssigned = paragraphs.every(function (paragraph) {
+          return paragraph.mode !== 'unset';
+        });
+
+        var modes = paragraphs.map(function (paragraph) { return paragraph.mode; });
+        var uniqueModes = modes.filter(function (mode, index) {
+          return modes.indexOf(mode) === index;
+        });
+        var allDifferent = uniqueModes.length === modes.length;
+
+        if (allAssigned && allDifferent) {
+          state.activityCompleted = true;
+          state.gameScore = 1;
+          saveGameScore();
+          updateGameScore();
+          setFeedback('🏆 ¡Muy bien! Los 3 renglones tienen sangrías diferentes.', '#0f7b3f');
+          taskLabel.textContent = '✓ Actividad completada exitosamente.';
+        } else if (!allAssigned) {
+          setFeedback('⚠ Todavía falta aplicar una sangría a alguno de los renglones.', '#d9534f');
         } else {
           state.gameScore = -1;
           saveGameScore();
           updateGameScore();
-          setFeedback('No es la sangría correcta todavía. Ajusta el párrafo seleccionado.', 'red');
+          setFeedback('✗ Dos renglones quedaron con la misma sangría. Cambia alguno.', '#d9534f');
         }
       });
 
       resetButton.addEventListener('click', function () {
-        state.currentTask = 0;
         state.selectedParagraph = null;
-        state.activeMode = null;
-        state.score = 0;
         state.gameScore = 0;
-        tasks.forEach(function (task) {
-          task.paragraphs.forEach(function (paragraph) {
-            paragraph.indent = 0;
-            paragraph.firstLine = false;
-          });
+        state.activityCompleted = false;
+        paragraphs.forEach(function (paragraph) {
+          paragraph.mode = 'unset';
         });
-        updateButtonState();
+        taskLabel.textContent = 'Selecciona un renglón y luego elige su sangría. Los 3 deben quedar diferentes entre sí.';
         renderEditor();
         updateGameScore();
         saveGameScore();
-        setFeedback('Juego reiniciado. Selecciona un párrafo para comenzar.', '#555');
+        setFeedback('🔄 Actividad reiniciada. Selecciona un renglón para comenzar.', '#555');
       });
 
       loadGameScore();
-      updateButtonState();
       renderEditor();
       updateGameScore();
-      setFeedback('Selecciona un párrafo para comenzar.', '#555');
+      setFeedback('Selecciona un renglón para comenzar.', '#555');
     })();
   </script>
 

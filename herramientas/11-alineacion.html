@@ -204,9 +204,11 @@
       background: rgba(43,87,154,.12);
       color: #0f407e;
     }
+    .align-paragraph.left { text-align: left; }
     .align-paragraph.center { text-align: center; }
     .align-paragraph.right { text-align: right; }
     .align-paragraph.justify { text-align: justify; }
+    .align-paragraph.none { text-align: left; }
     .align-actions {
       display: flex; gap: 10px; flex-wrap: wrap;
       margin-top: 12px;
@@ -335,10 +337,10 @@
     <!-- ACTIVIDAD: JUEGO ALINEACIÓN -->
     <div class="extra-zone">
       <h2>✏️ Actividad</h2>
-      <p class="hint"><strong>Instrucción:</strong> Selecciona el párrafo correcto y aplícale la alineación indicada. Son 2 tareas en total.</p>
+      <p class="hint"><strong>Instrucción:</strong> Selecciona cada renglón y aplícale una alineación diferente. Los 4 renglones deben quedar con una alineación distinta cada uno.</p>
 
       <div class="align-card">
-        <div class="task-summary" id="align-task">Tarea 1 de 2: selecciona el párrafo correcto y alinéalo al centro.</div>
+        <div class="task-summary" id="align-task">Selecciona un renglón y luego elige su alineación. Los 4 deben quedar diferentes entre sí.</div>
         <div class="align-toolbar">
           <button id="align-left" class="align-button">Izquierda</button>
           <button id="align-center" class="align-button">Centrar</button>
@@ -347,11 +349,10 @@
         </div>
         <div class="align-editor" id="align-editor" aria-label="Editor simulado de alineación"></div>
         <div class="align-actions">
-          <button id="apply-align" class="editor-btn">Aplicar a párrafo seleccionado</button>
           <button id="check-align" class="editor-btn">Comprobar</button>
           <button id="reset-align" class="editor-btn gray">Reiniciar</button>
         </div>
-        <div class="editor-feedback" id="align-feedback">Selecciona un párrafo para comenzar.</div>
+        <div class="editor-feedback" id="align-feedback">Selecciona un renglón para comenzar.</div>
         <div class="game-score" id="align-score">Puntaje del juego: 0 puntos</div>
       </div>
     </div>
@@ -372,33 +373,19 @@
 
   <script>
     (function () {
-      var tasks = [
-        {
-          instruction: 'Selecciona el párrafo correcto y alinéalo al centro.',
-          expected: 'center',
-          paragraphs: [
-            { id: 'p1', text: 'El informe final debe comenzar con una introducción clara.', align: 'left', correct: false },
-            { id: 'p2', text: 'Este título principal se ve mejor centrado en el documento.', align: 'left', correct: true },
-            { id: 'p3', text: 'Alinea la tabla y el gráfico si se usan en la siguiente sección.', align: 'left', correct: false }
-          ]
-        },
-        {
-          instruction: 'Selecciona el párrafo que debe estar justificado y aplícale ese formato.',
-          expected: 'justify',
-          paragraphs: [
-            { id: 'p1', text: 'El texto de un informe se ve más profesional cuando está bien distribuido.', align: 'left', correct: false },
-            { id: 'p2', text: 'La sección de conclusiones debe ser fácil de leer y bien alineada.', align: 'left', correct: true },
-            { id: 'p3', text: 'El margen izquierdo ya está correcto para esta nota.', align: 'left', correct: false }
-          ]
-        }
+      // Un solo renglón por línea, sin alineación "correcta" fija:
+      // la meta es que los 4 queden con una alineación distinta entre sí.
+      var paragraphs = [
+        { id: 'p1', text: 'El informe final debe comenzar con una introducción clara.', align: 'none' },
+        { id: 'p2', text: 'Este título principal se ve muy bien centrado en el documento.', align: 'none' },
+        { id: 'p3', text: 'El texto de un informe se ve más profesional cuando está bien distribuido.', align: 'none' },
+        { id: 'p4', text: 'Firma: ________________________     Fecha: ________________________', align: 'none' }
       ];
 
       var state = {
-        currentTask: 0,
         selectedParagraph: null,
-        currentAlign: null,
-        score: 0,
-        gameScore: 0
+        gameScore: 0,
+        activityCompleted: false
       };
 
       var editor = document.getElementById('align-editor');
@@ -411,12 +398,11 @@
         right: document.getElementById('align-right'),
         justify: document.getElementById('align-justify')
       };
-      var applyButton = document.getElementById('apply-align');
       var checkButton = document.getElementById('check-align');
       var resetButton = document.getElementById('reset-align');
 
-      function currentTask() {
-        return tasks[state.currentTask];
+      function findParagraph(id) {
+        return paragraphs.find(function (paragraph) { return paragraph.id === id; });
       }
 
       function setFeedback(message, color) {
@@ -448,112 +434,91 @@
         state.gameScore = stored !== null ? Number(stored) : 0;
       }
 
+      function getAlignName(align) {
+        var names = { left: 'izquierda', center: 'centrado', right: 'derecha', justify: 'justificado' };
+        return names[align] || align;
+      }
+
       function renderEditor() {
-        var task = currentTask();
-        taskLabel.textContent = 'Tarea ' + (state.currentTask + 1) + ' de ' + tasks.length + ': ' + task.instruction;
-        editor.innerHTML = task.paragraphs.map(function (paragraph) {
+        editor.innerHTML = paragraphs.map(function (paragraph) {
           var selected = state.selectedParagraph === paragraph.id ? ' selected' : '';
-          return '<div class="align-paragraph' + selected + ' ' + paragraph.align + '" data-id="' + paragraph.id + '" data-align="' + paragraph.align + '">' + paragraph.text + '</div>';
+          var alignInfo = paragraph.align === 'none' ? ' [Sin alineación]' : ' [Alineación: ' + getAlignName(paragraph.align) + ']';
+          return '<div class="align-paragraph' + selected + ' ' + paragraph.align + '" data-id="' + paragraph.id + '">' +
+                 paragraph.text +
+                 '<span style="color: #999; font-size: 12px; display: block; margin-top: 4px;">' + alignInfo + '</span>' +
+                 '</div>';
         }).join('');
 
         editor.querySelectorAll('.align-paragraph').forEach(function (element) {
           element.addEventListener('click', function () {
             state.selectedParagraph = element.getAttribute('data-id');
-            state.currentAlign = null;
             renderEditor();
-            updateButtonState();
-            setFeedback('Párrafo seleccionado. Elige una alineación y pulsa aplicar.', '#0b662f');
+            setFeedback('✓ Renglón seleccionado. Elige una alineación para aplicarla al instante.', '#0b662f');
           });
-        });
-      }
-
-      function updateButtonState() {
-        Object.keys(alignButtons).forEach(function (align) {
-          alignButtons[align].classList.toggle('active', state.currentAlign === align);
         });
       }
 
       Object.keys(alignButtons).forEach(function (align) {
         alignButtons[align].addEventListener('click', function () {
-          state.currentAlign = align;
-          updateButtonState();
-          setFeedback('Lista la alineación ' + align + '. Ahora aplica al párrafo seleccionado.', '#0b662f');
-        });
-      });
-
-      applyButton.addEventListener('click', function () {
-        if (!state.selectedParagraph) {
-          setFeedback('Selecciona primero un párrafo.', 'red');
-          return;
-        }
-        if (!state.currentAlign) {
-          setFeedback('Selecciona un tipo de alineación antes de aplicar.', 'red');
-          return;
-        }
-        var task = currentTask();
-        task.paragraphs = task.paragraphs.map(function (paragraph) {
-          if (paragraph.id === state.selectedParagraph) {
-            paragraph.align = state.currentAlign;
+          if (!state.selectedParagraph) {
+            setFeedback('⚠ Primero selecciona el renglón al que quieres aplicar la alineación.', '#d9534f');
+            return;
           }
-          return paragraph;
+          var paragraph = findParagraph(state.selectedParagraph);
+          paragraph.align = align;
+          renderEditor();
+          setFeedback('✓ Alineación ' + getAlignName(align) + ' aplicada.', '#0b662f');
         });
-        renderEditor();
-        setFeedback('Alineación aplicada. Pulsa comprobar cuando quieras.', '#0b662f');
       });
 
       checkButton.addEventListener('click', function () {
-        var task = currentTask();
-        var correctParagraph = task.paragraphs.find(function (paragraph) { return paragraph.correct; });
-        if (!correctParagraph) { return; }
-        if (correctParagraph.align === task.expected) {
-          state.score += 1;
-          if (state.gameScore !== -1) {
-            state.gameScore = 1;
-            saveGameScore();
-            updateGameScore();
-          }
-          if (state.currentTask + 1 < tasks.length) {
-            setFeedback('¡Muy bien! Pasando a la siguiente tarea.', '#0f7b3f');
-            state.currentTask += 1;
-            state.selectedParagraph = null;
-            state.currentAlign = null;
-            updateButtonState();
-            renderEditor();
-          } else {
-            setFeedback('¡Perfecto! Has completado todas las tareas.', '#0f7b3f');
-            taskLabel.textContent = 'Actividad terminada. Puntaje: ' + state.score + ' / ' + tasks.length + '.';
-          }
+        if (state.activityCompleted) { return; }
+
+        var allHaveAlign = paragraphs.every(function (paragraph) {
+          return paragraph.align !== 'none';
+        });
+
+        var aligns = paragraphs.map(function (paragraph) { return paragraph.align; });
+        var uniqueAligns = aligns.filter(function (align, index) {
+          return aligns.indexOf(align) === index;
+        });
+        var allDifferent = uniqueAligns.length === aligns.length;
+
+        if (allHaveAlign && allDifferent) {
+          state.activityCompleted = true;
+          state.gameScore = 1;
+          saveGameScore();
+          updateGameScore();
+          setFeedback('🏆 ¡Muy bien! Los 4 renglones tienen alineaciones diferentes.', '#0f7b3f');
+          taskLabel.textContent = '✓ Actividad completada exitosamente.';
+        } else if (!allHaveAlign) {
+          setFeedback('⚠ Todavía falta aplicar una alineación a alguno de los renglones.', '#d9534f');
         } else {
           state.gameScore = -1;
           saveGameScore();
           updateGameScore();
-          setFeedback('La alineación no es correcta aún. Revisa el párrafo indicado.', 'red');
+          setFeedback('✗ Dos renglones quedaron con la misma alineación. Cambia alguno.', '#d9534f');
         }
       });
 
       resetButton.addEventListener('click', function () {
-        state.currentTask = 0;
         state.selectedParagraph = null;
-        state.currentAlign = null;
-        state.score = 0;
         state.gameScore = 0;
-        tasks.forEach(function (task) {
-          task.paragraphs.forEach(function (paragraph) {
-            paragraph.align = 'left';
-          });
+        state.activityCompleted = false;
+        paragraphs.forEach(function (paragraph) {
+          paragraph.align = 'none';
         });
-        updateButtonState();
+        taskLabel.textContent = 'Selecciona un renglón y luego elige su alineación. Los 4 deben quedar diferentes entre sí.';
         renderEditor();
         updateGameScore();
         saveGameScore();
-        setFeedback('Juego reiniciado. Selecciona un párrafo para comenzar.', '#555');
+        setFeedback('🔄 Actividad reiniciada. Selecciona un renglón para comenzar.', '#555');
       });
 
       loadGameScore();
-      updateButtonState();
       renderEditor();
       updateGameScore();
-      setFeedback('Selecciona un párrafo para comenzar.', '#555');
+      setFeedback('Selecciona un renglón para comenzar.', '#555');
     })();
   </script>
 

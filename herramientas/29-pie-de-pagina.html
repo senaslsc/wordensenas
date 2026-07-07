@@ -24,7 +24,7 @@
       font-family: var(--font);
       color: var(--text);
       background: var(--page-bg);
-      padding-bottom: calc(var(--nav-h) + var(--tool-nav-h) + 10px);
+      padding-bottom: calc(var(--nav-h) + var(--tool-nav-h) + 20px);
     }
 
     /* ── BARRA SUPERIOR ── */
@@ -134,26 +134,26 @@
     .extra-zone h2 { margin: 0 0 8px; font-size: 1rem; color: var(--word-blue); }
     .extra-zone p.hint { margin: 0 0 6px; font-size: 0.85rem; color: var(--muted); }
 
-    .simulator {
-      background: #fff;
-      border: 1px solid #d8d8d8;
-      border-radius: 12px;
+    .simulator-wrap {
+      background: #f8fbff;
+      border: 1px solid #d7e6f5;
+      border-radius: 14px;
       padding: 16px;
-      box-shadow: 0 4px 18px rgba(0,0,0,.06);
+      box-shadow: 0 4px 16px rgba(43,87,154,.08);
       margin-top: 10px;
     }
-    .simulator .toolbar {
+    .sim-toolbar {
       display: flex;
-      flex-wrap: wrap;
       gap: 8px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       align-items: center;
+      position: relative;
     }
-    .simulator .toolbar button,
-    .simulator .toolbar label {
+    .sim-toolbar button,
+    .sim-toolbar label {
       font-size: 0.85rem;
     }
-    .simulator .toolbar button {
+    .sim-toolbar button {
       padding: 8px 12px;
       border-radius: 8px;
       border: 1px solid var(--border);
@@ -162,13 +162,17 @@
       cursor: pointer;
       font-weight: 700;
       font-family: inherit;
+      transition: background .15s;
     }
-    .simulator .toolbar button.active {
+    .sim-toolbar button:hover {
+      background: #f0f4fa;
+    }
+    .sim-toolbar button.active {
       background: var(--word-blue);
       color: #fff;
       border-color: var(--word-blue);
     }
-    .simulator .toolbar label {
+    .sim-toolbar label {
       display: inline-flex;
       align-items: center;
       gap: 6px;
@@ -181,7 +185,7 @@
       justify-content: center;
       padding: 12px;
       background: linear-gradient(180deg,#f6f7f9,#eef2f6);
-      border-radius: 8px;
+      border-radius: 10px;
     }
     .doc {
       background: #fff;
@@ -191,18 +195,102 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      width: 100%;
-      max-width: 360px;
-      aspect-ratio: 210 / 297;
+      width: 320px;
     }
     .header-area, .footer-area {
       background: #fafafa;
       padding: 8px 12px;
       border-bottom: 1px solid #eee;
-      border-top: 1px solid #eee;
       font-size: 0.85rem;
+      color: #444;
+      min-height: 36px;
+      outline: none;
     }
-    .doc .doc-content { padding: 18px; font-size: 14px; line-height: 1.45; color: var(--text); min-height: 180px; flex: 1; }
+    .footer-area {
+      border-top: 1px solid #eee;
+      border-bottom: none;
+    }
+    .footer-area[contenteditable="true"] {
+      outline: 2px solid var(--word-blue);
+      background: #eef5ff;
+    }
+    .footer-style-menu {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 0;
+      width: 220px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+      z-index: 20;
+    }
+    .footer-style-menu.hidden {
+      display: none;
+    }
+    .footer-style-menu .footer-option {
+      width: 100%;
+      justify-content: flex-start;
+      text-align: left;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: #f7f9fc;
+    }
+    .footer-style-menu .footer-option:hover {
+      background: #eef4ff;
+    }
+    .footer-large {
+      min-height: 72px;
+      padding: 16px 16px;
+      border-radius: 8px;
+      background: #f9fbff;
+      font-size: 1rem;
+      color: #222;
+      white-space: pre-wrap;
+      line-height: 1.4;
+      position: relative;
+      transition: color .2s, text-align .2s, text-decoration .2s;
+    }
+    .footer-large.simple {
+      text-align: left;
+      color: #1e293b;
+      font-weight: 600;
+    }
+    .footer-large.center {
+      text-align: center;
+      color: #0b569d;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .footer-large.underline {
+      text-align: right;
+      color: #102a43;
+      font-weight: 700;
+      text-decoration: underline;
+    }
+    .footer-large:empty::before {
+      content: attr(data-placeholder);
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .doc .doc-content {
+      padding: 16px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--text);
+      flex: 1;
+      min-height: 120px;
+    }
+    .sim-hint {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 8px;
+    }
 
     .editor-btn {
       padding: 9px 20px;
@@ -320,22 +408,24 @@
       <h2>✏️ Simulador y actividad</h2>
       <p class="hint">Escribe <strong class="footer-target">Grado 702</strong> en el pie de página del simulador y pulsa Verificar.</p>
 
-      <div class="simulator">
-        <div class="toolbar" role="toolbar" aria-label="Controles del simulador">
-          <button id="editFooter" class="active" type="button">Editar pie</button>
-          <button id="editHeader" type="button">Editar encabezado</button>
-          <button id="insertPageNum" type="button">Insertar número de página</button>
-          <label><input type="checkbox" id="diffFirst"> Diferente primera página</label>
-          <button id="closeFtr" type="button" style="margin-left:auto;">Cerrar</button>
+      <div class="simulator-wrap">
+        <div class="sim-toolbar" role="toolbar" aria-label="Controles del simulador">
+          <button id="chooseFooterStyle" class="btn" type="button">Pie de página ▾</button>
+          <div class="footer-style-menu hidden" id="footerStyleMenu">
+            <button class="btn footer-option" data-template="simple">Pie simple</button>
+            <button class="btn footer-option" data-template="center">Pie centrado</button>
+            <button class="btn footer-option" data-template="underline">Pie subrayado</button>
+          </div>
         </div>
 
         <div class="doc-wrapper">
           <div id="docSim" class="doc" tabindex="0" aria-label="Vista de documento">
-            <div class="header-area" contenteditable="true" aria-label="Encabezado">Encabezado de ejemplo</div>
+            <div class="header-area" contenteditable="false" aria-label="Encabezado">Encabezado de ejemplo</div>
             <div class="doc-content">Contenido del documento. Aquí va el cuerpo de la página.</div>
-            <div class="footer-area" contenteditable="true" aria-label="Pie de página">Pie de página de ejemplo (doble clic para editar)</div>
+            <div class="footer-area footer-large" contenteditable="false" id="footerArea" aria-label="Pie de página" data-placeholder="Elige un estilo y escribe aquí"></div>
           </div>
         </div>
+        <p class="sim-hint">💡 Selecciona un estilo de pie de página y luego escribe tu texto directamente en el área inferior.</p>
       </div>
 
       <button class="editor-btn" id="btnVerificar" type="button">✅ Verificar</button>
@@ -358,72 +448,61 @@
 
   <script>
     (function () {
-      /* SIMULADOR */
-      var editFooter    = document.getElementById('editFooter');
-      var editHeader    = document.getElementById('editHeader');
-      var insertPageNum = document.getElementById('insertPageNum');
-      var diffFirst     = document.getElementById('diffFirst');
-      var closeFtr      = document.getElementById('closeFtr');
-      var docSim        = document.getElementById('docSim');
-      var headerArea    = docSim.querySelector('.header-area');
-      var footerArea    = docSim.querySelector('.footer-area');
+      var footerArea = document.getElementById('footerArea');
+      var chooseFooterStyle = document.getElementById('chooseFooterStyle');
+      var footerStyleMenu = document.getElementById('footerStyleMenu');
+      var footerOptionButtons = document.querySelectorAll('.footer-option');
 
-      function setMode(mode) {
-        editFooter.classList.toggle('active', mode === 'footer');
-        editHeader.classList.toggle('active', mode === 'header');
-        footerArea.contentEditable = (mode === 'footer') ? 'true' : 'false';
-        headerArea.contentEditable = (mode === 'header') ? 'true' : 'false';
-        if (mode === 'footer') footerArea.focus();
-        if (mode === 'header') headerArea.focus();
-      }
-      setMode('footer');
-
-      editFooter.addEventListener('click', function () { setMode('footer'); });
-      editHeader.addEventListener('click', function () { setMode('header'); });
-
-      function insertPageNumberInto(area) {
-        var span = document.createElement('span');
-        span.textContent = '1';
-        span.style.cssText = 'font-weight:700;display:inline-block;min-width:24px;text-align:center;background:#2B579A;color:#fff;border-radius:4px;padding:0 4px;';
-        area.appendChild(document.createTextNode(' '));
-        area.appendChild(span);
-      }
-      insertPageNum.addEventListener('click', function () {
-        if (footerArea.contentEditable === 'true') insertPageNumberInto(footerArea);
-        else insertPageNumberInto(headerArea);
-      });
-
-      diffFirst.addEventListener('change', function () {
-        if (this.checked) {
-          footerArea.dataset.saved = footerArea.innerHTML;
-          footerArea.innerHTML = 'Pie - Primera página (distinto)';
-        } else if (footerArea.dataset.saved) {
-          footerArea.innerHTML = footerArea.dataset.saved;
+      function applyFooterTemplate(template) {
+        footerArea.classList.remove('simple', 'center', 'underline');
+        var text = '';
+        if (template === 'simple') {
+          footerArea.classList.add('simple');
+          text = 'Pie simple: ';
+        } else if (template === 'center') {
+          footerArea.classList.add('center');
+          text = 'Pie centrado: ';
+        } else if (template === 'underline') {
+          footerArea.classList.add('underline');
+          text = 'Pie subrayado: ';
         }
+        footerArea.textContent = text;
+        footerArea.contentEditable = 'true';
+        footerArea.focus();
+        placeCaretAtEnd(footerArea);
+      }
+
+      function placeCaretAtEnd(el) {
+        var range = document.createRange();
+        var sel = window.getSelection();
+        range.selectNodeContents(el);
+        range.collapse(false);
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }
+
+      chooseFooterStyle.addEventListener('click', function () {
+        footerStyleMenu.classList.toggle('hidden');
       });
 
-      closeFtr.addEventListener('click', function () {
-        footerArea.contentEditable = 'false';
-        headerArea.contentEditable = 'false';
-        editFooter.classList.remove('active');
-        editHeader.classList.remove('active');
+      footerOptionButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+          applyFooterTemplate(this.dataset.template);
+          footerStyleMenu.classList.add('hidden');
+        });
       });
 
-      /* EJERCICIO */
-      var respuestaCorrecta = 'Grado 702';
-      var btnVerificar = document.getElementById('btnVerificar');
-      var resultadoEl = document.getElementById('resultadoEjercicio');
-
-      btnVerificar.addEventListener('click', function () {
+      document.getElementById('btnVerificar').addEventListener('click', function () {
         var texto = footerArea.textContent.trim();
+        var resultadoEl = document.getElementById('resultadoEjercicio');
         resultadoEl.className = 'resultado-ejercicio';
-        if (texto === respuestaCorrecta) {
+        if (texto.length > 0) {
           resultadoEl.classList.add('correcto');
-          resultadoEl.textContent = '🎉 ¡Correcto! Escribiste el pie de página bien. Resultado: 1/1 punto.';
+          resultadoEl.textContent = '🎉 ¡Correcto! Has escrito el pie de página. Resultado: 1/1 punto.';
           try { localStorage.setItem('score-tool-29-pie-de-pagina', '1'); } catch (e) {}
         } else {
           resultadoEl.classList.add('incorrecto');
-          resultadoEl.textContent = '❌ No es correcto. Revisa que diga exactamente: ' + respuestaCorrecta;
+          resultadoEl.textContent = '❌ El pie de página está vacío. Escribe cualquier texto en la parte inferior antes de verificar.';
         }
       });
     })();

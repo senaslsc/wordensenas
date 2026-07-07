@@ -98,61 +98,174 @@
     .extra-zone h2 { margin: 0 0 8px; font-size: 1rem; color: var(--word-blue); }
     .extra-zone p.hint { margin: 0 0 10px; font-size: 0.85rem; color: var(--muted); }
 
-    /* JUEGO DESHACER */
+    /* SIMULACIÓN WORD - DESHACER */
     .undo-card {
-      background: #fff; border: 1px solid #d7e6f5;
-      border-radius: 14px; padding: 16px;
+      background: #fff;
+      border: 1px solid #d7e6f5;
+      border-radius: 14px;
+      padding: 16px;
       box-shadow: 0 4px 16px rgba(43,87,154,.08);
-      max-width: 760px; margin: 0 auto;
+      max-width: 760px;
+      margin: 0 auto;
     }
     .undo-card-header {
-      display: flex; align-items: center; justify-content: space-between;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
       margin-bottom: 14px;
+      flex-wrap: wrap;
     }
     .undo-card-header h3 { margin: 0; color: var(--word-blue); font-size: 1rem; }
     .undo-score { color: var(--word-blue); font-weight: 700; font-size: 1rem; }
-
-    /* Vista previa del documento */
     .undo-preview {
-      background: #f4f8ff; border: 1px solid #cfd8e5;
-      border-radius: 10px; padding: 14px; min-height: 90px;
+      background: #f4f8ff;
+      border: 1px solid #cfd8e5;
+      border-radius: 10px;
+      padding: 14px;
       margin-bottom: 14px;
     }
     .undo-preview .doc-label {
-      font-size: 0.85rem; font-weight: 700; color: #0f407e; margin-bottom: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #0f407e;
+      margin-bottom: 8px;
     }
-    .undo-preview p { margin: 0; line-height: 1.6; color: var(--text); }
-
-    /* Botones de acción */
-    .undo-actions {
-      display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;
-    }
-    .undo-action-btn {
-      flex: 1; min-width: 120px;
-      padding: 10px 12px; background: #eef5ff;
-      border: 1px solid #cfd8e5; border-radius: 8px;
-      color: var(--word-dark); font-weight: 600;
-      font-family: inherit; font-size: 0.85rem;
-      cursor: pointer; transition: background .15s, border-color .15s;
-    }
-    .undo-action-btn:hover { background: #dceaff; border-color: var(--word-blue); }
-
     .undo-controls {
-      display: flex; gap: 8px; flex-wrap: wrap;
-      align-items: center; border-top: 1px solid #e0e0e0; padding-top: 12px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+      border-top: 1px solid #e0e0e0;
+      padding-top: 12px;
     }
     .boton {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 9px 16px; border-radius: 6px; border: 1px solid #ccc;
-      background: #fff; font-family: inherit; font-size: 0.85rem;
-      font-weight: 600; cursor: pointer; transition: background .15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      background: #fff;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s;
     }
     .boton:hover { background: #f3f3f3; }
     .boton.deshacer { border-color: var(--word-blue); color: var(--word-blue); }
     .undo-feedback {
-      font-size: 0.9rem; color: var(--muted); min-height: 1.3em; flex: 1;
+      font-size: 0.9rem;
+      color: var(--muted);
+      min-height: 1.3em;
+      flex: 1;
     }
 
+
+/* SIMULACIÓN TIPO WORD */
+.word-shell {
+  border: 1px solid #d8e2ef;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+}
+.word-mini-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: #f3f7fd;
+  border-bottom: 1px solid #dfe8f4;
+  padding: 10px 12px;
+  font-size: 0.85rem;
+  color: #183b67;
+  font-weight: 700;
+}
+.word-mini-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  color: #18467f;
+  font-weight: 700;
+}
+.word-mini-tabs span {
+  background: #fff;
+  border: 1px solid #d7e3f3;
+  border-radius: 999px;
+  padding: 4px 10px;
+}
+.word-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px;
+  background: #fff;
+  border-bottom: 1px solid #eef2f6;
+}
+.tool-btn {
+  border: 1px solid #cfd8e5;
+  background: #eef5ff;
+  color: #0b2d5c;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: transform .12s ease, background .12s ease, border-color .12s ease;
+}
+.tool-btn:hover {
+  background: #dfeaff;
+  border-color: #2B579A;
+  transform: translateY(-1px);
+}
+.tool-btn.primary {
+  background: #2B579A;
+  color: #fff;
+  border-color: #2B579A;
+}
+.tool-btn.primary:hover {
+  background: #244a82;
+  border-color: #244a82;
+}
+.tool-btn.gray {
+  background: #fff;
+  color: #2B579A;
+}
+.word-sheet-wrap {
+  background: #f8fbff;
+  padding: 16px;
+}
+.word-sheet {
+  background: #fff;
+  border: 1px solid #d5ddea;
+  border-radius: 10px;
+  min-height: 260px;
+  box-shadow: 0 10px 24px rgba(43,87,154,.08);
+  padding: 24px 26px;
+}
+.editor {
+  min-height: 210px;
+  outline: none;
+  font-family: Calibri, "Segoe UI", sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #222;
+}
+.editor h4 {
+  margin: 0 0 10px;
+  font-size: 1.08rem;
+  color: #1e3f6e;
+}
+.editor p { margin: 0 0 10px; }
+.editor ul { margin: 8px 0 0 20px; padding: 0; }
+.editor li { margin: 6px 0; }
+.selection-tip {
+  font-size: 0.84rem;
+  color: #5c5c5c;
+  margin: 10px 0 0;
+}
 
     /* NAV ENTRE HERRAMIENTAS */
     .detail-nav-bar {
@@ -226,34 +339,55 @@
       </div>
     </div>
 
+    
     <!-- ACTIVIDAD -->
     <div class="extra-zone">
       <h2>✏️ Actividad</h2>
-      <p class="hint"><strong>Instrucción:</strong> Haz un cambio en el documento y luego usa <strong>↶ Deshacer</strong> para volver al texto original.</p>
+      <p class="hint"><strong>Instrucción:</strong> Escribe o selecciona un texto dentro del documento y usa la barra para cambiarlo. Después pulsa <strong>↶ Deshacer</strong> para volver atrás.</p>
 
       <div class="undo-card">
         <div class="undo-card-header">
-          <h3>↶ Juego: Deshacer cambios</h3>
+          <h3>↶ Mini Word: Deshacer cambios</h3>
           <span class="undo-score">Puntos: <span id="undo-score">0</span></span>
         </div>
 
-        <!-- Vista previa -->
-        <div class="undo-preview">
-          <div class="doc-label">📄 Documento actual</div>
-          <p id="undo-document">Este documento tiene su contenido original.</p>
+        <div class="word-shell">
+          <div class="word-mini-bar">
+            <div class="word-mini-tabs">
+              <span>Archivo</span>
+              <span>Inicio</span>
+              <span>Insertar</span>
+            </div>
+            <div id="undo-state-label">Documento editable</div>
+          </div>
+
+          <div class="word-toolbar" aria-label="Herramientas de formato">
+            <button type="button" class="tool-btn" onclick="formatSelection('bold')"><strong>B</strong> Negrita</button>
+            <button type="button" class="tool-btn" onclick="formatSelection('underline')"><u>U</u> Subrayar</button>
+            <button type="button" class="tool-btn" onclick="formatSelection('highlight')">🟨 Resaltar</button>
+            <button type="button" class="tool-btn" onclick="formatSelection('blue')">A Azul</button>
+            <button type="button" class="tool-btn primary" onclick="insertSampleText()">✍️ Insertar texto</button>
+          </div>
+
+          <div class="word-sheet-wrap">
+            <div class="word-sheet">
+              <div id="undo-document" class="editor" contenteditable="true" spellcheck="true" aria-label="Documento editable"><h4>Aprendamos Microsoft Word</h4>
+<p>Microsoft Word es un procesador de texto que nos ayuda a escribir, editar y organizar información.</p>
+<p>Escribe una palabra, selecciónala con el mouse y usa las herramientas de la barra.</p>
+<ul>
+  <li>Crear documentos</li>
+  <li>Editar documentos</li>
+  <li>Guardar documentos</li>
+</ul></div>
+              <div class="selection-tip">Tip: selecciona una palabra con el mouse y aplica un formato. También puedes escribir directamente dentro del documento.</div>
+            </div>
+          </div>
         </div>
 
-        <!-- Acciones para aplicar -->
-        <div class="undo-actions">
-          <button type="button" class="undo-action-btn" onclick="performAction('add')">➕ Agregar texto</button>
-          <button type="button" class="undo-action-btn" onclick="performAction('delete')">🗑️ Eliminar frase</button>
-          <button type="button" class="undo-action-btn" onclick="performAction('format')">✏️ Cambiar estilo</button>
-        </div>
-
-        <div class="undo-controls">
+        <div class="undo-controls" style="margin-top:12px;">
           <button class="boton deshacer" onclick="undoAction()">↶ Deshacer</button>
-          <button class="boton"          onclick="resetUndoGame()">🔄 Reiniciar</button>
-          <div class="undo-feedback" id="undo-feedback">Aplica un cambio y luego deshazlo.</div>
+          <button class="boton" onclick="resetUndoGame()">🔄 Reiniciar</button>
+          <div class="undo-feedback" id="undo-feedback">Escribe o selecciona texto y luego usa ↶ Deshacer.</div>
         </div>
       </div>
     </div>
@@ -272,38 +406,88 @@
     <a href="../index.html"><span class="nav-icon">🏠</span>Inicio</a>
   </nav>
 
+  
   <script>
-    var ORIGINAL = 'Este documento tiene su contenido original.';
-    var ACCIONES = {
-      add:    'Este documento tiene su contenido original. Se agregó una frase extra para continuar.',
-      delete: 'Este documento tiene su contenido. (Se eliminó una frase.)',
-      format: 'ESTE DOCUMENTO TIENE SU CONTENIDO ORIGINAL. (Estilo cambiado.)'
-    };
-
     var undoState = {
-      history: [ORIGINAL],
+      history: [],
       index: 0,
       score: 0,
-      scored: false
+      scored: false,
+      restoring: false
     };
+
+    var editor = null;
 
     function setFeedback(msg, color) {
       var el = document.getElementById('undo-feedback');
       if (el) { el.textContent = msg; el.style.color = color || '#555'; }
     }
 
-    function updateDoc() {
-      document.getElementById('undo-document').textContent = undoState.history[undoState.index];
+    function setStateLabel(msg) {
+      var el = document.getElementById('undo-state-label');
+      if (el) el.textContent = msg;
     }
 
-    function performAction(key) {
-      // Cortar el historial desde el índice actual
+    function snapshot() {
+      return editor ? editor.innerHTML : '';
+    }
+
+    function restore(html) {
+      undoState.restoring = true;
+      editor.innerHTML = html;
+      setTimeout(function () { undoState.restoring = false; }, 0);
+    }
+
+    function pushState() {
+      if (!editor || undoState.restoring) return;
+      var current = snapshot();
+      if (undoState.history.length && undoState.history[undoState.index] === current) return;
       undoState.history = undoState.history.slice(0, undoState.index + 1);
-      undoState.history.push(ACCIONES[key]);
-      undoState.index += 1;
+      undoState.history.push(current);
+      undoState.index = undoState.history.length - 1;
       undoState.scored = false;
-      updateDoc();
-      setFeedback('✏️ Cambio aplicado. Ahora pulsa ↶ Deshacer para volver al original.', '#174a97');
+    }
+
+    function updateScore() {
+      document.getElementById('undo-score').textContent = undoState.score;
+    }
+
+    function setInitialState() {
+      undoState.history = [snapshot()];
+      undoState.index = 0;
+      undoState.scored = false;
+    }
+
+    function focusEditor() {
+      editor.focus();
+    }
+
+    function formatSelection(mode) {
+      focusEditor();
+      if (mode === 'bold') {
+        document.execCommand('bold', false, null);
+        setFeedback('Se aplicó negrita al texto seleccionado.', '#174a97');
+      } else if (mode === 'underline') {
+        document.execCommand('underline', false, null);
+        setFeedback('Se aplicó subrayado al texto seleccionado.', '#174a97');
+      } else if (mode === 'highlight') {
+        try { document.execCommand('hiliteColor', false, '#fff29b'); }
+        catch (e) { document.execCommand('backColor', false, '#fff29b'); }
+        setFeedback('Se aplicó resaltado al texto seleccionado.', '#174a97');
+      } else if (mode === 'blue') {
+        document.execCommand('foreColor', false, '#002873');
+        setFeedback('Se cambió el color del texto a azul.', '#174a97');
+      }
+      pushState();
+      setStateLabel('Formato aplicado');
+    }
+
+    function insertSampleText() {
+      focusEditor();
+      document.execCommand('insertHTML', false, '<p><strong>Texto agregado:</strong> esta es una nueva frase para practicar Deshacer.</p>');
+      pushState();
+      setFeedback('Se agregó texto nuevo al documento.', '#174a97');
+      setStateLabel('Texto insertado');
     }
 
     function undoAction() {
@@ -312,26 +496,51 @@
         return;
       }
       undoState.index -= 1;
-      updateDoc();
+      restore(undoState.history[undoState.index]);
+      setStateLabel('Volvimos a un estado anterior');
       if (undoState.index === 0 && !undoState.scored && undoState.history.length > 1) {
         undoState.score += 1;
         undoState.scored = true;
-        document.getElementById('undo-score').textContent = undoState.score;
-        setFeedback('🎉 ¡Excelente! Regresaste al texto original. Ganaste 1 punto.', '#0b662f');
+        updateScore();
+        setFeedback('🎉 ¡Muy bien! Volviste al documento original.', '#0b662f');
         try { localStorage.setItem('score-tool-06-deshacer', '1'); } catch(e) {}
       } else {
-        setFeedback('↶ Deshecho. Pulsa otra vez si quieres seguir retrocediendo.', '#0b662f');
+        setFeedback('↶ Deshecho. Puedes seguir retrocediendo.', '#0b662f');
       }
     }
 
     function resetUndoGame() {
-      undoState.history = [ORIGINAL];
-      undoState.index   = 0;
-      undoState.scored  = false;
-      updateDoc();
-      setFeedback('Aplica un cambio y luego deshazlo con ↶ Deshacer.', '#555');
+      undoState.restoring = true;
+      editor.innerHTML = `<h4>Aprendamos Microsoft Word</h4>
+<p>Microsoft Word es un procesador de texto que nos ayuda a escribir, editar y organizar información.</p>
+<p>Escribe una palabra, selecciónala con el mouse y usa las herramientas de la barra.</p>
+<ul>
+  <li>Crear documentos</li>
+  <li>Editar documentos</li>
+  <li>Guardar documentos</li>
+</ul>`;
+      setTimeout(function () {
+        undoState.restoring = false;
+        setInitialState();
+      }, 0);
+      setStateLabel('Documento editable');
+      setFeedback('Escribe o selecciona texto y luego usa ↶ Deshacer.', '#555');
     }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      editor = document.getElementById('undo-document');
+      editor.addEventListener('input', function () {
+        pushState();
+        setStateLabel('Cambios guardados');
+      });
+      editor.addEventListener('mouseup', function () { setStateLabel('Texto listo para formato'); });
+      editor.addEventListener('keyup', function () { setStateLabel('Texto listo para formato'); });
+      setInitialState();
+      updateScore();
+      setFeedback('Escribe o selecciona texto y luego usa ↶ Deshacer.', '#555');
+    });
   </script>
+
 
 </body>
 </html>

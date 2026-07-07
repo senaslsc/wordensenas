@@ -114,14 +114,37 @@
 
     /* Preview del documento */
     .zoom-preview {
-      background: #e8ecf2; border-radius: 10px; padding: 16px;
-      display: flex; align-items: center; justify-content: center;
-      min-height: 140px; margin-bottom: 16px; transition: font-size .2s;
+      background:#e8ecf2;
+      border-radius:10px;
+      padding:24px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      min-height:360px;
+      overflow:hidden;
     }
-    .zoom-doc {
-      width: 90%; max-width: 460px; background: #fff;
-      border: 1px solid #d0d8e6; border-radius: 10px;
-      padding: 18px; box-shadow: 0 8px 20px rgba(43,87,154,.08);
+    .zoom-doc{
+      width:540px;
+      background:#fff;
+      border:1px solid #d0d8e6;
+      border-radius:4px;
+      padding:32px;
+      box-shadow:0 10px 24px rgba(43,87,154,.12);
+      transform-origin:center center;
+      transition:transform .25s ease;
+    }
+    .doc-title{
+      font-size:1.45rem;
+      font-weight:700;
+      color:#222;
+      margin-bottom:20px;
+    }
+    .doc-text{
+      font-size:15px;
+      line-height:1.8;
+      text-align:justify;
+      color:#333;
+      margin-bottom:18px;
     }
     .zoom-doc-header {
       display: flex; justify-content: space-between; align-items: center;
@@ -238,13 +261,14 @@
     <!-- ACTIVIDAD -->
     <div class="extra-zone">
       <h2>✏️ Actividad</h2>
-      <p class="hint"><strong>Instrucción:</strong> Mueve la barra hasta que el zoom quede en <strong>100%</strong> y pulsa Aplicar.</p>
-
+      <strong>
+        Instrucción: Mueve la barra hasta que el zoom quede en <span style="color:#002873;">100%</span> y da clic en el bóton aplicar
+    </strong>
       <div class="zoom-card">
         <div class="zoom-card-header">
           <div>
-            <h3>🔍 Juego de Zoom</h3>
-            <p>Ajusta la barra hasta llegar a 100%</p>
+            <h3>Actividad </h3>
+            <p><strong>Ajusta la barra hasta llegar a 100%</strong></p>
           </div>
           <div class="zoom-score">Puntos: <span id="zoom-score">0</span></div>
         </div>
@@ -256,7 +280,16 @@
               <strong>Documento de Word</strong>
               <span id="zoom-preview-percent">100%</span>
             </div>
-            <p>Este documento muestra la vista clara y cómoda del zoom correcto.</p>
+
+            <div class="doc-title">Aprendamos la herramienta Zoom de Microsoft Word</div>
+
+            <div class="doc-text">
+              La herramienta <strong>Zoom</strong> se encuentra en la parte inferior derecha de la pantalla,
+              representada por una barra con un porcentaje.
+            </div>
+
+
+
           </div>
         </div>
 
@@ -305,7 +338,7 @@
     function updateZoomUI(value) {
       document.getElementById('zoom-percentage').textContent   = value + '%';
       document.getElementById('zoom-preview-percent').textContent = value + '%';
-      document.getElementById('zoom-preview').style.fontSize   = (value / 100) + 'rem';
+      document.querySelector('.zoom-doc').style.transform='scale('+(value/100)+')';
     }
 
     function changeZoom(value) {

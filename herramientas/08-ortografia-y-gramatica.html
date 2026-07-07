@@ -160,20 +160,22 @@
       padding: 14px;
       margin-bottom: 14px;
       color: #1a1a1a;
+      position: relative;
     }
     .review-text { font-size: 0.95rem; line-height: 1.7; }
     .review-highlight {
-      background: rgba(43,87,154,.08);
-      color: #0f407e;
+      background: transparent;
+      color: #000;
       border: none;
-      padding: 2px 4px;
-      border-radius: 4px;
+      padding: 0 2px;
+      border-radius: 2px;
       cursor: pointer;
-      text-decoration: underline;
+      text-decoration: underline wavy #b22222;
+      text-decoration-thickness: 2px;
       font-weight: 700;
       font-family: inherit;
     }
-    .review-highlight.selected { background: rgba(43,87,154,.16); }
+    .review-highlight.selected { background: rgba(43,87,154,.16); color: #000; text-decoration: none; }
 
     .review-issues {
       display: flex;
@@ -198,38 +200,27 @@
       color: #0d305d;
     }
 
-    .review-suggestions {
-      border: 1px solid #cfd8e5;
-      border-radius: 12px;
-      padding: 12px;
-      margin-bottom: 14px;
-      background: #fcfdff;
-    }
-    .suggestion-header {
-      font-weight: 700;
-      margin-bottom: 10px;
-      color: var(--word-dark);
-    }
-    .suggestion-list {
-      display: grid;
-      gap: 10px;
-    }
-    .suggestion-item {
-      border: 1px solid #cbd4e7;
+    /* Removed lateral suggestions list — using contextual popup instead */
+
+    .suggestion-popup {
+      position: absolute;
+      z-index: 150;
+      min-width: 180px;
       background: #fff;
-      border-radius: 10px;
-      padding: 10px 12px;
+      border: 1px solid #cfd8e5;
+      border-radius: 8px;
+      box-shadow: 0 8px 20px rgba(15,64,126,.12);
+      padding: 6px;
+    }
+    .popup-option {
+      padding: 8px 10px;
+      border-radius: 6px;
       cursor: pointer;
-      color: var(--word-dark);
       font-weight: 600;
-      font-family: inherit;
-      transition: background .15s, border-color .15s;
+      color: var(--word-dark);
     }
-    .suggestion-item:hover { background: #eef5ff; }
-    .suggestion-item.selected {
-      border-color: #2b579a;
-      background: #d7e6ff;
-    }
+    .popup-option:hover { background: #eef5ff; }
+    .popup-option.selected { background: #d7e6ff; }
 
     .review-controls {
       display: flex;
@@ -363,14 +354,10 @@
 
         <div class="review-box">
           <div class="review-text" id="review-paragraph"></div>
+          <div id="suggestion-popup" class="suggestion-popup" hidden></div>
         </div>
 
         <div class="review-issues" id="review-issues"></div>
-
-        <div class="review-suggestions">
-          <div class="suggestion-header">Sugerencias</div>
-          <div id="suggestion-list" class="suggestion-list"></div>
-        </div>
 
         <div class="review-controls">
           <button class="review-btn" onclick="applyGrammarCorrection()">✅ Aceptar</button>
@@ -434,7 +421,7 @@
       var scoreEl = document.getElementById('review-score');
       var paragraphEl = document.getElementById('review-paragraph');
       var issuesEl = document.getElementById('review-issues');
-      var suggestionsEl = document.getElementById('suggestion-list');
+      var suggestionsEl = null; // lateral list removed; use contextual popup only
       var feedbackEl = document.getElementById('review-feedback');
 
       function setFeedback(message, color) {
@@ -456,10 +443,20 @@
           if (resolved === 'fixed') {
             html = html.replace(issue.text, issue.correct);
           } else {
-            html = html.replace(issue.text, '<button type="button" class="review-highlight" onclick="selectIssue(\'' + issue.id + '\')">' + issue.text + '</button>');
+            html = html.replace(issue.text, '<button type="button" class="review-highlight" data-issue="' + issue.id + '">' + issue.text + '</button>');
           }
         });
         if (paragraphEl) { paragraphEl.innerHTML = html; }
+        // Attach click handlers to highlight buttons to open contextual popup
+        if (paragraphEl) {
+          var highlights = paragraphEl.querySelectorAll('.review-highlight');
+          highlights.forEach(function(btn) {
+            btn.addEventListener('click', function (ev) {
+              var id = btn.getAttribute('data-issue');
+              window.selectIssue(id, btn);
+            });
+          });
+        }
       }
 
       function renderIssueChips() {
@@ -474,30 +471,84 @@
       }
 
       function renderSuggestions() {
-        if (!suggestionsEl) { return; }
         var issue = issues[state.selectedIssue];
         state.selectedOption = null;
-        suggestionsEl.innerHTML = issue.options.map(function (option) {
-          return '<button type="button" class="suggestion-item" onclick="selectSuggestion(\'' + option.replace(/'/g, "\\'") + '\')">' + option + '</button>';
-        }).join('');
+        var popup = document.getElementById('suggestion-popup');
+        if (popup) {
+          popup.innerHTML = issue.options.map(function(option) {
+            return '<div class="popup-option" data-opt="' + option.replace(/'/g, "\\'") + '">' + option + '</div>';
+          }).join('');
+          // attach handlers
+          popup.querySelectorAll('.popup-option').forEach(function(po){
+            po.addEventListener('click', function(){
+              var opt = po.getAttribute('data-opt');
+              window.selectSuggestion(opt);
+              hideSuggestionPopup();
+            });
+          });
+        }
         setFeedback(issue.type + ': ' + issue.reason, '#0b662f');
       }
 
-      window.selectIssue = function (issueId) {
+      // issueId: id of issue; anchor: DOM element clicked (optional)
+      window.selectIssue = function (issueId, anchor) {
         state.selectedIssue = issueId;
         state.selectedOption = null;
         renderIssueChips();
         renderSuggestions();
+        if (anchor) showSuggestionPopup(issueId, anchor);
       };
 
       window.selectSuggestion = function (option) {
         state.selectedOption = option;
-        var buttons = suggestionsEl.querySelectorAll('.suggestion-item');
-        buttons.forEach(function (button) {
-          button.classList.toggle('selected', button.textContent === option);
-        });
+        var popup = document.getElementById('suggestion-popup');
+        if (popup) {
+          popup.querySelectorAll('.popup-option').forEach(function(po){
+            po.classList.toggle('selected', po.textContent === option);
+          });
+        }
         setFeedback('Opción seleccionada: ' + option + '. Pulsa Aceptar para aplicar.', '#0b662f');
+        // Si la opción elegida es la correcta, aplicarla inmediatamente
+        var issue = issues[state.selectedIssue];
+        if (issue && option === issue.correct) {
+          // asegurar que state.selectedOption esté establecido antes de aplicar
+          state.selectedOption = option;
+          window.applyGrammarCorrection();
+        }
       };
+
+      function showSuggestionPopup(issueId, anchor) {
+        var popup = document.getElementById('suggestion-popup');
+        if (!popup) return;
+        var issue = issues[issueId];
+        popup.innerHTML = issue.options.map(function(option) {
+          return '<div class="popup-option" data-opt="' + option.replace(/'/g, "\\'") + '">' + option + '</div>';
+        }).join('');
+        // position popup relative to anchor inside review-box
+        var box = paragraphEl.getBoundingClientRect();
+        var aRect = anchor.getBoundingClientRect();
+        var offsetLeft = aRect.left - box.left;
+        var offsetTop = aRect.bottom - box.top + 6; // below the word
+        popup.style.position = 'absolute';
+        popup.style.left = Math.max(6, offsetLeft) + 'px';
+        popup.style.top = offsetTop + 'px';
+        popup.hidden = false;
+        // attach click handlers
+        popup.querySelectorAll('.popup-option').forEach(function(po){
+          po.addEventListener('click', function(){
+            var opt = po.getAttribute('data-opt');
+            window.selectSuggestion(opt);
+            hideSuggestionPopup();
+          });
+        });
+      }
+
+      function hideSuggestionPopup() {
+        var popup = document.getElementById('suggestion-popup');
+        if (!popup) return;
+        popup.hidden = true;
+        popup.innerHTML = '';
+      }
 
       window.applyGrammarCorrection = function () {
         var issue = issues[state.selectedIssue];

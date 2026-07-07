@@ -100,24 +100,29 @@
 
     /* JUEGO TABLA */
     .tabla-card {
-      background: #f8fbff; border: 1px solid #d7e6f5;
-      border-radius: 14px; padding: 16px;
-      box-shadow: 0 4px 16px rgba(43,87,154,.08);
+      background: #f8fbff;
+      border: 1px solid #d7e6f5;
+      border-radius: 12px; padding: 16px;
       max-width: 760px; margin: 0 auto; display: grid; gap: 14px;
     }
     .task-label {
-      font-size: 0.88rem; color: var(--word-dark); font-weight: 600;
-      background: #e8f0ff; border: 1px solid #cad9f5;
-      border-radius: 8px; padding: 8px 12px;
+      font-size: 0.9rem; color: var(--word-dark); font-weight: 600;
+      background: #eef4ff; border: 1px solid #cad9f5;
+      border-radius: 8px; padding: 10px 12px;
     }
     .score-row {
       display: flex; align-items: center; justify-content: space-between;
     }
     .score-row strong { color: var(--word-blue); font-size: 0.95rem; }
+    .goal-pill {
+      font-weight: 700; color: var(--word-blue); background: #eef4ff;
+      border: 1px solid #cad9f5;
+      padding: 3px 10px; border-radius: 6px; font-size: 0.85rem;
+    }
 
     /* Toolbar grilla */
     .table-toolbar {
-      display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+      display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
       background: #f3f2f1; border: 1px solid #d1d1d1;
       border-radius: 10px; padding: 12px 14px;
     }
@@ -126,17 +131,17 @@
       text-transform: uppercase; letter-spacing: .12em; font-weight: 700;
     }
     .table-grid {
-      display: grid; grid-template-columns: repeat(6, 30px);
+      display: grid; grid-template-columns: repeat(6, 28px);
       gap: 4px; padding: 8px; background: #fff;
       border: 1px solid #c6d0db; border-radius: 8px;
     }
     .table-grid-cell {
-      width: 30px; height: 30px; background: #f8f9fb;
+      width: 28px; height: 28px; background: #f8f9fb;
       border: 1px solid #d8dfe8; border-radius: 4px;
       cursor: pointer; transition: background .12s, border-color .12s;
     }
     .table-grid-cell:hover { background: #e6efff; }
-    .table-grid-cell.active { background: #2b579a; border-color: #224d8f; }
+    .table-grid-cell.active { background: var(--word-blue); border-color: #224d8f; }
     .table-selection { font-size: 0.95rem; font-weight: 700; color: var(--word-dark); }
 
     /* Preview documentos */
@@ -148,35 +153,45 @@
       .table-toolbar { flex-direction: column; align-items: stretch; }
     }
     .table-card-doc {
-      border: 1px solid #d9e2eb; border-radius: 12px;
-      background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.05);
+      border: 1px solid #d9e2eb; border-radius: 10px;
+      background: #fff;
       cursor: pointer; overflow: hidden; min-height: 200px;
       display: flex; flex-direction: column;
-      transition: border-color .15s, transform .15s;
+      transition: border-color .15s;
     }
     .table-card-doc:hover, .table-card-doc.selected {
-      border-color: var(--word-blue); transform: translateY(-1px);
+      border-color: var(--word-blue);
     }
     .table-card-header {
       padding: 10px 12px 8px; border-bottom: 1px solid #e4eaf0; background: #fbfdff;
     }
-    .table-card-header h3 { margin: 0; font-size: 0.88rem; color: var(--word-blue); }
+    .table-card-header h3 { margin: 0; font-size: 0.88rem; color: var(--word-blue); font-weight: 700; }
     .table-card-body {
       padding: 12px; flex: 1; display: flex;
       flex-direction: column; gap: 8px; align-items: center; justify-content: center;
     }
     .table-placeholder {
-      width: 100%; flex: 1; border: 2px dashed #d0d8e3; border-radius: 10px;
-      display: grid; place-items: center; color: #60708d;
-      font-size: 0.85rem; text-align: center; background: #fdfefe; padding: 10px;
-      min-height: 80px;
+      width: 100%; flex: 1; border: 1px dashed #c9d3e0; border-radius: 8px;
+      display: grid; place-items: center; color: #7c8aa3;
+      font-size: 0.82rem; text-align: center; background: #fdfefe; padding: 10px;
+      min-height: 90px;
     }
-    .inserted-table { width: 100%; border-collapse: collapse; border: 1px solid #c8d2df; }
+    .size-badge {
+      align-self: flex-start; font-size: 0.72rem; font-weight: 700;
+      color: var(--word-blue); background: #eef4ff; border: 1px solid #cad9f5;
+      padding: 2px 8px; border-radius: 4px; margin-bottom: 2px;
+    }
+    .inserted-table {
+      width: 100%; border-collapse: collapse;
+    }
     .inserted-table th, .inserted-table td {
-      border: 1px solid #d5dee9; padding: 5px 8px; font-size: 0.75rem;
+      border: 1px solid #d5dee9; padding: 6px 8px; font-size: 0.72rem;
     }
-    .inserted-table th { background: #eef4ff; color: var(--word-dark); font-weight: 700; }
-    .inserted-table td { background: #fff; color: #333; }
+    .inserted-table th {
+      background: #eef4ff;
+      color: var(--word-dark); font-weight: 700;
+    }
+    .inserted-table td { background: #fff; }
 
     /* Acciones */
     .table-actions {
@@ -186,19 +201,24 @@
     }
     .boton {
       display: inline-flex; align-items: center; gap: 6px;
-      padding: 9px 16px; border-radius: 6px; border: 1px solid #ccc;
+      padding: 10px 18px; border-radius: 999px; border: 1px solid #ccc;
       background: #fff; font-family: inherit; font-size: 0.85rem;
-      font-weight: 600; cursor: pointer; transition: background .15s;
+      font-weight: 700; cursor: pointer; transition: background .15s, transform .15s;
     }
-    .boton:hover { background: #f3f3f3; }
-    .boton.insertar  { border-color: var(--word-blue); color: var(--word-blue); }
-    .boton.comprobar { border-color: #0f7b3f; color: #0f7b3f; }
+    .boton:hover { transform: translateY(-1px); }
+    .boton.comprobar { border-color: #0f7b3f; color: #fff; background: #0f7b3f; }
+    .boton.comprobar:hover { background: #0c6633; }
+    .boton.gris { border-color: #ccc; color: #555; }
+    .boton.gris:hover { background: #f3f3f3; }
 
-    .tabla-feedback { font-size: 0.9rem; color: var(--muted); min-height: 1.3em; }
+    .tabla-feedback {
+      font-size: 0.92rem; color: var(--muted); min-height: 1.3em; font-weight: 600;
+    }
     .tabla-score {
-      padding: 10px 12px; border-radius: 8px;
-      background: #e9f5ff; border: 1px solid #b7d5ff;
-      color: var(--word-dark); font-weight: 700; font-size: 0.9rem;
+      padding: 12px 14px; border-radius: 12px;
+      background: linear-gradient(120deg, #e9f5ff, #f3faff);
+      border: 1px solid #b7d5ff;
+      color: var(--word-dark); font-weight: 800; font-size: 0.9rem;
     }
 
     /* NAV ENTRE HERRAMIENTAS */
@@ -273,21 +293,21 @@
     <!-- ACTIVIDAD -->
     <div class="extra-zone">
       <h2>✏️ Actividad</h2>
-      <p class="hint"><strong>Instrucción:</strong> Selecciona el tamaño de tabla indicado, elige la página correcta y pulsa <strong>Insertar tabla</strong>. Luego pulsa <strong>Comprobar</strong>.</p>
+      <p class="hint"><strong>Instrucción:</strong> Elige un documento y selecciona filas y columnas en la grilla: la tabla se inserta al instante. Repite con los 3 documentos usando un tamaño diferente en cada uno.</p>
 
       <div class="tabla-card">
         <div class="score-row">
           <strong>📊 Juego: Insertar tabla</strong>
-          <span style="font-weight:700;color:var(--word-blue);">Puntos: <span id="tabla-pts">0</span> / 3</span>
+          <span class="goal-pill">Progreso: <span id="tabla-pts">0</span> / 3</span>
         </div>
 
-        <div class="task-label" id="table-task">Tarea 1 de 3: cargando...</div>
+        <div class="task-label" id="table-task"><span class="task-icon">🧩</span><span>Cargando...</span></div>
 
         <!-- Grilla de selección -->
         <div class="table-toolbar">
           <span class="group-label">Tabla</span>
           <div class="table-grid" id="table-grid" aria-label="Seleccionar filas y columnas"></div>
-          <span class="table-selection" id="table-selection">Seleccionado: 2 × 2</span>
+          <span class="table-selection" id="table-selection">2 × 2</span>
         </div>
 
         <!-- Documentos -->
@@ -295,11 +315,10 @@
 
         <!-- Botones -->
         <div class="table-actions">
-          <button class="boton insertar"  id="insert-table">📊 Insertar tabla</button>
           <button class="boton comprobar" id="check-table">✅ Comprobar</button>
-          <button class="boton"           id="reset-table">🔄 Reiniciar</button>
+          <button class="boton gris"       id="reset-table">🔄 Reiniciar</button>
         </div>
-        <div class="tabla-feedback" id="table-feedback">Selecciona filas y columnas para comenzar.</div>
+        <div class="tabla-feedback" id="table-feedback">Elige un documento y toca la grilla para insertar una tabla.</div>
         <div class="tabla-score"    id="table-score">Puntaje del juego: 0 puntos</div>
       </div>
     </div>
@@ -320,23 +339,20 @@
 
   <script>
     (function () {
-      var tasks = [
-        { instruction: 'Tarea 1 de 3: Inserta una tabla de 3 columnas × 4 filas en el Reporte de ventas.',  expected: { rows: 4, cols: 3 }, page: 'page1' },
-        { instruction: 'Tarea 2 de 3: Inserta una tabla de 4 columnas × 3 filas en el Calendario.',         expected: { rows: 3, cols: 4 }, page: 'page2' },
-        { instruction: 'Tarea 3 de 3: Inserta una tabla de 4 columnas × 2 filas en el Resumen mensual.',    expected: { rows: 2, cols: 4 }, page: 'page3' }
-      ];
-
+      // Cada documento tiene su propio color e ícono. La meta: insertar
+      // una tabla de tamaño distinto en cada uno (no hay un tamaño "correcto" fijo).
       var pageData = {
-        page1: { title: 'Reporte de ventas', placeholder: 'Tabla aquí' },
-        page2: { title: 'Calendario',         placeholder: 'Tabla aquí' },
-        page3: { title: 'Resumen mensual',    placeholder: 'Tabla aquí' }
+        page1: { title: 'Reporte de ventas', icon: '📊', accent: '#0f7b3f', placeholder: 'Aún sin tabla' },
+        page2: { title: 'Calendario',         icon: '📅', accent: '#6a3fb5', placeholder: 'Aún sin tabla' },
+        page3: { title: 'Resumen mensual',    icon: '📈', accent: '#c56a1a', placeholder: 'Aún sin tabla' }
       };
 
       var state = {
-        currentTask: 0, rows: 2, cols: 2,
+        rows: 2, cols: 2,
         selectedPage: 'page1',
         inserted: { page1: null, page2: null, page3: null },
-        score: 0, gameScore: 0
+        gameScore: 0,
+        activityCompleted: false
       };
 
       function setFeedback(msg, color) {
@@ -344,8 +360,12 @@
         if (el) { el.textContent = msg; el.style.color = color || '#555'; }
       }
 
+      function countInserted() {
+        return Object.keys(state.inserted).filter(function (id) { return state.inserted[id]; }).length;
+      }
+
       function updateScoreUI() {
-        document.getElementById('tabla-pts').textContent = state.score;
+        document.getElementById('tabla-pts').textContent = countInserted();
         var el = document.getElementById('table-score');
         if (!el) return;
         if (state.gameScore === 1)       { el.textContent = 'Puntaje del juego: +1 punto'; el.style.color = '#0f7b3f'; }
@@ -364,12 +384,17 @@
             cell.setAttribute('data-r', r);
             cell.setAttribute('data-c', c);
             cell.setAttribute('aria-label', r + ' filas × ' + c + ' columnas');
-            cell.addEventListener('click', function() {
+            cell.addEventListener('click', function () {
               state.rows = Number(this.getAttribute('data-r'));
               state.cols = Number(this.getAttribute('data-c'));
+              // Se aplica de inmediato al documento seleccionado, sin botón "Insertar".
+              state.inserted[state.selectedPage] = { rows: state.rows, cols: state.cols };
               renderGrid();
-              document.getElementById('table-selection').textContent = 'Seleccionado: ' + state.cols + ' × ' + state.rows;
-              setFeedback('Tabla ' + state.cols + ' col × ' + state.rows + ' fil. Elige la página y pulsa Insertar tabla.', '#174a97');
+              document.getElementById('table-selection').textContent = state.cols + ' × ' + state.rows;
+              renderDocPreview();
+              updateScoreUI();
+              var pageTitle = pageData[state.selectedPage].title;
+              setFeedback('✓ Tabla de ' + state.cols + ' col × ' + state.rows + ' fil. insertada en "' + pageTitle + '".', '#0b662f');
             });
             grid.appendChild(cell);
           }
@@ -391,90 +416,84 @@
 
       function renderDocPreview() {
         var container = document.getElementById('table-preview');
-        container.innerHTML = Object.keys(pageData).map(function(pageId) {
+        container.innerHTML = Object.keys(pageData).map(function (pageId) {
           var page = pageData[pageId];
           var selected = state.selectedPage === pageId ? ' selected' : '';
           var inserted = state.inserted[pageId];
           var content = inserted
-            ? renderInsertedTable(inserted.rows, inserted.cols)
-            : '<div class="table-placeholder">' + page.placeholder + '</div>';
-          return '<div class="table-card-doc' + selected + '" data-page="' + pageId + '">' +
-                 '  <div class="table-card-header"><h3>' + page.title + '</h3></div>' +
+            ? '<span class="size-badge">' + inserted.cols + ' × ' + inserted.rows + '</span>' + renderInsertedTable(inserted.rows, inserted.cols)
+            : '<div class="table-placeholder"><span class="ph-icon">' + page.icon + '</span>' + page.placeholder + '</div>';
+          return '<div class="table-card-doc' + selected + '" data-page="' + pageId + '" style="--accent:' + page.accent + '">' +
+                 '  <div class="table-card-header"><span class="doc-icon">' + page.icon + '</span><h3>' + page.title + '</h3></div>' +
                  '  <div class="table-card-body">' + content + '</div>' +
                  '</div>';
         }).join('');
 
-        container.querySelectorAll('.table-card-doc').forEach(function(card) {
-          card.addEventListener('click', function() {
+        container.querySelectorAll('.table-card-doc').forEach(function (card) {
+          card.addEventListener('click', function () {
             state.selectedPage = card.getAttribute('data-page');
+            var existing = state.inserted[state.selectedPage];
+            if (existing) {
+              state.rows = existing.rows;
+              state.cols = existing.cols;
+            }
+            renderGrid();
+            document.getElementById('table-selection').textContent = state.cols + ' × ' + state.rows;
             renderDocPreview();
-            setFeedback('Página seleccionada. Ahora pulsa Insertar tabla.', '#174a97');
+            setFeedback('📄 "' + pageData[state.selectedPage].title + '" seleccionado. Toca la grilla para cambiar su tabla.', '#174a97');
           });
         });
       }
 
-      function updateTaskLabel() {
-        document.getElementById('table-task').textContent = tasks[state.currentTask].instruction;
-      }
+      document.getElementById('check-table').addEventListener('click', function () {
+        if (state.activityCompleted) { return; }
 
-      document.getElementById('insert-table').addEventListener('click', function() {
-        state.inserted[state.selectedPage] = { rows: state.rows, cols: state.cols };
-        renderDocPreview();
-        setFeedback('Tabla insertada. Pulsa Comprobar para verificar.', '#0b662f');
-      });
-
-      document.getElementById('check-table').addEventListener('click', function() {
-        var task = tasks[state.currentTask];
-        var inserted = state.inserted[task.page];
-        if (!inserted) {
-          setFeedback('❗ No hay tabla en la página indicada.', 'red');
-          state.gameScore = -1; updateScoreUI(); return;
+        var allInserted = Object.keys(state.inserted).every(function (id) { return state.inserted[id]; });
+        if (!allInserted) {
+          setFeedback('⚠ Todavía falta insertar una tabla en alguno de los 3 documentos.', '#d9534f');
+          return;
         }
-        if (inserted.rows === task.expected.rows && inserted.cols === task.expected.cols && state.selectedPage === task.page) {
-          state.score += 1;
-          if (state.gameScore !== -1) state.gameScore = 1;
+
+        var sizes = Object.keys(state.inserted).map(function (id) {
+          var t = state.inserted[id];
+          return t.rows + 'x' + t.cols;
+        });
+        var uniqueSizes = sizes.filter(function (size, index) { return sizes.indexOf(size) === index; });
+        var allDifferent = uniqueSizes.length === sizes.length;
+
+        if (allDifferent) {
+          state.activityCompleted = true;
+          state.gameScore = 1;
           updateScoreUI();
-          try { localStorage.setItem('score-tool-20-tabla', '1'); } catch(e) {}
-          if (state.currentTask + 1 < tasks.length) {
-            setFeedback('🎉 ¡Correcto! Pasando a la siguiente tarea...', '#0b662f');
-            setTimeout(function() {
-              state.currentTask += 1;
-              state.selectedPage = tasks[state.currentTask].page;
-              state.rows = 2; state.cols = 2;
-              state.inserted = { page1: null, page2: null, page3: null };
-              renderGrid();
-              document.getElementById('table-selection').textContent = 'Seleccionado: 2 × 2';
-              renderDocPreview();
-              updateTaskLabel();
-              setFeedback('Selecciona filas y columnas para comenzar.', '#555');
-            }, 1000);
-          } else {
-            document.getElementById('table-task').textContent = '🏆 ¡Completaste todas las tareas! Puntaje: ' + state.score + ' / 3';
-            setFeedback('¡Excelente! Terminaste la actividad.', '#0b662f');
-          }
+          try { localStorage.setItem('score-tool-20-tabla', '1'); } catch (e) {}
+          document.getElementById('table-task').innerHTML = '<span class="task-icon">🏆</span><span>¡Actividad completada! Las 3 tablas son diferentes.</span>';
+          setFeedback('🎉 ¡Excelente! Cada documento tiene una tabla de tamaño distinto.', '#0b662f');
         } else {
-          state.gameScore = -1; updateScoreUI();
-          setFeedback('❌ No es correcto. Revisa la página y las dimensiones de la tabla.', '#b22222');
+          state.gameScore = -1;
+          updateScoreUI();
+          try { localStorage.setItem('score-tool-20-tabla', '-1'); } catch (e) {}
+          setFeedback('❌ Dos documentos quedaron con la misma tabla. Cambia el tamaño de alguno.', '#b22222');
         }
       });
 
-      document.getElementById('reset-table').addEventListener('click', function() {
-        state.currentTask = 0; state.rows = 2; state.cols = 2;
+      document.getElementById('reset-table').addEventListener('click', function () {
+        state.rows = 2; state.cols = 2;
         state.selectedPage = 'page1';
         state.inserted = { page1: null, page2: null, page3: null };
-        state.score = 0; state.gameScore = 0;
+        state.gameScore = 0;
+        state.activityCompleted = false;
         renderGrid();
-        document.getElementById('table-selection').textContent = 'Seleccionado: 2 × 2';
+        document.getElementById('table-selection').textContent = '2 × 2';
         renderDocPreview();
-        updateTaskLabel();
+        document.getElementById('table-task').innerHTML = '<span class="task-icon">🧩</span><span>Elige un documento y toca la grilla para insertar una tabla diferente en cada uno.</span>';
         updateScoreUI();
-        setFeedback('Juego reiniciado. Selecciona filas y columnas para empezar.', '#555');
+        setFeedback('🔄 Actividad reiniciada. Elige un documento para comenzar.', '#555');
       });
 
       // Inicio
       renderGrid();
       renderDocPreview();
-      updateTaskLabel();
+      document.getElementById('table-task').innerHTML = '<span class="task-icon">🧩</span><span>Elige un documento y toca la grilla para insertar una tabla diferente en cada uno.</span>';
       updateScoreUI();
     })();
   </script>

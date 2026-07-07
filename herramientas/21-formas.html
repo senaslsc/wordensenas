@@ -195,32 +195,15 @@
     }
     .shape-icon.shape-rectangle { width: 32px; height: 20px; background: #2b579a; border-radius: 4px; }
     .shape-icon.shape-ellipse { width: 28px; height: 22px; background: #2b579a; border-radius: 50%; }
-    .shape-icon.shape-arrow { width: 28px; height: 22px; position: relative; }
-    .shape-icon.shape-arrow::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 7px;
-      width: 18px; height: 8px;
+    .shape-icon.shape-arrow {
+      width: 26px; height: 26px;
       background: #2b579a;
-      border-radius: 4px;
-    }
-    .shape-icon.shape-arrow::after {
-      content: '';
-      position: absolute;
-      right: 0; top: 4px;
-      width: 0; height: 0;
-      border-top: 8px solid transparent;
-      border-bottom: 8px solid transparent;
-      border-left: 10px solid #2b579a;
+      clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
     }
     .shape-icon.shape-star {
       width: 28px; height: 28px;
-      background:
-        radial-gradient(circle at 50% 32%, #2b579a 20%, transparent 21%),
-        radial-gradient(circle at 18% 50%, #2b579a 20%, transparent 21%),
-        radial-gradient(circle at 82% 50%, #2b579a 20%, transparent 21%),
-        radial-gradient(circle at 50% 72%, #2b579a 20%, transparent 21%);
-      mask: radial-gradient(circle 50% at 50% 35%, transparent 18%, black 19%) 0 0 / 100% 100% no-repeat;
+      background: #2b579a;
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
     }
     .color-swatch {
       width: 28px;
@@ -298,76 +281,43 @@
       overflow: hidden;
       box-shadow: inset 0 0 0 1px rgba(227,233,239,.8), 0 1px 4px rgba(0,0,0,.06);
     }
-    .page-preview::before {
-      content: '';
-      position: absolute;
-      top: 16px; left: 14px; right: 14px;
-      height: 18px;
-      border-bottom: 1px solid rgba(92,112,134,.16);
-    }
-    .page-preview::after {
-      content: '';
-      position: absolute;
-      top: 42px; left: 18px; right: 18px;
-      height: 8px;
-      background: linear-gradient(90deg, rgba(92,112,134,.12) 15%, rgba(92,112,134,0) 15%);
-      background-size: 22px 8px;
-      opacity: .45;
-    }
     .shape-canvas {
       position: absolute;
       inset: 18px 18px 20px;
-      display: grid;
-      gap: 10px;
     }
-    .page-title {
-      font-size: 0.84rem;
-      font-weight: 700;
-      color: #23374d;
-      margin-bottom: 10px;
+    .shape-wrapper {
+      position: absolute;
+      cursor: grab;
+      touch-action: none;
     }
-    .page-lines {
-      width: 100%;
-      min-height: 30px;
-      background: linear-gradient(to bottom, rgba(92,112,134,.12) 1px, transparent 1px);
-      background-size: 100% 16px;
-      opacity: .65;
-    }
+    .shape-wrapper:active { cursor: grabbing; }
     .shape-object {
-      position: absolute;
-      display: grid;
-      place-items: center;
+      width: 100%;
+      height: 100%;
+      display: block;
       color: #fff;
-    }
-    .shape-object.rectangle { width: 70px; height: 48px; border-radius: 8px; top: 30%; left: 40%; }
-    .shape-object.ellipse { width: 58px; height: 58px; border-radius: 50%; top: 35%; left: 42%; }
-    .shape-object.arrow { width: 70px; height: 42px; top: 36%; left: 38%; }
-    .shape-object.arrow::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 16px;
-      width: 42px; height: 10px;
       background: currentColor;
-      border-radius: 6px;
     }
-    .shape-object.arrow::after {
-      content: '';
-      position: absolute;
-      right: 0; top: 8px;
-      width: 0; height: 0;
-      border-top: 12px solid transparent;
-      border-bottom: 12px solid transparent;
-      border-left: 16px solid currentColor;
+    .shape-object.rectangle { border-radius: 8px; }
+    .shape-object.ellipse { border-radius: 50%; }
+    .shape-object.arrow {
+      clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
     }
     .shape-object.star {
-      width: 52px; height: 52px;
       clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-      top: 34%; left: 40%;
     }
-    .shape-object span {
-      width: 100%; height: 100%; display: block;
-      background: currentColor;
-      border-radius: inherit;
+    .resize-handle {
+      position: absolute;
+      right: -7px;
+      bottom: -7px;
+      width: 15px;
+      height: 15px;
+      background: #fff;
+      border: 2px solid var(--word-blue);
+      border-radius: 50%;
+      cursor: nwse-resize;
+      touch-action: none;
+      box-shadow: 0 1px 3px rgba(0,0,0,.25);
     }
     .shape-card-note {
       margin-top: 12px;
@@ -502,7 +452,7 @@
     <!-- ACTIVIDAD: JUEGO FORMAS -->
     <div class="extra-zone">
       <h2>✏️ Actividad</h2>
-      <p class="hint"><strong>Instrucción:</strong> Selecciona una forma y un color, luego colócala en la página correcta. Son 3 tareas en total.</p>
+      <p class="hint"><strong>Instrucción:</strong> Elige una página, luego un color (opcional) y una forma: se insertará automáticamente. Puedes arrastrarla con el cursor para moverla y usar el punto azul de la esquina para cambiar su tamaño. La actividad está bien hecha cuando las 3 páginas tengan formas diferentes entre sí, sin importar el color.</p>
 
       <div class="shape-activity" id="shape-activity">
         <div class="shape-toolbar">
@@ -521,11 +471,10 @@
         </div>
         <div class="shape-pages" id="shape-pages"></div>
         <div class="shape-actions">
-          <button id="insert-shape" class="editor-btn">Insertar forma</button>
           <button id="check-shape" class="editor-btn">Comprobar</button>
           <button id="reset-shape" class="editor-btn gray">Reiniciar</button>
         </div>
-        <div class="shape-feedback" id="shape-feedback">Elige una forma y color, luego haz clic en una página.</div>
+        <div class="shape-feedback" id="shape-feedback">Elige una página y luego una forma para insertarla.</div>
         <div class="game-score" id="shape-score">Puntaje: 0</div>
       </div>
     </div>
@@ -546,12 +495,6 @@
 
   <script>
     (function () {
-      var tasks = [
-        { label: 'Insertar rectángulo azul en Informe', expected: { shape: 'rectangle', color: 'blue' }, page: 'page1' },
-        { label: 'Insertar elipse roja en Póster', expected: { shape: 'ellipse', color: 'red' }, page: 'page2' },
-        { label: 'Insertar flecha verde en Diapositiva', expected: { shape: 'arrow', color: 'green' }, page: 'page3' }
-      ];
-
       var shapes = [
         { id: 'rectangle', label: 'Rectángulo', icon: 'shape-rectangle' },
         { id: 'ellipse', label: 'Elipse', icon: 'shape-ellipse' },
@@ -566,14 +509,31 @@
         { id: 'yellow', label: 'Amarillo', css: 'yellow' }
       ];
 
+      var pages = ['page1', 'page2', 'page3'];
+
+      var pageData = {
+        page1: { title: 'Informe' },
+        page2: { title: 'Póster' },
+        page3: { title: 'Diapositiva' }
+      };
+
+      // Tamaño (px) y posición (% dentro del lienzo) por defecto de cada forma
+      var shapeDefaults = {
+        rectangle: { width: 76, height: 52, left: 36, top: 32 },
+        ellipse: { width: 64, height: 64, left: 38, top: 30 },
+        arrow: { width: 60, height: 60, left: 38, top: 30 },
+        star: { width: 58, height: 58, left: 38, top: 30 }
+      };
+
+      var MIN_SIZE = 26;
+      var MAX_SIZE = 180;
+
       var state = {
-        currentTask: 0,
         selectedShape: 'rectangle',
         selectedColor: 'blue',
         selectedPage: 'page1',
         inserted: { page1: null, page2: null, page3: null },
-        gameScore: 0,
-        score: 0
+        gameScore: 0
       };
 
       var shapeList = document.getElementById('shape-list');
@@ -583,16 +543,9 @@
       var selectedColorLabel = document.getElementById('selected-color');
       var feedback = document.getElementById('shape-feedback');
       var scoreLabel = document.getElementById('shape-score');
-      var pageData = {
-        page1: { title: 'Informe', note: 'Objetivo: insertar rectángulo azul' },
-        page2: { title: 'Póster', note: 'Objetivo: insertar elipse roja' },
-        page3: { title: 'Diapositiva', note: 'Objetivo: insertar flecha verde' }
-      };
-      var insertButton = document.getElementById('insert-shape');
       var checkButton = document.getElementById('check-shape');
       var resetButton = document.getElementById('reset-shape');
 
-      function currentTask() { return tasks[state.currentTask]; }
       function saveScore() { try { localStorage.setItem('score-tool-21-formas', state.gameScore); } catch (e) {} }
       function loadScore() {
         var s = null;
@@ -606,6 +559,13 @@
       }
       function setFeedback(message, color) { feedback.textContent = message; feedback.style.color = color || '#555'; }
 
+      function currentShape() {
+        return shapes.find(function (shape) { return shape.id === state.selectedShape; }) || shapes[0];
+      }
+      function currentColor() {
+        return colors.find(function (color) { return color.id === state.selectedColor; }) || colors[0];
+      }
+
       function renderShapes() {
         shapeList.innerHTML = shapes.map(function (shape) {
           var active = state.selectedShape === shape.id ? ' active' : '';
@@ -614,9 +574,21 @@
         shapeList.querySelectorAll('.shape-tool-button').forEach(function (button) {
           button.addEventListener('click', function () {
             state.selectedShape = this.getAttribute('data-shape');
+            var existing = state.inserted[state.selectedPage];
+            if (existing && existing.shape === state.selectedShape) {
+              existing.color = state.selectedColor;
+            } else {
+              var d = shapeDefaults[state.selectedShape];
+              state.inserted[state.selectedPage] = {
+                shape: state.selectedShape,
+                color: state.selectedColor,
+                left: d.left, top: d.top, width: d.width, height: d.height
+              };
+            }
             renderShapes();
             updateSelectionLabels();
-            setFeedback('Forma seleccionada: ' + currentShape().label + '.', '#0b662f');
+            renderPages();
+            setFeedback(currentShape().label + ' insertada. Arrástrala o usa el punto azul para cambiar su tamaño.', '#0b662f');
           });
         });
       }
@@ -629,29 +601,26 @@
         colorList.querySelectorAll('.shape-color-button').forEach(function (button) {
           button.addEventListener('click', function () {
             state.selectedColor = this.getAttribute('data-color');
+            if (state.inserted[state.selectedPage]) {
+              state.inserted[state.selectedPage].color = state.selectedColor;
+            }
             renderColors();
             updateSelectionLabels();
+            renderPages();
             setFeedback('Color seleccionado: ' + currentColor().label + '.', '#0b662f');
           });
         });
       }
 
-      function currentShape() {
-        return shapes.find(function (shape) { return shape.id === state.selectedShape; }) || shapes[0];
-      }
-      function currentColor() {
-        return colors.find(function (color) { return color.id === state.selectedColor; }) || colors[0];
-      }
-
       function renderPages() {
-        shapePages.innerHTML = Object.keys(pageData).map(function (pageId) {
+        shapePages.innerHTML = pages.map(function (pageId) {
           var page = pageData[pageId];
           var selected = state.selectedPage === pageId ? ' selected' : '';
           var inserted = state.inserted[pageId];
-          var content = inserted ? renderInsertedShape(inserted.shape, inserted.color) : renderEmptyPage(page.title);
+          var content = inserted ? renderInsertedShape(inserted) : renderEmptyPage();
           return '<div class="page-card' + selected + '" data-page="' + pageId + '">' +
                    '<div class="page-card-header"><h3>' + page.title + '</h3></div>' +
-                   '<div class="page-card-body">' + content + '<div class="shape-card-note">' + page.note + '</div></div>' +
+                   '<div class="page-card-body">' + content + '</div>' +
                  '</div>';
         }).join('');
 
@@ -659,19 +628,33 @@
           card.addEventListener('click', function () {
             state.selectedPage = this.getAttribute('data-page');
             renderPages();
-            setFeedback('Página seleccionada: ' + this.querySelector('h3').textContent + '.', '#0b662f');
+            setFeedback('Página seleccionada: ' + this.querySelector('h3').textContent + '. Elige una forma para insertarla aquí.', '#0b662f');
           });
+        });
+
+        attachShapeInteractions();
+      }
+
+      function updatePageSelectionHighlight() {
+        shapePages.querySelectorAll('.page-card').forEach(function (card) {
+          card.classList.toggle('selected', card.getAttribute('data-page') === state.selectedPage);
         });
       }
 
-      function renderEmptyPage(title) {
-        return '<div class="page-preview"><div class="shape-canvas"><div class="page-title">' + title + '</div><div class="page-lines"></div></div></div>';
+      function renderEmptyPage() {
+        return '<div class="page-preview"><div class="shape-canvas"></div></div>';
       }
 
-      function renderInsertedShape(shape, color) {
+      function renderInsertedShape(item) {
         var colorMap = { blue: '#2b579a', red: '#c0392b', green: '#0f7b3f', yellow: '#e9b600' };
-        var fill = colorMap[color] || '#2b579a';
-        return '<div class="page-preview"><div class="shape-canvas"><div class="page-title">Figura insertada</div><div class="shape-object ' + shape + '" style="color:' + fill + '"><span></span></div><div class="page-lines"></div></div></div>';
+        var fill = colorMap[item.color] || '#2b579a';
+        var wrapperStyle = 'left:' + item.left + '%;top:' + item.top + '%;width:' + item.width + 'px;height:' + item.height + 'px;';
+        return '<div class="page-preview"><div class="shape-canvas">' +
+                 '<div class="shape-wrapper" style="' + wrapperStyle + '" data-left="' + item.left + '" data-top="' + item.top + '" data-width="' + item.width + '" data-height="' + item.height + '">' +
+                   '<div class="shape-object ' + item.shape + '" style="color:' + fill + '"></div>' +
+                   '<span class="resize-handle" title="Arrastra para cambiar el tamaño"></span>' +
+                 '</div>' +
+               '</div></div>';
       }
 
       function updateSelectionLabels() {
@@ -679,51 +662,135 @@
         selectedColorLabel.textContent = currentColor().label;
       }
 
-      insertButton.addEventListener('click', function () {
-        state.inserted[state.selectedPage] = { shape: state.selectedShape, color: state.selectedColor };
-        renderPages();
-        setFeedback('Figura insertada en ' + state.selectedPage + '. Ahora comprueba.', '#0b662f');
-      });
+      function getPoint(e) {
+        if (e.touches && e.touches.length) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        return { x: e.clientX, y: e.clientY };
+      }
+
+      function attachShapeInteractions() {
+        shapePages.querySelectorAll('.shape-wrapper').forEach(function (wrapper) {
+          wrapper.addEventListener('mousedown', startDrag);
+          wrapper.addEventListener('touchstart', startDrag, { passive: false });
+        });
+        shapePages.querySelectorAll('.resize-handle').forEach(function (handle) {
+          handle.addEventListener('mousedown', startResize);
+          handle.addEventListener('touchstart', startResize, { passive: false });
+        });
+      }
+
+      function startDrag(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var wrapper = e.currentTarget;
+        var card = wrapper.closest('.page-card');
+        var pageId = card.getAttribute('data-page');
+        state.selectedPage = pageId;
+        updatePageSelectionHighlight();
+
+        var canvas = wrapper.closest('.shape-canvas');
+        var canvasRect = canvas.getBoundingClientRect();
+        var wrapperRect = wrapper.getBoundingClientRect();
+        var start = getPoint(e);
+        var offsetX = start.x - wrapperRect.left;
+        var offsetY = start.y - wrapperRect.top;
+
+        function onMove(ev) {
+          if (ev.cancelable) ev.preventDefault();
+          var p = getPoint(ev);
+          var newLeftPx = p.x - canvasRect.left - offsetX;
+          var newTopPx = p.y - canvasRect.top - offsetY;
+          newLeftPx = Math.max(0, Math.min(newLeftPx, canvasRect.width - wrapperRect.width));
+          newTopPx = Math.max(0, Math.min(newTopPx, canvasRect.height - wrapperRect.height));
+          var leftPct = (newLeftPx / canvasRect.width) * 100;
+          var topPct = (newTopPx / canvasRect.height) * 100;
+          wrapper.style.left = leftPct + '%';
+          wrapper.style.top = topPct + '%';
+          wrapper.dataset.left = leftPct;
+          wrapper.dataset.top = topPct;
+        }
+        function onUp() {
+          document.removeEventListener('mousemove', onMove);
+          document.removeEventListener('mouseup', onUp);
+          document.removeEventListener('touchmove', onMove);
+          document.removeEventListener('touchend', onUp);
+          var inserted = state.inserted[pageId];
+          if (inserted) {
+            inserted.left = parseFloat(wrapper.dataset.left);
+            inserted.top = parseFloat(wrapper.dataset.top);
+          }
+        }
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onUp);
+        document.addEventListener('touchmove', onMove, { passive: false });
+        document.addEventListener('touchend', onUp);
+      }
+
+      function startResize(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var handle = e.currentTarget;
+        var wrapper = handle.closest('.shape-wrapper');
+        var card = handle.closest('.page-card');
+        var pageId = card.getAttribute('data-page');
+        state.selectedPage = pageId;
+        updatePageSelectionHighlight();
+
+        var start = getPoint(e);
+        var startWidth = wrapper.offsetWidth;
+        var startHeight = wrapper.offsetHeight;
+
+        function onMove(ev) {
+          if (ev.cancelable) ev.preventDefault();
+          var p = getPoint(ev);
+          var dx = p.x - start.x;
+          var dy = p.y - start.y;
+          var newWidth = Math.max(MIN_SIZE, Math.min(startWidth + dx, MAX_SIZE));
+          var newHeight = Math.max(MIN_SIZE, Math.min(startHeight + dy, MAX_SIZE));
+          wrapper.style.width = newWidth + 'px';
+          wrapper.style.height = newHeight + 'px';
+          wrapper.dataset.width = newWidth;
+          wrapper.dataset.height = newHeight;
+        }
+        function onUp() {
+          document.removeEventListener('mousemove', onMove);
+          document.removeEventListener('mouseup', onUp);
+          document.removeEventListener('touchmove', onMove);
+          document.removeEventListener('touchend', onUp);
+          var inserted = state.inserted[pageId];
+          if (inserted) {
+            inserted.width = parseFloat(wrapper.dataset.width);
+            inserted.height = parseFloat(wrapper.dataset.height);
+          }
+        }
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onUp);
+        document.addEventListener('touchmove', onMove, { passive: false });
+        document.addEventListener('touchend', onUp);
+      }
 
       checkButton.addEventListener('click', function () {
-        var task = currentTask();
-        var inserted = state.inserted[task.page];
-        if (!inserted) {
-          setFeedback('No se encontró figura en la página indicada.', '#c0392b');
+        var missing = pages.filter(function (p) { return !state.inserted[p]; });
+        if (missing.length > 0) {
+          setFeedback('Faltan figuras por insertar en las 3 páginas.', '#c0392b');
           state.gameScore = -1; saveScore(); updateScore();
           return;
         }
-        if (inserted.shape === task.expected.shape && inserted.color === task.expected.color) {
-          state.score += 1;
-          if (state.gameScore !== -1) { state.gameScore = 1; saveScore(); }
-          updateScore();
-          if (state.currentTask + 1 < tasks.length) {
-            state.currentTask += 1;
-            state.selectedPage = tasks[state.currentTask].page;
-            state.selectedShape = tasks[state.currentTask].expected.shape;
-            state.selectedColor = tasks[state.currentTask].expected.color;
-            renderShapes();
-            renderColors();
-            updateSelectionLabels();
-            renderPages();
-            setFeedback('¡Correcto! Siguiente tarea: ' + currentTask().label + '.', '#0f7b3f');
-          } else {
-            setFeedback('¡Perfecto! Completaste todas las figuras.', '#0f7b3f');
-            scoreLabel.textContent = 'Final: ' + state.score + ' / ' + tasks.length;
-          }
+        var shapesUsed = pages.map(function (p) { return state.inserted[p].shape; });
+        var uniqueShapes = shapesUsed.filter(function (value, index, self) { return self.indexOf(value) === index; });
+        if (uniqueShapes.length === pages.length) {
+          state.gameScore = 1; saveScore(); updateScore();
+          setFeedback('¡Correcto! Las tres páginas tienen formas diferentes.', '#0f7b3f');
         } else {
           state.gameScore = -1; saveScore(); updateScore();
-          setFeedback('No es correcto. Revisa la forma, color y la página.', '#c0392b');
+          setFeedback('Hay formas repetidas. Cada página debe tener una forma diferente (el color no importa).', '#c0392b');
         }
       });
 
       resetButton.addEventListener('click', function () {
-        state.currentTask = 0;
         state.selectedShape = 'rectangle';
         state.selectedColor = 'blue';
         state.selectedPage = 'page1';
         state.inserted = { page1: null, page2: null, page3: null };
-        state.score = 0;
         state.gameScore = 0;
         saveScore();
         renderShapes();
@@ -731,7 +798,7 @@
         updateSelectionLabels();
         renderPages();
         updateScore();
-        setFeedback('Juego reiniciado. Elige forma y página para comenzar.', '#555');
+        setFeedback('Juego reiniciado. Elige una página y luego una forma para insertarla.', '#555');
       });
 
       loadScore();
@@ -740,7 +807,7 @@
       updateSelectionLabels();
       renderPages();
       updateScore();
-      setFeedback('Elige una forma y color, luego haz clic en una página.', '#555');
+      setFeedback('Elige una página y luego una forma para insertarla.', '#555');
     })();
   </script>
 

@@ -125,14 +125,33 @@
     }
 
     /* Vista previa */
-    .preview-area { display: flex; justify-content: center; }
+    .preview-area { display: flex; justify-content: center; margin: 20px 0; }
     .doc-surface {
-      background: #fff; border: 1px solid #c8d2df;
-      border-radius: 6px; width: 100%; max-width: 320px; min-height: 160px;
-      box-shadow: 0 4px 14px rgba(43,87,154,.1);
+      background: #fff; border: 3px solid #2B579A;
+      border-radius: 10px; width: 100%; max-width: 600px; min-height: 400px;
+      box-shadow: 0 6px 20px rgba(43,87,154,.15);
       transition: padding .3s;
+      position: relative;
     }
-    .doc-content p { margin: 0 0 8px; font-size: 0.82rem; color: #444; line-height: 1.5; }
+    .doc-surface::before {
+      content: 'MARGEN';
+      position: absolute;
+      font-size: 11px;
+      color: #999;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .doc-surface::after {
+      content: '';
+      position: absolute;
+      border: 2px dashed rgba(43,87,154,.3);
+      top: 0; left: 0; right: 0; bottom: 0;
+      border-radius: 8px;
+      pointer-events: none;
+    }
+    .doc-content { position: relative; z-index: 1; }
+    .doc-content p { margin: 0 0 16px; font-size: 1rem; color: #333; line-height: 1.6; font-weight: 500; }
 
     /* Acciones */
     .margin-actions {
@@ -229,7 +248,7 @@
     <!-- ACTIVIDAD -->
     <div class="extra-zone">
       <h2>✏️ Actividad</h2>
-      <p class="hint"><strong>Instrucción:</strong> Selecciona el margen <strong>Moderado</strong>, pulsa <strong>Aplicar margen</strong> y luego <strong>Comprobar</strong>.</p>
+      <p class="hint"><strong>Instrucción:</strong> La hoja tiene margen <strong>Estrecho</strong> por defecto. Selecciona un margen <strong>diferente</strong> y luego pulsa <strong>Comprobar</strong>.</p>
 
       <div class="margin-card">
         <div class="margin-card-header">
@@ -255,10 +274,9 @@
 
         <!-- Controles -->
         <div class="margin-actions">
-          <button class="boton aplicar"   id="applyBtn">📐 Aplicar margen</button>
           <button class="boton comprobar" id="checkBtn">✅ Comprobar</button>
           <button class="boton"           id="resetBtn">🔄 Reiniciar</button>
-          <div class="margin-feedback" id="feedback">Selecciona un margen y pulsa Aplicar.</div>
+          <div class="margin-feedback" id="feedback">Selecciona un margen diferente al actual ("Estrecho") y pulsa Comprobar.</div>
         </div>
       </div>
     </div>
@@ -280,13 +298,19 @@
   <script>
     (function () {
       var marginPresets = {
-        normal:   { label: 'Normal',   top: 22, right: 22, bottom: 22, left: 22 },
-        estrecho: { label: 'Estrecho', top: 10, right: 10, bottom: 10, left: 10 },
-        moderado: { label: 'Moderado', top: 18, right: 28, bottom: 18, left: 28 },
-        amplio:   { label: 'Amplio',   top: 36, right: 36, bottom: 36, left: 36 }
+        estrecho: { label: 'Estrecho', top: 15, right: 15, bottom: 15, left: 15 },
+        normal:   { label: 'Normal',   top: 40, right: 40, bottom: 40, left: 40 },
+        moderado: { label: 'Moderado', top: 60, right: 60, bottom: 60, left: 60 },
+        amplio:   { label: 'Amplio',   top: 90, right: 90, bottom: 90, left: 90 }
       };
 
-      var state = { selectedPreset: 'normal', appliedPreset: null, score: 0, checked: false };
+      var state = { 
+        selectedPreset: 'estrecho', 
+        appliedPreset: 'estrecho',
+        initialPreset: 'estrecho',
+        score: 0, 
+        checked: false 
+      };
 
       var choicesEl  = document.getElementById('marginChoices');
       var docSurface = document.getElementById('docSurface');
@@ -305,49 +329,52 @@
           btn.className   = state.selectedPreset === key ? 'active' : '';
           btn.addEventListener('click', function () {
             state.selectedPreset = key;
+            applyMarginAutomatically();
             renderChoices();
-            setFeedback('"' + marginPresets[key].label + '" seleccionado. Pulsa Aplicar margen.', '');
           });
           choicesEl.appendChild(btn);
         });
       }
 
-      function applyMargin() {
+      function applyMarginAutomatically() {
         var m = marginPresets[state.selectedPreset];
         docSurface.style.padding = m.top + 'px ' + m.right + 'px ' + m.bottom + 'px ' + m.left + 'px';
         state.appliedPreset = state.selectedPreset;
-        setFeedback('Margen "' + m.label + '" aplicado. Pulsa Comprobar.', '');
+        setFeedback('Margen "' + m.label + '" aplicado automáticamente. Verifica si es correcto.', '');
       }
 
       function checkTask() {
-        if (!state.appliedPreset) { setFeedback('❗ Primero aplica un margen.', 'warn'); return; }
-        if (state.appliedPreset === 'moderado') {
-          if (!state.checked) {
-            state.score += 1;
-            state.checked = true;
-            document.getElementById('margin-pts').textContent = state.score;
-            try { localStorage.setItem('score-tool-26-margenes', '1'); } catch(e) {}
-          }
-          setFeedback('🎉 ¡Correcto! Aplicaste el margen Moderado. Resultado: 1/1 punto.', 'success');
-        } else {
-          setFeedback('❌ No es correcto. Selecciona el margen "Moderado" y vuelve a aplicar.', 'warn');
+        if (!state.appliedPreset) { setFeedback('❗ Primero selecciona un margen.', 'warn'); return; }
+        if (state.appliedPreset === state.initialPreset) { 
+          setFeedback('❌ Debes seleccionar un margen diferente al inicial. El margen actual es "' + marginPresets[state.initialPreset].label + '".', 'warn'); 
+          return; 
         }
+        if (!state.checked) {
+          state.score += 1;
+          state.checked = true;
+          document.getElementById('margin-pts').textContent = state.score;
+          try { localStorage.setItem('score-tool-26-margenes', '1'); } catch(e) {}
+        }
+        setFeedback('🎉 ¡Correcto! Cambiaste el margen de "' + marginPresets[state.initialPreset].label + '" a "' + marginPresets[state.appliedPreset].label + '". Resultado: 1/1 punto.', 'success');
       }
 
       function resetGame() {
-        state.selectedPreset = 'normal'; state.appliedPreset = null;
-        state.score = 0; state.checked = false;
+        state.selectedPreset = 'estrecho'; 
+        state.appliedPreset = 'estrecho';
+        state.initialPreset = 'estrecho';
+        state.score = 0; 
+        state.checked = false;
         document.getElementById('margin-pts').textContent = '0';
-        docSurface.style.padding = '22px';
+        docSurface.style.padding = '15px';
         renderChoices();
-        setFeedback('Selecciona un margen y pulsa Aplicar.', '');
+        setFeedback('Selecciona un margen diferente al actual ("Estrecho") y pulsa Comprobar.', '');
       }
 
-      document.getElementById('applyBtn').addEventListener('click', applyMargin);
       document.getElementById('checkBtn').addEventListener('click', checkTask);
       document.getElementById('resetBtn').addEventListener('click', resetGame);
 
       renderChoices();
+      applyMarginAutomatically();
       docSurface.style.padding = '22px';
     })();
   </script>

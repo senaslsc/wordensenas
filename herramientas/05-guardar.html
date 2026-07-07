@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -17,162 +17,355 @@
       --nav-h: 54px;
       --tool-nav-h: 48px;
     }
-    html { scroll-behavior: smooth; }
+
     body {
-      margin: 0; font-family: var(--font);
-      color: var(--text); background: var(--page-bg);
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font);
+      background: var(--page-bg);
+      color: var(--text);
       padding-bottom: calc(var(--nav-h) + var(--tool-nav-h) + 20px);
     }
 
-    /* BARRA SUPERIOR */
     .title-bar {
-      background: var(--word-blue); color: #fff;
-      padding: 6px 14px; display: flex; align-items: center; gap: 10px; font-size: 12px;
+      background: var(--word-blue);
+      color: #fff;
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+    }
+    .title-bar h1 {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 600;
     }
     .word-logo {
-      width: 24px; height: 24px; background: #fff; color: var(--word-blue);
-      font-weight: 800; font-size: 15px;
-      display: flex; align-items: center; justify-content: center;
-      border-radius: 3px; text-decoration: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      background: #fff;
+      color: var(--word-blue);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      text-decoration: none;
     }
-    .title-bar h1 { margin: 0; font-size: 13px; font-weight: 600; }
-    .title-bar a.title-link { color: #fff; text-decoration: none; }
-    .title-bar a.title-link:hover { text-decoration: underline; }
+    .title-bar a { color: #fff; text-decoration: none; }
 
-    /* Solo Inicio */
     .ribbon-tabs {
-      display: flex; list-style: none; margin: 0; padding: 0 6px;
-      background: #fff; border-bottom: 2px solid var(--word-blue);
+      display: flex;
+      margin: 0;
+      padding: 0 8px;
+      list-style: none;
+      background: #fff;
+      border-bottom: 2px solid var(--word-blue);
     }
     .ribbon-tabs li a {
-      display: block; padding: 9px 16px; font-size: 13px;
-      color: var(--word-blue); font-weight: 700; text-decoration: none;
+      display: block;
+      padding: 10px 14px;
+      text-decoration: none;
+      color: var(--word-blue);
+      font-weight: 700;
       border-bottom: 3px solid var(--word-blue);
     }
 
-    /* CABECERA */
     .detail-header {
       background: linear-gradient(135deg, var(--word-blue), #1e3f6e);
-      color: #fff; padding: 20px 16px; display: flex; align-items: center; gap: 16px;
+      color: white;
+      padding: 20px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
     }
     .detail-header img {
-      width: 64px; height: 64px; object-fit: contain;
-      background: rgba(255,255,255,.15); border-radius: 8px; padding: 6px;
+      width: 64px;
+      height: 64px;
+      border-radius: 10px;
+      background: rgba(255,255,255,.15);
+      padding: 8px;
     }
-    .detail-header h1 { margin: 0 0 4px; font-size: 1.4rem; }
+    .detail-header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
     .detail-cat {
-      display: inline-block; background: rgba(255,255,255,.2);
-      padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;
+      display: inline-block;
+      margin-bottom: 6px;
+      background: rgba(255,255,255,.2);
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
     }
 
-    /* CONTENIDO */
-    .detail-body { max-width: 800px; margin: 0 auto; padding: 16px 16px 24px; }
-    .block {
-      background: #fff; border: 1px solid var(--border);
-      border-radius: 8px; padding: 14px 16px; margin-bottom: 16px;
+    .detail-body {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 16px;
     }
-    .block h2 { margin: 0 0 12px; font-size: 1rem; color: var(--word-blue); }
+    .block, .extra-zone {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 18px;
+    }
+    .block h2, .extra-zone h2 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+      color: var(--word-blue);
+    }
+    .hint {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
 
-    /* VIDEO */
-    .video-btn-wrap {
-      display: flex; flex-direction: column; align-items: center;
-      justify-content: center; background: #f0f4fa;
-      border: 2px solid var(--word-blue); border-radius: 12px;
-      padding: 32px 20px; gap: 14px; text-align: center;
+    .video-frame {
+      width: 100%;
+      min-height: 220px;
+      border: 1px solid #cdd8e5;
+      border-radius: 12px;
+      overflow: hidden;
     }
-    .video-btn-wrap p { margin: 0; color: var(--muted); font-size: 0.88rem; }
-    .btn-youtube {
-      display: inline-flex; align-items: center; gap: 10px;
-      background: #FF0000; color: #fff; font-weight: 700; font-size: 1rem;
-      padding: 12px 24px; border-radius: 8px; text-decoration: none;
-      font-family: inherit; box-shadow: 0 4px 12px rgba(255,0,0,.3);
-      transition: background .2s, transform .15s;
+    .video-frame iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
     }
-    .btn-youtube:hover { background: #cc0000; transform: translateY(-2px); }
 
-    /* ACTIVIDAD */
-    .extra-zone {
-      background: #fff; border: 1px solid var(--word-blue);
-      border-radius: 8px; padding: 14px 16px; margin-bottom: 16px;
-    }
-    .extra-zone h2 { margin: 0 0 8px; font-size: 1rem; color: var(--word-blue); }
-    .extra-zone p.hint { margin: 0 0 10px; font-size: 0.85rem; color: var(--muted); }
-
-    /* JUEGO GUARDAR */
     .save-card {
-      background: #fff; border: 1px solid #d7e6f5;
-      border-radius: 14px; padding: 16px;
-      box-shadow: 0 4px 16px rgba(43,87,154,.08);
-      max-width: 760px; margin: 0 auto;
+      background: #fff;
+      border: 1px solid #d7e6f5;
+      border-radius: 16px;
+      box-shadow: 0 10px 24px rgba(43,87,154,.08);
+      padding: 18px;
     }
     .save-card-header {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
     }
-    .save-card-header h3 { margin: 0; color: var(--word-blue); font-size: 1rem; }
-    .save-score { color: var(--word-blue); font-weight: 700; font-size: 1rem; }
+    .save-card-header h3 {
+      margin: 0;
+      font-size: 1rem;
+      color: var(--word-blue);
+    }
+    .save-status {
+      font-weight: 700;
+      color: #b23d3d;
+    }
+    .save-status.saved {
+      color: #0b662f;
+    }
+    .file-name {
+      font-size: 0.9rem;
+      color: #5a5a5a;
+    }
 
-    .save-options { display: grid; gap: 10px; margin-bottom: 14px; }
-    .save-option {
-      display: flex; align-items: center; gap: 12px;
-      padding: 12px 14px; background: #f4f8ff;
-      border: 1px solid #cfd8e5; border-radius: 10px;
-      cursor: pointer; text-align: left; font-family: inherit;
-      transition: border-color .15s, background .15s, transform .15s;
+    .save-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
     }
-    .save-option:hover { background: #e8f0ff; }
-    .save-option.selected {
-      background: #d7e6ff; border-color: var(--word-blue);
-      color: #0d305d; transform: translateY(-1px);
+    .tool-button {
+      border: 1px solid #ccc;
+      background: #fff;
+      color: var(--text);
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s, border-color .2s;
     }
-    .save-option .save-icon { font-size: 1.4rem; }
-    .save-option strong { display: block; font-weight: 700; margin-bottom: 2px; }
-    .save-option p { margin: 0; font-size: 0.85rem; color: var(--muted); }
+    .tool-button:hover { background: #f5f8ff; }
+    .tool-button.save { border-color: #2a74d0; color: #1d4f8b; }
+    .tool-button.saveas { border-color: #8b5e1b; color: #7c4b17; }
+    .tool-button.close { border-color: #b22222; color: #7a1616; }
 
-    .save-controls {
-      display: flex; gap: 10px; flex-wrap: wrap;
-      align-items: center; border-top: 1px solid #e0e0e0; padding-top: 12px;
+    .document-area {
+      border: 1px solid #cfd8e3;
+      border-radius: 12px;
+      background: #f7f9fb;
+      padding: 14px;
     }
-    .boton {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 9px 16px; border-radius: 6px; border: 1px solid #ccc;
-      background: #fff; font-family: inherit; font-size: 0.85rem;
-      font-weight: 600; cursor: pointer; transition: background .15s;
+    .doc-header {
+      margin-bottom: 10px;
+      color: #3f3f3f;
+      font-weight: 700;
     }
-    .boton:hover { background: #f3f3f3; }
-    .boton.aplicar { border-color: var(--word-blue); color: var(--word-blue); }
-    .save-feedback { font-size: 0.9rem; color: var(--muted); min-height: 1.3em; flex: 1; }
+    #doc-text {
+      width: 100%;
+      min-height: 150px;
+      border: 1px solid #d4dae0;
+      border-radius: 10px;
+      padding: 12px;
+      font-family: inherit;
+      font-size: 0.96rem;
+      resize: vertical;
+      line-height: 1.5;
+    }
 
+    .save-feedback {
+      margin-top: 16px;
+      color: var(--muted);
+      min-height: 1.3em;
+      font-size: 0.95rem;
+    }
 
-    /* NAV ENTRE HERRAMIENTAS */
+    .save-history-card {
+      margin-top: 18px;
+      border: 1px solid #d7e6f5;
+      background: #f8fbff;
+      border-radius: 12px;
+      padding: 14px;
+    }
+    .save-history-card h4 {
+      margin: 0 0 10px;
+      color: var(--word-blue);
+      font-size: 0.95rem;
+    }
+    .save-history-list {
+      display: grid;
+      gap: 10px;
+    }
+    .save-history-item {
+      background: #fff;
+      border: 1px solid #c6d5e8;
+      border-radius: 10px;
+      padding: 10px 12px;
+      color: #333;
+      font-size: 0.92rem;
+    }
+    .save-history-item strong {
+      display: block;
+      margin-bottom: 4px;
+      color: #1a4f86;
+    }
+    .saveas-panel {
+      margin-bottom: 18px;
+      border: 1px solid #c6d5e8;
+      background: #f3f7ff;
+      border-radius: 10px;
+      padding: 12px;
+    }
+    .saveas-panel p {
+      margin: 0 0 10px;
+      color: #1a4f86;
+      font-size: 0.92rem;
+    }
+    .saveas-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .saveas-row input {
+      flex: 1;
+      border: 1px solid #cfd8e3;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-family: inherit;
+      font-size: 0.95rem;
+    }
+    .close-dialog {
+      position: relative;
+      display: none;
+      background: #f3f7ff;
+      border: 1px solid #c6d5e8;
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 18px;
+    }
+    .close-dialog[hidden] {
+      display: none;
+    }
+    .close-dialog:not([hidden]) {
+      display: block;
+    }
+    .close-dialog-inner {
+      background: transparent;
+      border-radius: 0;
+      padding: 0;
+      max-width: 100%;
+      width: 100%;
+      box-shadow: none;
+      text-align: left;
+    }
+    .close-dialog-inner p {
+      margin: 0 0 14px;
+      font-size: 0.96rem;
+      color: #333;
+    }
+    .close-dialog-buttons {
+      display: grid;
+      gap: 10px;
+    }
+    .close-dialog-buttons .tool-button {
+      width: 100%;
+    }
+
     .detail-nav-bar {
-      position: fixed; bottom: var(--nav-h); left: 0; right: 0;
-      background: #fff; border-top: 1px solid var(--border);
-      padding: 8px 12px; display: flex; justify-content: center;
-      gap: 8px; flex-wrap: wrap; z-index: 99;
-      min-height: var(--tool-nav-h); align-items: center;
+      position: fixed;
+      bottom: var(--nav-h);
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-top: 1px solid var(--border);
+      padding: 8px 12px;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      z-index: 99;
+      min-height: var(--tool-nav-h);
+      align-items: center;
     }
     .detail-nav-bar a {
-      padding: 8px 18px; border-radius: 6px;
-      font-weight: 700; font-size: 13px; text-decoration: none;
-      background: var(--word-blue); color: #fff;
-      transition: background .15s;
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 13px;
+      text-decoration: none;
+      background: var(--word-blue);
+      color: #fff;
     }
     .detail-nav-bar a:hover { background: var(--word-dark); }
     .detail-nav-bar a.btn-gray { background: #605e5c; }
     .detail-nav-bar a.btn-gray:hover { background: #3e3d3c; }
 
-    /* NAV INFERIOR */
     .bottom-nav {
-      position: fixed; bottom: 0; left: 0; right: 0; height: var(--nav-h);
-      background: var(--word-dark); display: flex; justify-content: center;
-      z-index: 100; box-shadow: 0 -2px 12px rgba(0,0,0,.2);
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: var(--nav-h);
+      background: var(--word-dark);
+      display: flex;
+      justify-content: center;
+      z-index: 100;
+      box-shadow: 0 -2px 12px rgba(0,0,0,.2);
     }
     .bottom-nav a {
-      flex: 1; max-width: 130px; display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 2px;
-      color: rgba(255,255,255,.8); text-decoration: none;
-      font-size: 0.62rem; font-weight: 500; padding: 4px;
+      flex: 1;
+      max-width: 130px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      color: rgba(255,255,255,.8);
+      text-decoration: none;
+      font-size: 0.62rem;
+      font-weight: 500;
+      padding: 4px;
     }
     .bottom-nav a:hover { color: #fff; background: rgba(255,255,255,.08); }
     .bottom-nav .nav-icon { font-size: 1.15rem; }
@@ -180,133 +373,267 @@
 </head>
 <body>
 
-  <!-- BARRA SUPERIOR -->
   <header class="title-bar">
     <a class="word-logo" href="../index.html" title="Inicio">W</a>
-    <h1><a class="title-link" href="../index.html">Guardar — Word Básico</a></h1>
+    <h1><a href="../index.html">Guardar — Word Básico</a></h1>
   </header>
 
-  <!-- SOLO INICIO -->
   <nav aria-label="Menú Word">
     <ul class="ribbon-tabs">
       <li><a href="../index.html">Inicio</a></li>
     </ul>
   </nav>
 
-  <!-- CABECERA -->
   <header class="detail-header">
-    <img src="../icons/Guardar.png" alt="Guardar" width="64" height="64" />
+    <img src="../icons/Guardar.png" alt="Guardar" />
     <div>
-      <span class="detail-cat">Edición básica</span>
+      <span class="detail-cat">Archivo</span>
       <h1>Guardar</h1>
     </div>
   </header>
 
   <div class="detail-body">
-
-    <!-- VIDEO -->
     <div class="block">
       <h2>🎥 Video explicativo</h2>
-      <div class="video-btn-wrap">
-        <p>Haz clic para ver el video explicativo sobre <strong>Guardar en Word</strong></p>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/50epvR7frGA?si=gsdpLvCI5B8-K0fA&amp;start=29" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-          &#9654; Ver video en YouTube
-        </a>
-        <p>Se abrirá en una pestaña nueva</p>
+      <div class="video-frame">
+        <iframe src="https://www.youtube.com/embed/50epvR7frGA?si=gsdpLvCI5B8-K0fA&amp;start=29" title="Video Guardar en Word" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
       </div>
     </div>
 
-    <!-- ACTIVIDAD -->
     <div class="extra-zone">
-      <h2>✏️ Actividad</h2>
-      <p class="hint"><strong>Instrucción:</strong> Selecciona la opción que guarda los cambios en el archivo y pulsa Aplicar.</p>
+      <h2>✏️ Actividad de Guardar</h2>
+      <p class="hint">Escribe en el documento y pulsa <strong>Guardar</strong> para conservar los cambios. Si cierras sin guardar, perderás el trabajo.</p>
 
       <div class="save-card">
         <div class="save-card-header">
-          <h3>💾 Juego: ¿Cuál guarda el archivo?</h3>
-          <span class="save-score">Puntos: <span id="save-score">0</span></span>
+          <div>
+            <h3>💾 Simulación de Guardar</h3>
+            <div class="file-name" id="file-name">Documento1.docx</div>
+          </div>
+          <span class="save-status" id="save-status">No guardado</span>
         </div>
 
-        <div class="save-options">
-          <button type="button" class="save-option" data-id="save" onclick="selectSaveOption('save')">
-            <span class="save-icon">💾</span>
-            <div>
-              <strong>Guardar</strong>
-              <p>Guarda los cambios realizados en el archivo actual.</p>
-            </div>
-          </button>
-          <button type="button" class="save-option" data-id="print" onclick="selectSaveOption('print')">
-            <span class="save-icon">🖨️</span>
-            <div>
-              <strong>Imprimir</strong>
-              <p>Envía el documento a la impresora.</p>
-            </div>
-          </button>
-          <button type="button" class="save-option" data-id="close" onclick="selectSaveOption('close')">
-            <span class="save-icon">❌</span>
-            <div>
-              <strong>Cerrar</strong>
-              <p>Cierra el documento sin guardar los cambios.</p>
-            </div>
-          </button>
+        <div class="save-toolbar">
+          <button class="tool-button save" onclick="saveDocument()">💾 Guardar</button>
+          <button class="tool-button saveas" onclick="showSaveAsPanel()">📝 Guardar como</button>
+          <button class="tool-button close" onclick="attemptCloseDocument()">❌ Cerrar</button>
+          <button class="tool-button" onclick="resetDocument()">🔄 Reiniciar</button>
         </div>
 
-        <div class="save-controls">
-          <button class="boton aplicar" onclick="applySaveChoice()">💾 Aplicar</button>
-          <button class="boton"         onclick="resetSaveGame()">🔄 Reiniciar</button>
-          <div class="save-feedback" id="save-feedback">Elige la opción que guarda tu trabajo.</div>
+        <div class="saveas-panel" id="saveas-panel" hidden>
+          <p>Escribe el nuevo nombre del archivo dentro de la actividad.</p>
+          <div class="saveas-row">
+            <input id="saveas-input" type="text" value="Documento1.docx" />
+            <button class="tool-button saveas" onclick="saveAsDocument()">Guardar</button>
+            <button class="tool-button" onclick="hideSaveAsPanel()">Cancelar</button>
+          </div>
+        </div>
+
+        <div class="document-area">
+          <div class="doc-header">Documento de Word</div>
+          <textarea id="doc-text" oninput="markChanged()">Aprende a guardar en Word.</textarea>
+        </div>
+
+        <div class="save-feedback" id="save-feedback">Haz cambios y guarda tu documento.</div>
+
+        <div class="save-history-card">
+          <h4>Últimos 3 guardados</h4>
+          <div class="save-history-list" id="save-history-list">
+            <div class="save-history-item">Aún no hay guardados.</div>
+          </div>
         </div>
       </div>
     </div>
-
   </div>
 
-  <!-- NAV ENTRE HERRAMIENTAS -->
+  <div class="close-dialog" id="close-dialog" hidden>
+    <div class="close-dialog-inner">
+      <p>Hay cambios sin guardar. ¿Quieres guardar antes de cerrar?</p>
+      <div class="close-dialog-buttons">
+        <button class="tool-button save" onclick="confirmCloseSave()">💾 Guardar y cerrar</button>
+        <button class="tool-button close" onclick="closeWithoutSaving()">❌ Cerrar sin guardar</button>
+        <button class="tool-button" onclick="cancelClose()">✖️ Cancelar</button>
+      </div>
+    </div>
+  </div>
+
   <nav class="detail-nav-bar" aria-label="Navegación entre herramientas">
     <a href="04-zoom.html">◀ Zoom</a>
     <a href="../index.html" class="btn-gray">🏠 Ver todas</a>
     <a href="06-deshacer.html">Deshacer ▶</a>
   </nav>
 
-  <!-- NAV INFERIOR -->
   <nav class="bottom-nav" aria-label="Menú principal">
     <a href="../index.html"><span class="nav-icon">🏠</span>Inicio</a>
   </nav>
 
   <script>
-    var saveState = { selected: null, score: 0 };
+    var saveState = {
+      changed: false,
+      saved: false,
+      filename: 'Documento1.docx',
+      history: []
+    };
 
-    function setFeedback(msg, color) {
+    function setFeedback(message, color) {
       var el = document.getElementById('save-feedback');
-      if (el) { el.textContent = msg; el.style.color = color || '#555'; }
+      if (!el) return;
+      el.textContent = message;
+      el.style.color = color || '#555';
     }
 
-    function selectSaveOption(id) {
-      saveState.selected = id;
-      document.querySelectorAll('.save-option').forEach(function(btn) {
-        btn.classList.toggle('selected', btn.getAttribute('data-id') === id);
+    function updateStatus() {
+      var status = document.getElementById('save-status');
+      var fileName = document.getElementById('file-name');
+      if (!status) return;
+      status.textContent = saveState.saved ? 'Guardado' : 'No guardado';
+      status.classList.toggle('saved', saveState.saved);
+      if (fileName) fileName.textContent = saveState.filename;
+      renderSaveHistory();
+    }
+
+    function markChanged() {
+      saveState.changed = true;
+      saveState.saved = false;
+      updateStatus();
+      setFeedback('Documento modificado. Pulsa Guardar para conservar los cambios.', '#174a97');
+    }
+
+    function addSaveHistory(action) {
+      var text = document.getElementById('doc-text').value.trim();
+      var preview = text.length > 40 ? text.substring(0, 40) + '...' : text;
+      saveState.history.unshift({
+        filename: saveState.filename,
+        action: action,
+        preview: preview,
+        time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
       });
-      setFeedback('Opción seleccionada. Pulsa Aplicar para comprobarla.', '#174a97');
-    }
-
-    function applySaveChoice() {
-      if (!saveState.selected) { setFeedback('❗ Selecciona primero una opción.', 'red'); return; }
-      if (saveState.selected === 'save') {
-        saveState.score += 1;
-        document.getElementById('save-score').textContent = saveState.score;
-        setFeedback('🎉 ¡Correcto! Guardaste los cambios correctamente.', '#0b662f');
-        try { localStorage.setItem('score-tool-05-guardar', '1'); } catch(e) {}
-      } else {
-        setFeedback('❌ No es correcto. Busca el botón que guarda el archivo.', '#b22222');
+      if (saveState.history.length > 3) {
+        saveState.history.pop();
       }
     }
 
-    function resetSaveGame() {
-      saveState.selected = null;
-      document.querySelectorAll('.save-option').forEach(function(btn) { btn.classList.remove('selected'); });
-      setFeedback('Elige la opción que guarda tu trabajo.', '#555');
+    function renderSaveHistory() {
+      var list = document.getElementById('save-history-list');
+      if (!list) return;
+      list.innerHTML = '';
+      if (saveState.history.length === 0) {
+        list.innerHTML = '<div class="save-history-item">Aún no hay guardados.</div>';
+        return;
+      }
+      saveState.history.forEach(function(item) {
+        var div = document.createElement('div');
+        div.className = 'save-history-item';
+        div.innerHTML = '<strong>' + item.filename + ' • ' + item.action + ' • ' + item.time + '</strong>' +
+                        '<span>Contenido: ' + item.preview + '</span>';
+        list.appendChild(div);
+      });
     }
-  </script>
 
+    function saveDocument() {
+      if (!saveState.changed && saveState.saved) {
+        setFeedback('✅ Ya está guardado. No necesitas guardar de nuevo.', '#0b662f');
+        return;
+      }
+      saveState.saved = true;
+      saveState.changed = false;
+      addSaveHistory('Guardar');
+      updateStatus();
+      setFeedback('🎉 ¡Correcto! Tus cambios se guardaron en ' + saveState.filename + '.', '#0b662f');
+    }
+
+    function saveAsDocument() {
+      var input = document.getElementById('saveas-input');
+      if (!input) return;
+      var newName = input.value.trim();
+      if (!newName) {
+        setFeedback('Escribe un nombre válido dentro de la actividad.', 'red');
+        return;
+      }
+      saveState.filename = newName.endsWith('.docx') ? newName : newName + '.docx';
+      saveState.saved = true;
+      saveState.changed = false;
+      addSaveHistory('Guardar como');
+      updateStatus();
+      hideSaveAsPanel();
+      setFeedback('🎉 Guardado como ' + saveState.filename + '.', '#0b662f');
+    }
+
+    function showSaveAsPanel() {
+      var panel = document.getElementById('saveas-panel');
+      if (!panel) return;
+      panel.hidden = false;
+      var input = document.getElementById('saveas-input');
+      if (input) input.value = saveState.filename;
+    }
+
+    function hideSaveAsPanel() {
+      var panel = document.getElementById('saveas-panel');
+      if (!panel) return;
+      panel.hidden = true;
+    }
+
+    function attemptCloseDocument() {
+      if (saveState.changed) {
+        showCloseDialog();
+        return;
+      }
+      closeDocument();
+    }
+
+    function showCloseDialog() {
+      var dialog = document.getElementById('close-dialog');
+      if (dialog) dialog.hidden = false;
+    }
+
+    function hideCloseDialog() {
+      var dialog = document.getElementById('close-dialog');
+      if (dialog) dialog.hidden = true;
+    }
+
+    function confirmCloseSave() {
+      saveDocument();
+      hideCloseDialog();
+      closeDocument(true);
+    }
+
+    function closeWithoutSaving() {
+      hideCloseDialog();
+      saveState.changed = false;
+      closeDocument(false);
+    }
+
+    function cancelClose() {
+      hideCloseDialog();
+      setFeedback('Cancelado. Puedes seguir editando.', '#555');
+    }
+
+    function closeDocument(wasSaved) {
+      if (wasSaved === undefined) {
+        wasSaved = saveState.saved;
+      }
+      if (wasSaved) {
+        setFeedback('✅ Documento cerrado. Aquí están los últimos 3 guardados.', '#0b662f');
+      } else {
+        setFeedback('⚠️ Cerraste sin guardar. Los últimos guardados siguen abajo.', '#b22222');
+      }
+      renderSaveHistory();
+    }
+
+    function resetDocument() {
+      document.getElementById('doc-text').value = 'Aprende a guardar en Word.';
+      saveState.changed = false;
+      saveState.saved = false;
+      saveState.filename = 'Documento1.docx';
+      saveState.history = [];
+      updateStatus();
+      setFeedback('Actividad reiniciada. Escribe y pulsa Guardar.', '#555');
+    }
+
+    window.addEventListener('DOMContentLoaded', function() {
+      updateStatus();
+      setFeedback('Haz cambios y guarda tu documento.', '#555');
+    });
+  </script>
 </body>
 </html>

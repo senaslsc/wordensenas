@@ -136,12 +136,9 @@
 
     .exercise-shell {
       display: grid;
-      grid-template-columns: 1fr 320px;
       gap: 18px;
-      align-items: start;
       margin-top: 10px;
     }
-    @media (max-width: 760px) { .exercise-shell { grid-template-columns: 1fr; } }
     .exercise-panel {
       background: #f8fbff;
       border: 1px solid rgba(0,0,0,.08);
@@ -163,34 +160,62 @@
       font-weight: 700;
     }
     .task-card p { margin: 0; font-size: 0.96rem; line-height: 1.6; }
-    .controls-group { margin-bottom: 16px; }
-    .controls-group h3 {
-      margin: 0 0 10px;
-      font-size: 0.95rem;
-      color: var(--word-dark);
+
+    /* ── BARRA DE COLUMNAS ESTILO CINTA DE WORD ── */
+    .column-toolbar {
+      background: #f0f4fa;
+      border: 1px solid #d8dee6;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 18px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.8), 0 1px 2px rgba(0,0,0,.04);
     }
-    .column-buttons, .page-buttons { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
-    .column-buttons button,
-    .page-buttons button {
+    .column-toolbar h3 {
+      margin: 0 0 12px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #4b5563;
+    }
+    .column-options {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .col-option {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px 12px;
       border: 1px solid var(--border);
       border-radius: 10px;
       background: #fff;
-      color: var(--text);
-      padding: 12px 10px;
-      font-size: 0.92rem;
       cursor: pointer;
       font-family: inherit;
       transition: transform .15s, border-color .15s, box-shadow .15s;
     }
-    .column-buttons button.active,
-    .page-buttons button.active {
+    .col-option:hover { border-color: #9ab7e1; transform: translateY(-1px); }
+    .col-option.active {
       border-color: var(--word-blue);
       box-shadow: 0 8px 18px rgba(43,87,154,.12);
-      transform: translateY(-1px);
       background: #f3f7ff;
     }
-    .column-buttons button:hover,
-    .page-buttons button:hover { border-color: #9ab7e1; }
+    .col-icon {
+      display: flex;
+      gap: 3px;
+      width: 56px;
+      height: 40px;
+      padding: 5px;
+      border: 1px solid #d8dee5;
+      border-radius: 4px;
+      background: #fff;
+    }
+    .col-icon span { flex: 1; background: #dbe6f5; border-radius: 2px; }
+    .col-option.active .col-icon span { background: var(--word-blue); }
+    .col-label { font-size: 0.8rem; color: var(--text); font-weight: 600; }
+
     .actions {
       display: flex; flex-wrap: wrap; gap: 10px;
       margin-bottom: 14px;
@@ -206,7 +231,6 @@
       transition: transform .15s, box-shadow .15s, background .15s;
     }
     .actions button:hover { transform: translateY(-1px); }
-    #applyButton { background: #2B579A; color: #fff; }
     #checkButton { background: #0f7b3f; color: #fff; }
     #resetButton { background: #605e5c; color: #fff; }
     .feedback {
@@ -222,39 +246,6 @@
     .feedback.warn { border-color: #f8c471; background: #fff7e5; color: #7f5a1a; }
     .feedback.error { border-color: #e38d8d; background: #fff1f1; color: #8a2b2b; }
     .score-line { margin-top: 12px; font-size: 0.95rem; color: var(--muted); }
-    .preview-panel {
-      display: grid;
-      gap: 14px;
-    }
-    .preview-panel .preview-header {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--word-blue);
-    }
-    .page-cards {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-    }
-    .mini-page {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px;
-      text-align: left;
-      cursor: pointer;
-      font-family: inherit;
-      transition: border-color .15s, box-shadow .15s, transform .15s;
-    }
-    .mini-page:hover { border-color: #9ab7e1; transform: translateY(-1px); }
-    .mini-page.active {
-      border-color: var(--word-blue);
-      box-shadow: 0 10px 18px rgba(43,87,154,.12);
-    }
-    .mini-page strong { display: block; margin-bottom: 8px; font-size: 0.95rem; }
-    .mini-page span { display: inline-flex; align-items: center; gap: 4px; font-size: 0.82rem; color: var(--muted); }
-    .mini-col-preview { display: flex; gap: 6px; align-items: center; margin-bottom: 8px; }
-    .mini-col-preview .mini-col { flex: 1; height: 28px; background: #f3f6f9; border: 1px solid #e6e9ec; border-radius: 4px; }
     .document-preview {
       background: #fff;
       border: 1px solid rgba(0,0,0,.12);
@@ -265,10 +256,11 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      margin-bottom: 16px;
     }
     .doc-surface {
       width: 100%;
-      max-width: 360px;
+      max-width: 460px;
       min-height: 340px;
       background: #fdfdfc;
       border: 1px solid #d8d8d4;
@@ -400,40 +392,25 @@
     <!-- ACTIVIDAD: JUEGO COLUMNAS -->
     <div class="extra-zone">
       <h2>✏️ Actividad</h2>
-      <p class="hint"><strong>Instrucción:</strong> Selecciona la página correcta y aplica el número de columnas como en Word. Son 3 tareas en total.</p>
+      <p class="hint"><strong>Instrucción:</strong> Elige un estilo de columnas en la barra superior y velo aplicado al instante en el documento. La actividad se completa al aplicar cualquier tipo de columnas.</p>
 
       <div class="exercise-shell">
         <div class="exercise-panel">
-          <div class="task-card">
-            <p class="task-title">Tarea actual</p>
-            <p id="taskText">Aplica 2 columnas en la Página 1.</p>
+          <div class="column-toolbar">
+            <h3>Diseño de columnas</h3>
+            <div class="column-options" id="columnButtons"></div>
           </div>
 
-          <div class="controls-group">
-            <h3>Elegir columnas</h3>
-            <div class="column-buttons" id="columnButtons"></div>
-          </div>
-
-          <div class="controls-group">
-            <h3>Elegir página</h3>
-            <div class="page-buttons" id="pageButtons"></div>
-          </div>
+          <div class="document-preview" id="docPreview"></div>
 
           <div class="actions">
-            <button id="applyButton" type="button">Aplicar columnas</button>
             <button id="checkButton" type="button">Comprobar</button>
             <button id="resetButton" type="button">Reiniciar</button>
           </div>
 
-          <div class="feedback" id="feedback">Selecciona columnas y página, luego aplica.</div>
-          <div class="score-line"><strong>Puntaje:</strong> <span id="scoreValue">0</span> / 3</div>
+          <div class="feedback" id="feedback">Elige un estilo de columnas para aplicarlo.</div>
+          <div class="score-line" id="scoreLine">Puntaje: 0</div>
         </div>
-
-        <aside class="exercise-panel preview-panel">
-          <div class="preview-header">Vista previa de página</div>
-          <div class="page-cards" id="pageCards"></div>
-          <div class="document-preview" id="docPreview"></div>
-        </aside>
       </div>
     </div>
 
@@ -453,28 +430,22 @@
 
   <script>
     (function () {
-      var tasks = [
-        { page: 'page1', columns: 2, label: 'Página 1 debe cambiar a 2 columnas.' },
-        { page: 'page2', columns: 3, label: 'Página 2 debe cambiar a 3 columnas.' },
-        { page: 'page3', columns: 1, label: 'Página 3 debe quedar en 1 columna.' }
+      var columnOptions = [
+        { value: 1, label: '1 columna' },
+        { value: 2, label: '2 columnas' },
+        { value: 3, label: '3 columnas' }
       ];
 
       var state = {
-        selectedPage: 'page1',
-        selectedColumns: 2,
-        currentTask: 0,
-        score: 0,
-        applied: { page1: 1, page2: 1, page3: 1 }
+        selectedColumns: null,
+        applied: null,
+        gameScore: 0
       };
 
       var columnButtons = document.getElementById('columnButtons');
-      var pageButtons = document.getElementById('pageButtons');
-      var pageCards = document.getElementById('pageCards');
-      var taskText = document.getElementById('taskText');
       var feedback = document.getElementById('feedback');
-      var scoreValue = document.getElementById('scoreValue');
+      var scoreLine = document.getElementById('scoreLine');
       var docPreview = document.getElementById('docPreview');
-      var applyButton = document.getElementById('applyButton');
       var checkButton = document.getElementById('checkButton');
       var resetButton = document.getElementById('resetButton');
 
@@ -484,92 +455,52 @@
         if (type) feedback.classList.add(type);
       }
 
-      function renderColumns() {
-        var choices = [
-          { value: 1, label: '1 columna' },
-          { value: 2, label: '2 columnas' },
-          { value: 3, label: '3 columnas' }
-        ];
+      function saveScore() { try { localStorage.setItem('score-tool-24-columnas', state.gameScore); } catch (e) {} }
+      function loadScore() {
+        var value = null;
+        try { value = localStorage.getItem('score-tool-24-columnas'); } catch (e) {}
+        state.gameScore = value !== null ? Number(value) : 0;
+      }
+      function updateScore() {
+        if (state.gameScore === 1) { scoreLine.textContent = 'Puntaje: +1'; scoreLine.style.color = '#0f7b3f'; }
+        else if (state.gameScore === -1) { scoreLine.textContent = 'Puntaje: -1'; scoreLine.style.color = '#c0392b'; }
+        else { scoreLine.textContent = 'Puntaje: 0'; scoreLine.style.color = '#0b2d5c'; }
+      }
+
+      function renderColumnButtons() {
         columnButtons.innerHTML = '';
-        choices.forEach(function (choice) {
+        columnOptions.forEach(function (option) {
           var btn = document.createElement('button');
           btn.type = 'button';
-          btn.textContent = choice.label;
-          btn.dataset.cols = choice.value;
-          btn.className = state.selectedColumns === choice.value ? 'active' : '';
+          btn.className = 'col-option' + (state.selectedColumns === option.value ? ' active' : '');
+          btn.dataset.cols = option.value;
+
+          var icon = document.createElement('span');
+          icon.className = 'col-icon';
+          for (var i = 0; i < option.value; i++) {
+            icon.appendChild(document.createElement('span'));
+          }
+          btn.appendChild(icon);
+
+          var label = document.createElement('span');
+          label.className = 'col-label';
+          label.textContent = option.label;
+          btn.appendChild(label);
+
           btn.addEventListener('click', function () {
-            state.selectedColumns = choice.value;
-            renderColumns();
-            setFeedback('Estilo seleccionado: ' + choice.label + '.', 'success');
+            state.selectedColumns = option.value;
+            state.applied = option.value;
+            renderColumnButtons();
+            renderDocPreview();
+            setFeedback('Columnas aplicadas: ' + option.label + '.', 'success');
           });
+
           columnButtons.appendChild(btn);
         });
       }
 
-      function renderPageButtons() {
-        var pages = [
-          { id: 'page1', label: 'Página 1' },
-          { id: 'page2', label: 'Página 2' },
-          { id: 'page3', label: 'Página 3' }
-        ];
-        pageButtons.innerHTML = '';
-        pageCards.innerHTML = '';
-
-        pages.forEach(function (page) {
-          var btn = document.createElement('button');
-          btn.type = 'button';
-          btn.textContent = page.label;
-          btn.className = state.selectedPage === page.id ? 'active' : '';
-          btn.addEventListener('click', function () {
-            state.selectedPage = page.id;
-            renderPageButtons();
-            renderDocPreview();
-            setFeedback('Página seleccionada: ' + page.label + '.', 'success');
-          });
-          pageButtons.appendChild(btn);
-
-          var card = document.createElement('button');
-          card.type = 'button';
-          card.className = 'mini-page' + (state.selectedPage === page.id ? ' active' : '');
-          card.dataset.page = page.id;
-          var title = document.createElement('strong');
-          title.textContent = page.label;
-          card.appendChild(title);
-
-          var preview = document.createElement('div');
-          preview.className = 'mini-col-preview';
-          var colCount = state.applied[page.id] || 1;
-          for (var i = 0; i < colCount; i++) {
-            var mc = document.createElement('div');
-            mc.className = 'mini-col';
-            preview.appendChild(mc);
-          }
-          card.appendChild(preview);
-
-          var info = document.createElement('span');
-          info.textContent = (state.applied[page.id] || 1) + ' columna' + ((state.applied[page.id] || 1) === 1 ? '' : 's');
-          card.appendChild(info);
-
-          card.addEventListener('click', function () {
-            state.selectedPage = page.id;
-            renderPageButtons();
-            renderDocPreview();
-          });
-          pageCards.appendChild(card);
-        });
-      }
-
-      function renderTask() {
-        var task = tasks[state.currentTask];
-        if (!task) {
-          taskText.textContent = 'Ejercicio completado. ¡Buen trabajo!';
-          return;
-        }
-        taskText.textContent = task.label;
-      }
-
       function renderDocPreview() {
-        var cols = state.applied[state.selectedPage] || 1;
+        var cols = state.applied || 1;
         docPreview.innerHTML = '';
         var surface = document.createElement('div');
         surface.className = 'doc-surface';
@@ -578,65 +509,36 @@
         docPreview.appendChild(surface);
       }
 
-      function updateScore() {
-        scoreValue.textContent = state.score;
-      }
-
-      function applyColumns() {
-        state.applied[state.selectedPage] = state.selectedColumns;
-        renderPageButtons();
-        renderDocPreview();
-        setFeedback('Columnas aplicadas en ' + state.selectedPage.replace('page', 'Página ') + '.', 'success');
-      }
-
       function checkTask() {
-        var task = tasks[state.currentTask];
-        if (!task) return;
-        if (state.selectedPage !== task.page) {
-          setFeedback('Selecciona ' + task.page.replace('page', 'Página ') + ' para esta tarea.', 'error');
-          return;
-        }
-        if (state.applied[task.page] !== task.columns) {
-          setFeedback('La página seleccionada no tiene el número correcto de columnas.', 'error');
-          return;
-        }
-        state.score += 1;
-        state.currentTask += 1;
-        updateScore();
-        if (state.currentTask >= tasks.length) {
-          renderTask();
-          setFeedback('¡Excelente! Completaste todas las tareas.', 'success');
-          try { localStorage.setItem('score-tool-24-columnas', '1'); } catch (e) {}
+        if (state.applied !== null) {
+          state.gameScore = 1;
+          saveScore();
+          updateScore();
+          setFeedback('¡Correcto! Aplicaste columnas en el documento.', 'success');
         } else {
-          renderTask();
-          setFeedback('Correcto. Avanza a la siguiente tarea.', 'success');
+          setFeedback('Aún no has elegido ningún estilo de columnas.', 'warn');
         }
       }
 
       function resetExercise() {
-        state.selectedPage = 'page1';
-        state.selectedColumns = 2;
-        state.currentTask = 0;
-        state.score = 0;
-        state.applied = { page1: 1, page2: 1, page3: 1 };
-        renderColumns();
-        renderPageButtons();
-        renderTask();
+        state.selectedColumns = null;
+        state.applied = null;
+        state.gameScore = 0;
+        saveScore();
+        renderColumnButtons();
         renderDocPreview();
         updateScore();
-        setFeedback('Ejercicio reiniciado. Selecciona la primera página y aplica columnas.', 'warn');
+        setFeedback('Ejercicio reiniciado. Elige un estilo de columnas.', 'warn');
       }
 
-      applyButton.addEventListener('click', applyColumns);
       checkButton.addEventListener('click', checkTask);
       resetButton.addEventListener('click', resetExercise);
 
-      renderColumns();
-      renderPageButtons();
-      renderTask();
+      loadScore();
+      renderColumnButtons();
       renderDocPreview();
       updateScore();
-      setFeedback('Selecciona columnas y página, luego aplica.', 'warn');
+      setFeedback('Elige un estilo de columnas para aplicarlo al documento.', 'warn');
     })();
   </script>
 

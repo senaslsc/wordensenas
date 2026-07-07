@@ -333,32 +333,36 @@
     <!-- ACTIVIDAD: JUEGO FUENTE -->
     <div class="extra-zone">
       <h2>✏️ Actividad</h2>
-      <p class="hint"><strong>Instrucción:</strong> Selecciona el texto correcto y cambia su fuente, tamaño y estilo, como en Word. Son 2 tareas.</p>
+      <p class="hint"><strong>Instrucción:</strong> Selecciona cualquier texto, elige una fuente, tamaño o estilo y observa cómo cambia al instante. Son 2 tareas libres.</p>
 
       <div class="font-card">
-        <p class="font-task" id="font-task">Tarea 1 de 2: selecciona el texto correcto y cambia su fuente a Calibri 16.</p>
+        <p class="font-task" id="font-task">Tarea 1 de 2: selecciona cualquier texto y cambia su fuente o tamaño.</p>
         <div class="font-toolbar">
           <select id="font-family">
             <option value="Calibri">Calibri</option>
             <option value="Arial">Arial</option>
             <option value="Times New Roman">Times New Roman</option>
+            <option value="Verdana">Verdana</option>
+            <option value="Georgia">Georgia</option>
+            <option value="Courier New">Courier New</option>
           </select>
           <select id="font-size">
+            <option value="10">10</option>
             <option value="12">12</option>
             <option value="14">14</option>
             <option value="16">16</option>
             <option value="18">18</option>
+            <option value="20">20</option>
           </select>
           <button id="bold-btn" type="button" class="font-toolbar-btn">B Negrita</button>
           <button id="italic-btn" type="button" class="font-toolbar-btn">I Cursiva</button>
         </div>
         <div class="font-editor" id="font-editor" aria-label="Editor simulado de fuente"></div>
         <div class="font-actions">
-          <button id="apply-style" class="font-btn">Aplicar al texto seleccionado</button>
           <button id="check-font" class="font-btn">Comprobar</button>
           <button id="reset-font" class="font-btn gray">Reiniciar</button>
         </div>
-        <div class="font-feedback" id="font-feedback">Selecciona un segmento de texto en el editor.</div>
+        <div class="font-feedback" id="font-feedback">Selecciona un segmento y luego ajusta la fuente o el estilo.</div>
         <div class="font-score" id="font-score">Puntaje del juego: 0 puntos</div>
       </div>
     </div>
@@ -381,26 +385,33 @@
     (function () {
       var tasks = [
         {
-          instructions: 'Selecciona el texto correcto y cambia su fuente a Calibri 16.',
-          expected: { family: 'Calibri', size: '16', bold: false, italic: false },
+          instructions: 'Selecciona cualquier texto y cambia su fuente o tamaño.',
           segments: [
             { id: '1', text: 'Es un ejemplo', family: 'Arial', size: '12', bold: false, italic: false },
-            { id: '2', text: 'Es un ejemplo', family: 'Times New Roman', size: '14', bold: false, italic: false },
-            { id: '3', text: 'Es un ejemplo', family: 'Calibri', size: '16', bold: false, italic: false, correct: true },
-            { id: '4', text: 'Es un ejemplo.', family: 'Arial', size: '12', bold: false, italic: false }
+            { id: '2', text: 'Es un ejemplo', family: 'Verdana', size: '14', bold: false, italic: false },
+            { id: '3', text: 'Es un ejemplo', family: 'Georgia', size: '16', bold: false, italic: false },
+            { id: '4', text: 'Es un ejemplo.', family: 'Calibri', size: '18', bold: false, italic: false }
           ]
         },
         {
-          instructions: 'Cambia el tamaño a 18 y aplica cursiva al texto destacado.',
-          expected: { family: 'Calibri', size: '18', bold: false, italic: true },
+          instructions: 'Selecciona cualquier texto y aplica un estilo diferente.',
           segments: [
             { id: '1', text: 'La invitación', family: 'Calibri', size: '16', bold: false, italic: false },
-            { id: '2', text: 'debe decir', family: 'Calibri', size: '16', bold: false, italic: false },
-            { id: '3', text: 'fecha y hora', family: 'Calibri', size: '18', bold: false, italic: true, correct: true },
-            { id: '4', text: 'para la entrega.', family: 'Calibri', size: '16', bold: false, italic: false }
+            { id: '2', text: 'debe decir', family: 'Times New Roman', size: '16', bold: false, italic: false },
+            { id: '3', text: 'fecha y hora', family: 'Arial', size: '18', bold: false, italic: false },
+            { id: '4', text: 'para la entrega.', family: 'Courier New', size: '16', bold: false, italic: false }
           ]
         }
       ];
+
+      tasks.forEach(function (task) {
+        task.segments.forEach(function (segment) {
+          segment.originalFamily = segment.family || 'Calibri';
+          segment.originalSize = segment.size || '12';
+          segment.originalBold = segment.bold || false;
+          segment.originalItalic = segment.italic || false;
+        });
+      });
 
       var state = {
         currentTask: 0,
@@ -448,7 +459,6 @@
       var sizeSelect = document.getElementById('font-size');
       var boldBtn = document.getElementById('bold-btn');
       var italicBtn = document.getElementById('italic-btn');
-      var applyBtn = document.getElementById('apply-style');
       var checkBtn = document.getElementById('check-font');
       var resetBtn = document.getElementById('reset-font');
 
@@ -459,6 +469,10 @@
 
       function currentTask() {
         return tasks[state.currentTask];
+      }
+
+      function getSelectedSegment() {
+        return currentTask().segments.find(function (item) { return item.id === state.selectedSegmentId; });
       }
 
       function renderTask() {
@@ -477,8 +491,13 @@
         editor.querySelectorAll('.font-segment').forEach(function (segment) {
           segment.addEventListener('click', function () {
             state.selectedSegmentId = segment.getAttribute('data-id');
+            state.family = segment.getAttribute('data-family');
+            state.size = segment.getAttribute('data-size');
+            state.bold = segment.getAttribute('data-bold') === 'true';
+            state.italic = segment.getAttribute('data-italic') === 'true';
+            updateToolbar();
             renderTask();
-            setFeedback('Segmento seleccionado. Ajusta la fuente y aplica estilo.', '#0b662f');
+            setFeedback('Segmento seleccionado. Ajusta la fuente y el estilo.', '#0b662f');
           });
         });
       }
@@ -490,27 +509,28 @@
         italicBtn.classList.toggle('active', state.italic);
       }
 
-      function applyStyle() {
-        if (!state.selectedSegmentId) {
-          setFeedback('Selecciona un segmento antes de aplicar los cambios.', 'red');
-          return;
-        }
-        var segment = currentTask().segments.find(function (item) { return item.id === state.selectedSegmentId; });
+      function applyToSelectedSegment() {
+        var segment = getSelectedSegment();
         if (!segment) { return; }
         segment.family = state.family;
         segment.size = state.size;
         segment.bold = state.bold;
         segment.italic = state.italic;
         renderTask();
-        setFeedback('Cambio aplicado. Comprobar para ver si es correcto.', '#0b662f');
       }
 
       function checkAnswer() {
-        var task = currentTask();
-        var target = task.segments.find(function (item) { return item.correct; });
-        if (!target) { return; }
-        var correct = target.family === task.expected.family && target.size === task.expected.size && target.bold === task.expected.bold && target.italic === task.expected.italic;
-        if (correct) {
+        if (!state.selectedSegmentId) {
+          setFeedback('Selecciona un segmento antes de comprobar.', 'red');
+          return;
+        }
+        var segment = getSelectedSegment();
+        if (!segment) { return; }
+        var changed = segment.family !== segment.originalFamily ||
+                      segment.size !== segment.originalSize ||
+                      segment.bold !== segment.originalBold ||
+                      segment.italic !== segment.originalItalic;
+        if (changed) {
           state.score += 1;
           if (state.gameScore !== -1) {
             state.gameScore = 1;
@@ -535,7 +555,7 @@
           state.gameScore = -1;
           saveGameScore();
           updateGameScore();
-          setFeedback('Aún falta ajustar el formato del texto correcto.', 'red');
+          setFeedback('Selecciona un segmento y realiza un cambio para ganar el punto.', 'red');
         }
       }
 
@@ -550,24 +570,39 @@
         state.gameScore = 0;
         tasks.forEach(function (task) {
           task.segments.forEach(function (segment) {
-            segment.family = segment.family || 'Calibri';
-            segment.size = segment.size || '12';
-            segment.bold = segment.bold || false;
-            segment.italic = segment.italic || false;
+            segment.family = segment.originalFamily;
+            segment.size = segment.originalSize;
+            segment.bold = segment.originalBold;
+            segment.italic = segment.originalItalic;
           });
         });
         updateToolbar();
         renderTask();
         updateGameScore();
         saveGameScore();
-        setFeedback('Juego reiniciado. Selecciona un segmento de texto.', '#555');
+        setFeedback('Juego reiniciado. Selecciona un segmento y realiza un cambio.', '#555');
       }
 
-      familySelect.addEventListener('change', function () { state.family = familySelect.value; updateToolbar(); });
-      sizeSelect.addEventListener('change', function () { state.size = sizeSelect.value; updateToolbar(); });
-      boldBtn.addEventListener('click', function () { state.bold = !state.bold; updateToolbar(); });
-      italicBtn.addEventListener('click', function () { state.italic = !state.italic; updateToolbar(); });
-      applyBtn.addEventListener('click', applyStyle);
+      familySelect.addEventListener('change', function () {
+        state.family = familySelect.value;
+        updateToolbar();
+        applyToSelectedSegment();
+      });
+      sizeSelect.addEventListener('change', function () {
+        state.size = sizeSelect.value;
+        updateToolbar();
+        applyToSelectedSegment();
+      });
+      boldBtn.addEventListener('click', function () {
+        state.bold = !state.bold;
+        updateToolbar();
+        applyToSelectedSegment();
+      });
+      italicBtn.addEventListener('click', function () {
+        state.italic = !state.italic;
+        updateToolbar();
+        applyToSelectedSegment();
+      });
       checkBtn.addEventListener('click', checkAnswer);
       resetBtn.addEventListener('click', resetGame);
 
@@ -575,7 +610,7 @@
       updateToolbar();
       renderTask();
       updateGameScore();
-      setFeedback('Selecciona un segmento de texto primero.', '#555');
+      setFeedback('Selecciona un segmento primero.', '#555');
     })();
   </script>
 

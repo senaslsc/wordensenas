@@ -174,11 +174,24 @@
       background: #fff;
       border: 1px solid #cfd8e5;
       border-radius: 12px;
-      padding: 18px;
-      min-height: 160px;
-      line-height: 1.8;
-      font-size: 0.98rem;
+      padding: 24px 26px;
+      min-height: 180px;
+      line-height: 1.9;
+      font-size: 1rem;
       color: #1a1a1a;
+      cursor: text;
+      outline: none;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.6);
+      user-select: text;
+      -webkit-user-select: text;
+    }
+    .editor-area *::selection {
+      background: rgba(43,87,154,.22);
+      color: inherit;
+    }
+    .editor-area::selection {
+      background: rgba(43,87,154,.22);
+      color: inherit;
     }
     .editor-segment {
       cursor: pointer;
@@ -300,22 +313,22 @@
     <!-- ACTIVIDAD: JUEGO CURSIVA -->
     <div class="extra-zone">
       <h2>✏️ Actividad</h2>
-      <p class="hint"><strong>Instrucción:</strong> Selecciona la palabra correcta y aplícale Cursiva, como en Word.</p>
+      <p class="hint"><strong>Instrucción:</strong> Selecciona todo el párrafo arrastrando con el cursor y aplícale <strong>Cursiva</strong>, como en Microsoft Word.</p>
 
       <div class="italic-card">
-        <div class="task-summary" id="cursiva-task-summary">Selecciona la palabra que debe ir en cursiva.</div>
-        <div class="editor-toolbar">
+        <div class="task-summary" id="cursiva-task-summary">Selecciona todo el párrafo y aplícale cursiva.</div>
+        <div class="editor-toolbar" aria-label="Herramientas de formato">
           <button id="italic-btn" class="editor-btn">Cursiva</button>
           <button id="remove-italic-btn" class="editor-btn gray">Quitar cursiva</button>
           <button id="check-btn" class="editor-btn">Comprobar</button>
           <button id="reset-btn" class="editor-btn gray">Reiniciar</button>
         </div>
-        <div class="editor-area" id="cursiva-editor" aria-label="Editor simulado de Word"></div>
-        <div class="editor-feedback" id="cursiva-feedback">Selecciona un segmento de texto para comenzar.</div>
+        <div class="editor-area" id="cursiva-editor" contenteditable="true" spellcheck="false" aria-label="Editor simulado de Word">
+          <p id="cursiva-paragraph">Este documento es muy importante para la firma.</p>
+        </div>
+        <div class="editor-feedback" id="cursiva-feedback">Selecciona el párrafo para comenzar.</div>
       </div>
     </div>
-
-  </div><!-- /detail-body -->
 
   <!-- NAV ENTRE HERRAMIENTAS -->
   <nav class="detail-nav-bar" aria-label="Navegación entre herramientas">
@@ -331,22 +344,10 @@
 
   <script>
     (function () {
-      var task = {
-        instructions: 'Elige la palabra que debe ir en cursiva y aplica el estilo.',
-        segments: [
-          { id: 'a', text: 'Este', correct: false, italic: false },
-          { id: 'b', text: 'documento', correct: false, italic: false },
-          { id: 'c', text: 'es', correct: false, italic: false },
-          { id: 'd', text: 'muy', correct: false, italic: false },
-          { id: 'e', text: 'importante', correct: true, italic: false },
-          { id: 'f', text: 'para', correct: false, italic: false },
-          { id: 'g', text: 'la', correct: false, italic: false },
-          { id: 'h', text: 'firma.', correct: false, italic: false }
-        ]
-      };
+      var originalText = 'Este documento es muy importante para la firma.';
 
-      var state = {
-        selectedId: null,
+      var task = {
+        instructions: 'Selecciona todo el párrafo y aplícale cursiva.',
         completed: false
       };
 
@@ -357,89 +358,155 @@
       var removeItalicBtn = document.getElementById('remove-italic-btn');
       var checkBtn = document.getElementById('check-btn');
       var resetBtn = document.getElementById('reset-btn');
+      var paragraph = document.getElementById('cursiva-paragraph');
 
       function setFeedback(message, color) {
-        feedback.textContent = message;
+        feedback.innerHTML = message;
         feedback.style.color = color || '#555';
       }
 
-      function renderEditor() {
-        taskSummary.textContent = task.instructions;
-        editor.innerHTML = task.segments.map(function (segment) {
-          var classes = 'editor-segment' + (segment.italic ? ' italic' : '');
-          if (state.selectedId === segment.id) { classes += ' selected'; }
-          return '<span class="' + classes + '" data-id="' + segment.id + '">' + segment.text + '</span>';
-        }).join(' ');
-
-        editor.querySelectorAll('.editor-segment').forEach(function (span) {
-          span.addEventListener('click', function () {
-            state.selectedId = span.getAttribute('data-id');
-            renderEditor();
-            setFeedback('Segmento seleccionado. Usa Cursiva o Quitar cursiva.', '#0b662f');
-          });
-        });
+      function normalizeText(text) {
+        return (text || '').replace(/\s+/g, ' ').trim();
       }
 
-      function updateItalic(apply) {
-        if (!state.selectedId) {
-          setFeedback('Selecciona primero un segmento de texto.', 'red');
-          return;
+      function getSelectionRange() {
+        var selection = window.getSelection();
+        if (!selection || selection.rangeCount === 0 || selection.isCollapsed) {
+          return null;
         }
-        task.segments = task.segments.map(function (segment) {
-          if (segment.id === state.selectedId) {
-            segment.italic = apply;
+        var range = selection.getRangeAt(0);
+        if (!editor.contains(range.commonAncestorContainer)) {
+          return null;
+        }
+        return range;
+      }
+
+      function selectionExists() {
+        return !!getSelectionRange();
+      }
+
+      function applyCommand(command) {
+        editor.focus();
+        document.execCommand(command, false, null);
+      }
+
+      function paragraphIsFullyItalic(node) {
+        if (!node) return false;
+
+        var walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, null, false);
+        var textNode;
+        var foundText = false;
+
+        while ((textNode = walker.nextNode())) {
+          if (!textNode.nodeValue || !textNode.nodeValue.trim()) {
+            continue;
           }
-          return segment;
-        });
-        renderEditor();
+
+          foundText = true;
+
+          var parent = textNode.parentElement;
+          var italic = false;
+
+          while (parent && parent !== editor) {
+            var computed = window.getComputedStyle(parent);
+            if (computed.fontStyle === 'italic') {
+              italic = true;
+              break;
+            }
+            parent = parent.parentElement;
+          }
+
+          if (!italic) {
+            return false;
+          }
+        }
+
+        return foundText;
+      }
+
+      function updateSummary() {
+        taskSummary.textContent = task.instructions;
+      }
+
+      function highlightSelectionHint() {
+        if (selectionExists()) {
+          setFeedback('Párrafo seleccionado. Ahora pulsa <b>Cursiva</b>.', '#0b662f');
+        } else {
+          setFeedback('Selecciona el párrafo con el mouse para comenzar.', '#555');
+        }
       }
 
       function checkTask() {
-        var wrong = [];
-        task.segments.forEach(function (segment) {
-          if (segment.correct && !segment.italic) {
-            wrong.push('"' + segment.text + '" debe ir en cursiva');
-          }
-          if (!segment.correct && segment.italic) {
-            wrong.push('"' + segment.text + '" no debe ir en cursiva');
-          }
-        });
-        if (wrong.length === 0) {
-          setFeedback('¡Perfecto! Texto en cursiva aplicado correctamente.', '#0f7b3f');
-          state.completed = true;
+        var currentText = normalizeText(paragraph.textContent);
+        var originalOK = currentText === normalizeText(originalText);
+        var italicOK = paragraphIsFullyItalic(paragraph);
+
+        if (originalOK && italicOK) {
+          setFeedback('¡Perfecto! Aplicaste cursiva al párrafo completo.', '#0f7b3f');
+          task.completed = true;
           try { localStorage.setItem('score-tool-cursiva', '1'); } catch (e) {}
           return;
         }
-        setFeedback(wrong.join('. ') + '.', 'red');
-        highlightIncorrect();
-      }
 
-      function highlightIncorrect() {
-        editor.querySelectorAll('.editor-segment').forEach(function (span) {
-          var id = span.getAttribute('data-id');
-          var segment = task.segments.find(function (s) { return s.id === id; });
-          if (!segment) { return; }
-          span.classList.toggle('incorrect', segment.correct !== segment.italic);
-        });
+        if (!originalOK) {
+          setFeedback('El texto cambió. Debe quedarse exactamente igual y solo aplicar cursiva.', 'red');
+          return;
+        }
+
+        setFeedback('Aún falta aplicar cursiva a todo el párrafo seleccionado.', 'red');
       }
 
       function resetTask() {
-        task.segments.forEach(function (segment) {
-          segment.italic = false;
-        });
-        state.selectedId = null;
-        state.completed = false;
-        renderEditor();
-        setFeedback('Juego reiniciado. Selecciona el texto correcto.', '#555');
+        editor.innerHTML = '<p id="cursiva-paragraph">' + originalText + '</p>';
+        paragraph = document.getElementById('cursiva-paragraph');
+        task.completed = false;
+        updateSummary();
+        setFeedback('Selecciona el párrafo para comenzar.', '#555');
       }
 
-      italicBtn.addEventListener('click', function () { updateItalic(true); });
-      removeItalicBtn.addEventListener('click', function () { updateItalic(false); });
+      [italicBtn, removeItalicBtn, checkBtn, resetBtn].forEach(function (btn) {
+        btn.addEventListener('mousedown', function (e) {
+          e.preventDefault();
+        });
+      });
+
+      italicBtn.addEventListener('click', function () {
+        if (!selectionExists()) {
+          setFeedback('Primero selecciona el párrafo completo arrastrando el cursor.', 'red');
+          return;
+        }
+        applyCommand('italic');
+        setFeedback('Cursiva aplicada. Pulsa Comprobar.', '#0b662f');
+      });
+
+      removeItalicBtn.addEventListener('click', function () {
+        if (!selectionExists()) {
+          setFeedback('Primero selecciona el párrafo o el texto al que quieres quitar la cursiva.', 'red');
+          return;
+        }
+        applyCommand('removeFormat');
+        setFeedback('Formato quitado de la selección.', '#0b662f');
+      });
+
       checkBtn.addEventListener('click', checkTask);
       resetBtn.addEventListener('click', resetTask);
 
-      renderEditor();
-      setFeedback('Selecciona un segmento de texto para comenzar.', '#555');
+      editor.addEventListener('beforeinput', function (e) {
+        if (/^(insert|delete|historyUndo|historyRedo)/.test(e.inputType)) {
+          e.preventDefault();
+        }
+      });
+
+      editor.addEventListener('mouseup', function () {
+        highlightSelectionHint();
+      });
+
+      editor.addEventListener('keyup', function () {
+        highlightSelectionHint();
+      });
+
+      updateSummary();
+      setFeedback('Selecciona el párrafo para comenzar.', '#555');
     })();
   </script>
 

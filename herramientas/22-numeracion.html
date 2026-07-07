@@ -186,11 +186,9 @@
     }
     .numbering-pages {
       display: grid;
-      grid-template-columns: repeat(3, minmax(170px, 1fr));
+      grid-template-columns: minmax(220px, 360px);
+      justify-content: center;
       gap: 14px;
-    }
-    @media (max-width: 700px) {
-      .numbering-pages { grid-template-columns: 1fr; }
     }
     .numbering-page-card {
       background: #fff;
@@ -430,27 +428,25 @@
     <!-- ACTIVIDAD: JUEGO NUMERACIÓN -->
     <div class="extra-zone">
       <h2>✏️ Actividad</h2>
-      <p class="hint"><strong>Instrucción:</strong> Selecciona un estilo de numeración y aplícalo en la página correcta. Son 3 tareas en total.</p>
+      <p class="hint"><strong>Instrucción:</strong> Elige un estilo de numeración: se aplicará automáticamente al capítulo. Luego comprueba si es el estilo correcto.</p>
 
       <div class="numbering-activity">
         <div class="numbering-toolbar">
           <div><strong class="tool-label">Estilo de numeración</strong></div>
           <div class="numbering-style-list" id="numbering-style-list"></div>
           <div class="numbering-actions">
-            <button id="apply-numbering" class="editor-btn">Aplicar numeración</button>
             <button id="check-numbering" class="editor-btn">Comprobar</button>
             <button id="reset-numbering" class="editor-btn gray">Reiniciar</button>
           </div>
         </div>
 
         <div class="numbering-sidebar">
-          <div class="numbering-chip">Lista: <strong id="selected-style-label">1, 2, 3</strong></div>
-          <div class="numbering-chip">Página: <strong id="selected-page-label">Capítulo</strong></div>
+          <div class="numbering-chip">Estilo: <strong id="selected-style-label">1, 2, 3</strong></div>
         </div>
 
         <div class="numbering-pages" id="numbering-pages"></div>
 
-        <div class="numbering-feedback" id="numbering-feedback">Elige un estilo y una página, luego aplica la numeración.</div>
+        <div class="numbering-feedback" id="numbering-feedback">Elige un estilo de numeración para aplicarlo.</div>
         <div class="game-score" id="numbering-score">Puntaje: 0</div>
       </div>
     </div>
@@ -477,32 +473,28 @@
         { id: 'upper-roman', label: 'I, II, III', format: function (i) { var romans = ['I', 'II', 'III', 'IV', 'V']; return romans[i - 1] + '.'; } }
       ];
 
-      var pages = [
-        { id: 'page1', title: 'Capítulo', note: 'Numerar los títulos del capítulo con 1, 2, 3.', expected: 'decimal' },
-        { id: 'page2', title: 'Lista de compras', note: 'Numerar los items con a, b, c.', expected: 'lower-alpha' },
-        { id: 'page3', title: 'Pasos', note: 'Numerar las instrucciones con I, II, III.', expected: 'upper-roman' }
-      ];
+      var page = {
+        id: 'page1',
+        title: 'Capítulo',
+        note: 'Numera los títulos del capítulo con 1, 2, 3.',
+        expected: 'decimal',
+        items: ['Introducción', 'Objetivo', 'Resumen']
+      };
 
       var state = {
         selectedStyle: 'decimal',
-        selectedPage: 'page1',
-        applied: { page1: null, page2: null, page3: null },
-        currentTask: 0,
-        score: 0,
+        applied: null,
         gameScore: 0
       };
 
       var styleList = document.getElementById('numbering-style-list');
       var pagesContainer = document.getElementById('numbering-pages');
       var selectedStyleLabel = document.getElementById('selected-style-label');
-      var selectedPageLabel = document.getElementById('selected-page-label');
       var feedback = document.getElementById('numbering-feedback');
       var score = document.getElementById('numbering-score');
-      var applyButton = document.getElementById('apply-numbering');
       var checkButton = document.getElementById('check-numbering');
       var resetButton = document.getElementById('reset-numbering');
 
-      function task() { return pages[state.currentTask]; }
       function saveScore() { try { localStorage.setItem('score-tool-22-numeracion', state.gameScore); } catch (e) {} }
       function loadScore() {
         var value = null;
@@ -517,7 +509,6 @@
       function setFeedback(text, color) { feedback.textContent = text; feedback.style.color = color || '#555'; }
 
       function currentStyle() { return styles.find(function (style) { return style.id === state.selectedStyle; }); }
-      function currentPage() { return pages.find(function (page) { return page.id === state.selectedPage; }); }
 
       function renderStyles() {
         styleList.innerHTML = styles.map(function (style) {
@@ -527,110 +518,67 @@
         styleList.querySelectorAll('.numbering-style-button').forEach(function (button) {
           button.addEventListener('click', function () {
             state.selectedStyle = this.getAttribute('data-style');
+            state.applied = { style: state.selectedStyle };
             renderStyles();
             updateLabels();
-            setFeedback('Estilo seleccionado: ' + currentStyle().label + '.', '#0b662f');
+            renderPages();
+            setFeedback('Numeración "' + currentStyle().label + '" aplicada al capítulo.', '#0b662f');
           });
         });
       }
 
       function renderPages() {
-        pagesContainer.innerHTML = pages.map(function (page) {
-          var active = state.selectedPage === page.id ? ' selected' : '';
-          var preview = state.applied[page.id] ? renderNumberedPage(page.id) : renderEmptyPage(page.id);
-          return '<div class="numbering-page-card' + active + '" data-page="' + page.id + '">' +
-                   '<div class="numbering-page-header"><h3>' + page.title + '</h3></div>' +
-                   '<div class="numbering-page-body">' + preview + '</div>' +
-                   '<div class="numbering-page-note">' + page.note + '</div>' +
-                 '</div>';
-        }).join('');
-        pagesContainer.querySelectorAll('.numbering-page-card').forEach(function (card) {
-          card.addEventListener('click', function () {
-            state.selectedPage = this.getAttribute('data-page');
-            renderPages();
-            updateLabels();
-            setFeedback('Página seleccionada: ' + currentPage().title + '.', '#0b662f');
-          });
-        });
+        var preview = state.applied ? renderNumberedPage() : renderEmptyPage();
+        pagesContainer.innerHTML =
+          '<div class="numbering-page-card">' +
+            '<div class="numbering-page-header"><h3>' + page.title + '</h3></div>' +
+            '<div class="numbering-page-body">' + preview + '</div>' +
+            '<div class="numbering-page-note">' + page.note + '</div>' +
+          '</div>';
       }
 
-      function renderEmptyPage(pageId) {
-        var items = getPageItems(pageId);
+      function renderEmptyPage() {
         return '<div class="doc-preview"><div class="doc-canvas">' +
-               items.map(function (text) { return '<div class="doc-line"><span></span><div class="doc-text">' + text + '</div></div>'; }).join('') +
+               page.items.map(function (text) { return '<div class="doc-line"><span></span><div class="doc-text">' + text + '</div></div>'; }).join('') +
                '</div></div>';
       }
 
-      function renderNumberedPage(pageId) {
-        var items = getPageItems(pageId);
-        var applied = state.applied[pageId];
-        var style = styles.find(function (style) { return applied && style.id === applied.style; }) || currentStyle();
+      function renderNumberedPage() {
+        var style = styles.find(function (s) { return state.applied && s.id === state.applied.style; }) || currentStyle();
         return '<div class="doc-preview"><div class="doc-canvas">' +
-               items.map(function (text, index) { return '<div class="doc-line"><span class="visible">' + style.format(index + 1) + '</span><div class="doc-text">' + text + '</div></div>'; }).join('') +
+               page.items.map(function (text, index) { return '<div class="doc-line"><span class="visible">' + style.format(index + 1) + '</span><div class="doc-text">' + text + '</div></div>'; }).join('') +
                '</div></div>';
-      }
-
-      function getPageItems(pageId) {
-        return {
-          page1: ['Introducción', 'Objetivo', 'Resumen'],
-          page2: ['Pan', 'Leche', 'Huevos'],
-          page3: ['Abrir Word', 'Escribir texto', 'Guardar documento']
-        }[pageId];
       }
 
       function updateLabels() {
         selectedStyleLabel.textContent = currentStyle().label;
-        selectedPageLabel.textContent = currentPage().title;
       }
 
-      applyButton.addEventListener('click', function () {
-        state.applied[state.selectedPage] = { style: state.selectedStyle };
-        renderPages();
-        setFeedback('Numeración aplicada en ' + currentPage().title + '.', '#0b662f');
-      });
-
       checkButton.addEventListener('click', function () {
-        var current = currentPage();
-        var applied = state.applied[current.id];
-        var expected = current.expected;
-        if (applied && applied.style === expected) {
-          state.score += 1;
-          state.gameScore = state.gameScore !== -1 ? 1 : -1;
-          saveScore();
-          updateScore();
-          if (state.currentTask + 1 < pages.length) {
-            state.currentTask += 1;
-            state.selectedPage = pages[state.currentTask].id;
-            state.selectedStyle = pages[state.currentTask].expected;
-            renderStyles();
-            renderPages();
-            updateLabels();
-            setFeedback('¡Correcto! Ahora numera la página: ' + currentPage().title + '.', '#0f7b3f');
-          } else {
-            setFeedback('¡Perfecto! Todas las listas están numeradas.', '#0f7b3f');
-            score.textContent = 'Final: ' + state.score + ' / ' + pages.length;
-          }
+        if (!state.applied) {
+          setFeedback('Aún no has aplicado ninguna numeración.', '#c0392b');
+          state.gameScore = -1; saveScore(); updateScore();
+          return;
+        }
+        if (state.applied.style === page.expected) {
+          state.gameScore = 1; saveScore(); updateScore();
+          setFeedback('¡Correcto! El capítulo quedó numerado con el estilo adecuado.', '#0f7b3f');
         } else {
-          state.gameScore = -1;
-          saveScore();
-          updateScore();
-          setFeedback('No es correcto. Revisa el estilo de numeración y la página seleccionada.', '#c0392b');
+          state.gameScore = -1; saveScore(); updateScore();
+          setFeedback('No es correcto. Prueba con otro estilo de numeración.', '#c0392b');
         }
       });
 
       resetButton.addEventListener('click', function () {
         state.selectedStyle = 'decimal';
-        state.selectedPage = 'page1';
-        state.applied = { page1: null, page2: null, page3: null };
-        state.currentTask = 0;
-        state.score = 0;
+        state.applied = null;
         state.gameScore = 0;
         saveScore();
         renderStyles();
         renderPages();
         updateLabels();
         updateScore();
-        setFeedback('Actividad reiniciada. Selecciona estilo y página.', '#555');
+        setFeedback('Actividad reiniciada. Elige un estilo de numeración.', '#555');
       });
 
       loadScore();
@@ -638,7 +586,7 @@
       renderPages();
       updateLabels();
       updateScore();
-      setFeedback('Selecciona un estilo, luego aplica numeración en la página correcta.', '#555');
+      setFeedback('Elige un estilo de numeración para aplicarlo al capítulo.', '#555');
     })();
   </script>
 

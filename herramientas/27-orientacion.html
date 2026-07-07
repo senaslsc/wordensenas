@@ -263,6 +263,7 @@
       <div class="simulator-wrap">
         <div class="sim-header">
           <strong>📄 Documento Word</strong>
+          <span>Puntos: <span class="quiz-score-val" id="activity-score">0</span> / 1</span>
         </div>
 
         <div class="sim-toolbar">
@@ -285,43 +286,8 @@
           </div>
         </div>
         <p class="sim-hint">💡 Haz doble clic dentro del documento para editar el texto.</p>
-      </div>
-    </div>
 
-    <!-- QUIZ CON PUNTAJE -->
-    <div class="extra-zone">
-      <h2>✏️ Actividad</h2>
-      <p class="hint"><strong>Instrucción:</strong> Responde las preguntas y pulsa <strong>Comprobar</strong> en cada una.</p>
-
-      <div class="quiz-wrap">
-        <div class="quiz-header">
-          <strong>❓ Preguntas sobre Orientación</strong>
-          <span>Puntos: <span class="quiz-score-val" id="quiz-score">0</span> / 2</span>
-        </div>
-
-        <!-- Pregunta 1 -->
-        <div class="q-block" data-answer="landscape">
-          <p>1. ¿Qué orientación es mejor para un cartel publicitario ancho?</p>
-          <div class="q-options">
-            <label><input type="radio" name="q1" value="portrait"> Vertical</label>
-            <label><input type="radio" name="q1" value="landscape"> Horizontal</label>
-          </div>
-          <button class="boton comprobar check-btn" data-q="q1">✅ Comprobar</button>
-          <div class="q-feedback" id="fb-q1"></div>
-        </div>
-
-        <!-- Pregunta 2 -->
-        <div class="q-block" data-answer="portrait">
-          <p>2. ¿Qué orientación es la más común para escribir un ensayo escolar?</p>
-          <div class="q-options">
-            <label><input type="radio" name="q2" value="portrait"> Vertical</label>
-            <label><input type="radio" name="q2" value="landscape"> Horizontal</label>
-          </div>
-          <button class="boton comprobar check-btn" data-q="q2">✅ Comprobar</button>
-          <div class="q-feedback" id="fb-q2"></div>
-        </div>
-
-        <div id="resultado-final"></div>
+        <div id="activity-feedback" style="margin-top: 12px; font-size: 0.9rem; min-height: 1.3em; color: var(--muted); font-weight: 500;"></div>
       </div>
     </div>
 
@@ -347,6 +313,12 @@
       var scaleSelect  = document.getElementById('scaleSelect');
       var resetBtn     = document.getElementById('resetBtn');
       var doc          = document.getElementById('doc');
+      var feedback     = document.getElementById('activity-feedback');
+      var scoreSpan    = document.getElementById('activity-score');
+
+      var currentOrientation = 'portrait';
+      var completed = false;
+      var score = 0;
 
       function setOrientation(o) {
         if (!doc) return;
@@ -358,6 +330,18 @@
           doc.classList.remove('portrait'); doc.classList.add('landscape');
           landscapeBtn.classList.add('active');   landscapeBtn.setAttribute('aria-pressed', 'true');
           portraitBtn.classList.remove('active');  portraitBtn.setAttribute('aria-pressed', 'false');
+        }
+        currentOrientation = o;
+
+        // Verificar si cambió de orientación
+        if (o !== 'portrait' && !completed) {
+          completed = true;
+          score = 1;
+          scoreSpan.textContent = score;
+          feedback.textContent = '🎉 ¡Excelente! Cambiaste la orientación a Horizontal. Actividad completada: 1/1 punto.';
+          feedback.style.color = '#0b662f';
+          feedback.style.fontWeight = '700';
+          try { localStorage.setItem('score-tool-27-orientacion', '1'); } catch(e) {}
         }
       }
 
@@ -376,62 +360,15 @@
         doc.style.transform = 'none';
         var c = doc.querySelector('.doc-content');
         if (c) c.innerText = 'Escribe aquí tu documento. Cambia la orientación para ver el efecto.';
+        
+        // Reiniciar actividad
+        if (completed) {
+          completed = false;
+          score = 0;
+          scoreSpan.textContent = '0';
+          feedback.textContent = '';
+        }
       });
-
-      /* ── QUIZ ── */
-      var quizScore = 0;
-      var total = 2;
-
-      function updateQuizScore() {
-        document.getElementById('quiz-score').textContent = quizScore;
-      }
-
-      document.querySelectorAll('.check-btn').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-          var qname  = btn.getAttribute('data-q');
-          var qBlock = btn.closest('.q-block');
-          var fb     = document.getElementById('fb-' + qname);
-          var selected = document.querySelector('input[name="' + qname + '"]:checked');
-
-          if (!selected) {
-            fb.textContent = '❗ Selecciona una opción primero.';
-            fb.style.color = '#b22222';
-            return;
-          }
-          if (qBlock.getAttribute('data-answered') === 'true') return;
-
-          qBlock.setAttribute('data-answered', 'true');
-          btn.disabled = true;
-          qBlock.querySelectorAll('input[type=radio]').forEach(function(i) { i.disabled = true; });
-
-          var user    = selected.value;
-          var correct = qBlock.getAttribute('data-answer');
-
-          // Aplicar orientación en el simulador
-          if (correct === 'portrait' || correct === 'landscape') setOrientation(correct);
-
-          if (user === correct) {
-            fb.textContent = '🎉 ¡Correcto!';
-            fb.style.color = '#0b662f';
-            quizScore += 1;
-            updateQuizScore();
-          } else {
-            fb.textContent = '❌ Incorrecto. La respuesta correcta se aplicó en el simulador.';
-            fb.style.color = '#b22222';
-          }
-
-          // Si ya respondieron todo, mostrar resultado final
-          var answered = document.querySelectorAll('.q-block[data-answered="true"]').length;
-          if (answered === total) {
-            var rf = document.getElementById('resultado-final');
-            rf.className = 'resultado-final';
-            rf.textContent = '🏆 Resultado final: ' + quizScore + ' de ' + total + ' puntos.';
-            try { localStorage.setItem('score-tool-27-orientacion', '1'); } catch(e) {}
-          }
-        });
-      });
-
-      updateQuizScore();
     })();
   </script>
 

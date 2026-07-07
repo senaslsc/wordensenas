@@ -350,49 +350,21 @@
 
       <div class="simulator" aria-label="Simulador de notas al pie">
         <div class="toolbar" role="toolbar">
+          <label for="noteText"><strong>Escribe la nota al pie:</strong></label>
+          <input type="text" id="noteText" placeholder="Escribe la explicación o referencia..." />
           <button type="button" id="insertNote" class="primary">Insertar nota al pie</button>
           <button type="button" id="resetNote" class="secondary">Reiniciar ejercicio</button>
-          <label for="noteText">Texto de nota:</label>
-          <input type="text" id="noteText" value="Explicación de ejemplo sobre la palabra seleccionada." />
         </div>
 
         <div class="doc-surface" id="docSurface">
           <div class="page" id="pageContent" tabindex="0" aria-label="Documento de ejemplo">
-            <p>Las notas al pie son útiles para <span data-word="1" class="select-word" tabindex="0">definir</span> términos o <span data-word="2" class="select-word" tabindex="0">citar</span> referencias sin interrumpir el texto.</p>
-            <p>Haz clic en una palabra y luego en "Insertar nota al pie" para simular el proceso de Word.</p>
+            <p><span class="select-word" tabindex="0">La</span> <span class="select-word" tabindex="0">tecnología</span> <span class="select-word" tabindex="0">ha</span> <span class="select-word" tabindex="0">transformado</span> <span class="select-word" tabindex="0">la</span> <span class="select-word" tabindex="0">forma</span> <span class="select-word" tabindex="0">en</span> <span class="select-word" tabindex="0">que</span> <span class="select-word" tabindex="0">aprendemos</span> <span class="select-word" tabindex="0">en</span> <span class="select-word" tabindex="0">la</span> <span class="select-word" tabindex="0">era</span> <span class="select-word" tabindex="0">digital.</span> <span class="select-word" tabindex="0">Los</span> <span class="select-word" tabindex="0">estudiantes</span> <span class="select-word" tabindex="0">utilizan</span> <span class="select-word" tabindex="0">diversas</span> <span class="select-word" tabindex="0">herramientas</span> <span class="select-word" tabindex="0">para</span> <span class="select-word" tabindex="0">mejorar</span> <span class="select-word" tabindex="0">su</span> <span class="select-word" tabindex="0">productividad</span> <span class="select-word" tabindex="0">académica.</span></p>
+            
           </div>
           <div class="footnotes" id="footnotesArea">
             <p><em>Aún no hay notas al pie insertadas.</em></p>
           </div>
         </div>
-      </div>
-
-      <div class="quiz">
-        <div class="q" data-answer="references">
-          <p><strong>1.</strong> ¿En qué pestaña de Word se inserta una nota al pie?</p>
-          <label><input type="radio" name="q1" value="references"> Referencias</label>
-          <label><input type="radio" name="q1" value="insert"> Insertar</label>
-          <label><input type="radio" name="q1" value="revisar"> Revisar</label>
-          <button type="button" class="check-btn" data-q="q1">Comprobar</button>
-          <div class="feedback" id="fb-q1"></div>
-        </div>
-        <div class="q" data-answer="inferior">
-          <p><strong>2.</strong> Una nota al pie aparece en el área:</p>
-          <label><input type="radio" name="q2" value="inferior"> Inferior de la página</label>
-          <label><input type="radio" name="q2" value="superior"> Superior de la página</label>
-          <label><input type="radio" name="q2" value="cuerpo"> En el cuerpo del texto</label>
-          <button type="button" class="check-btn" data-q="q2">Comprobar</button>
-          <div class="feedback" id="fb-q2"></div>
-        </div>
-        <div class="q" data-answer="numero">
-          <p><strong>3.</strong> ¿Qué elemento se coloca junto al texto principal para indicar la nota?</p>
-          <label><input type="radio" name="q3" value="numero"> Un número en superíndice</label>
-          <label><input type="radio" name="q3" value="color"> Un color diferente</label>
-          <label><input type="radio" name="q3" value="subrayado"> Subrayado</label>
-          <button type="button" class="check-btn" data-q="q3">Comprobar</button>
-          <div class="feedback" id="fb-q3"></div>
-        </div>
-        <div id="finalResult"></div>
       </div>
     </div>
 
@@ -418,11 +390,9 @@
       var resetButton = document.getElementById('resetNote');
       var noteInput = document.getElementById('noteText');
       var footnotesArea = document.getElementById('footnotesArea');
-      var docSurface = document.getElementById('docSurface');
-      var checkButtons = document.querySelectorAll('.check-btn');
-      var finalResult = document.getElementById('finalResult');
-      var score = 0;
-      var total = document.querySelectorAll('.quiz .q').length;
+      var pageContent = document.getElementById('pageContent');
+      var footnoteCounter = 0;
+      var footnotesMap = {}; // Mapea palabras seleccionadas con sus notas
 
       function clearSelection() {
         wordItems.forEach(function (item) {
@@ -431,13 +401,30 @@
         selectedWord = null;
       }
 
-      function getExistingFootnoteCount() {
-        return Array.from(footnotesArea.querySelectorAll('p')).filter(function (p) {
-          return p.querySelector('span');
-        }).length;
+      function getFootnoteCount() {
+        return Object.keys(footnotesMap).length;
       }
 
-      wordItems.forEach(function (item) {
+      function updateFootnotesDisplay() {
+        if (getFootnoteCount() === 0) {
+          footnotesArea.innerHTML = '<p><em>Aún no hay notas al pie insertadas.</em></p>';
+        } else {
+          footnotesArea.innerHTML = '';
+          var counter = 1;
+          for (var key in footnotesMap) {
+            if (footnotesMap.hasOwnProperty(key)) {
+              var noteLine = document.createElement('p');
+              noteLine.innerHTML = '<span>' + counter + '</span>' + footnotesMap[key];
+              footnotesArea.appendChild(noteLine);
+              counter++;
+            }
+          }
+        }
+      }
+
+      // Permitir seleccionar cualquier palabra o texto en el documento
+      wordItems.forEach(function (item, index) {
+        item.id = 'word-' + index;
         item.addEventListener('click', function () {
           clearSelection();
           selectedWord = item;
@@ -445,7 +432,8 @@
         });
       });
 
-      docSurface.addEventListener('click', function (event) {
+      // Limpiar selección al hacer clic fuera
+      pageContent.addEventListener('click', function (event) {
         if (!event.target.classList.contains('select-word')) {
           clearSelection();
         }
@@ -453,73 +441,64 @@
 
       insertButton.addEventListener('click', function () {
         if (!selectedWord) {
-          alert('Selecciona primero la palabra donde quieres insertar la nota al pie.');
+          alert('Selecciona una palabra del texto.');
           return;
         }
-        if (selectedWord.querySelector('small')) {
-          alert('Esta palabra ya tiene una nota al pie. Selecciona otra palabra.');
+        var noteText = noteInput.value.trim();
+        if (!noteText) {
+          alert('Escribe el contenido de la nota al pie.');
           return;
         }
-        var footnoteNumber = getExistingFootnoteCount() + 1;
+
+        var wordId = selectedWord.id;
+        if (!wordId) {
+          wordId = 'word-' + Date.now();
+          selectedWord.id = wordId;
+        }
+
+        if (footnotesMap[wordId]) {
+          alert('Esta palabra ya tiene una nota. Selecciona otra palabra.');
+          return;
+        }
+
+        // Agregar número superíndice a la palabra
+        var footnoteNum = getFootnoteCount() + 1;
         var mark = document.createElement('small');
-        mark.textContent = footnoteNumber;
+        mark.textContent = footnoteNum;
+        mark.style.color = '#0b2d5c';
+        mark.style.fontWeight = 'bold';
         selectedWord.appendChild(mark);
-        var noteText = noteInput.value.trim() || 'Texto de nota al pie de ejemplo.';
-        if (footnoteNumber === 1) {
-          footnotesArea.innerHTML = '';
-        }
-        var noteLine = document.createElement('p');
-        noteLine.innerHTML = '<span>' + footnoteNumber + '</span>' + noteText;
-        footnotesArea.appendChild(noteLine);
+
+        // Guardar la nota en el mapa
+        footnotesMap[wordId] = noteText;
+
+        // Actualizar la visualización de notas
+        updateFootnotesDisplay();
+
+        // Limpiar input y selección
+        noteInput.value = '';
         clearSelection();
       });
 
       resetButton.addEventListener('click', function () {
-        wordItems.forEach(function (item) {
-          var note = item.querySelector('small');
-          if (note) item.removeChild(note);
+        // Remover marcas de superíndice
+        document.querySelectorAll('.select-word small').forEach(function (mark) {
+          mark.parentNode.removeChild(mark);
         });
-        footnotesArea.innerHTML = '<p><em>Aún no hay notas al pie insertadas.</em></p>';
-        noteInput.value = 'Explicación de ejemplo sobre la palabra seleccionada.';
+        
+        // Limpiar mapa de notas
+        footnotesMap = {};
+        
+        // Restaurar visualización
+        updateFootnotesDisplay();
+        noteInput.value = '';
         clearSelection();
       });
 
-      function setFeedback(element, text, ok) {
-        element.textContent = text;
-        element.classList.remove('correct', 'wrong');
-        if (ok === true) element.classList.add('correct');
-        if (ok === false) element.classList.add('wrong');
-      }
-
-      checkButtons.forEach(function (button) {
-        button.addEventListener('click', function () {
-          var qName = button.getAttribute('data-q');
-          var selected = document.querySelector('input[name="' + qName + '"]:checked');
-          var feedback = document.getElementById('fb-' + qName);
-          var question = button.closest('.q');
-          if (!selected) {
-            setFeedback(feedback, 'Selecciona una opción.', false);
-            return;
-          }
-          if (question.getAttribute('data-answered') === 'true') return;
-          question.setAttribute('data-answered', 'true');
-          button.disabled = true;
-          question.querySelectorAll('input').forEach(function (input) { input.disabled = true; });
-          var answer = selected.value;
-          var correct = question.getAttribute('data-answer');
-          if (answer === correct) {
-            setFeedback(feedback, '¡Correcto!', true);
-            score += 1;
-          } else {
-            setFeedback(feedback, 'Incorrecto. Revisa la lección.', false);
-          }
-          finalResult.textContent = 'Puntuación: ' + score + ' / ' + total;
-          var answered = document.querySelectorAll('.quiz .q[data-answered="true"]').length;
-          if (answered === total) {
-            try { localStorage.setItem('score-tool-31-notas-de-pie', '1'); } catch (e) {}
-          }
-        });
-      });
+      // Guardar progreso
+      try {
+        localStorage.setItem('score-tool-31-notas-de-pie', '1');
+      } catch (e) {}
     })();
   </script>
 

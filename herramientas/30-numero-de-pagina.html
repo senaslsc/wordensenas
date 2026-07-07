@@ -134,26 +134,27 @@
     .extra-zone h2 { margin: 0 0 8px; font-size: 1rem; color: var(--word-blue); }
     .extra-zone p.hint { margin: 0 0 6px; font-size: 0.85rem; color: var(--muted); }
 
-    .simulator {
-      background: #fff;
-      border: 1px solid #d8d8d8;
-      border-radius: 12px;
+    .simulator-wrap {
+      background: #f8fbff;
+      border: 1px solid #d7e6f5;
+      border-radius: 14px;
       padding: 16px;
-      box-shadow: 0 4px 18px rgba(0,0,0,.06);
+      box-shadow: 0 4px 16px rgba(43,87,154,.08);
       margin-top: 10px;
     }
-    .simulator .toolbar {
+    .sim-toolbar {
       display: flex;
-      flex-wrap: wrap;
       gap: 8px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       align-items: center;
+      position: relative;
     }
-    .simulator .toolbar button,
-    .simulator .toolbar label {
+    .sim-toolbar button,
+    .sim-toolbar label {
       font-size: 0.85rem;
     }
-    .simulator .toolbar button {
+    .sim-toolbar button,
+    .page-style-menu .page-option {
       padding: 8px 12px;
       border-radius: 8px;
       border: 1px solid var(--border);
@@ -162,13 +163,19 @@
       cursor: pointer;
       font-weight: 700;
       font-family: inherit;
+      transition: background .15s;
+      text-align: left;
     }
-    .simulator .toolbar button.active {
+    .sim-toolbar button:hover,
+    .page-style-menu .page-option:hover {
+      background: #f0f4fa;
+    }
+    .sim-toolbar button.active {
       background: var(--word-blue);
       color: #fff;
       border-color: var(--word-blue);
     }
-    .simulator .toolbar label {
+    .sim-toolbar label {
       display: inline-flex;
       align-items: center;
       gap: 6px;
@@ -176,11 +183,64 @@
       color: var(--muted);
       font-weight: 600;
     }
+    .page-style-menu {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 0;
+      width: 240px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+      z-index: 20;
+    }
+    .page-style-menu.hidden {
+      display: none;
+    }
+    .page-style-menu .page-option {
+      width: 100%;
+      justify-content: flex-start;
+      text-align: left;
+      background: #f7f9fc;
+    }
+    .page-style-menu .page-option:hover {
+      background: #eef4ff;
+    }
     .doc-preview {
       border: 1px solid #e1e3e6;
       border-radius: 10px;
       background: #f8fbff;
       padding: 14px;
+    }
+    .page-header,
+    .page-footer {
+      min-height: 48px;
+      padding: 12px 14px;
+      background: #fafafa;
+      border: 1px solid #e5e7ea;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: #222;
+      outline: none;
+      white-space: pre-wrap;
+      line-height: 1.4;
+    }
+    .page-header { margin-bottom: 12px; }
+    .page-footer { margin-top: 12px; }
+    .page-header.simple { font-weight: 700; }
+    .page-header.leftnum { text-align: left; }
+    .page-header.center { text-align: center; }
+    .page-footer.simple { text-align: left; }
+    .page-footer.center { text-align: center; }
+    .page-footer.underline { text-align: right; text-decoration: underline; }
+    .page-header[contenteditable="true"],
+    .page-footer[contenteditable="true"] {
+      outline: 2px solid var(--word-blue);
+      background: #eef5ff;
     }
     .doc-surface {
       width: 100%;
@@ -219,28 +279,6 @@
       font-weight: 700;
       color: var(--word-dark);
     }
-
-    .quiz { margin-top: 18px; }
-    .quiz .q { margin-bottom: 18px; }
-    .quiz .q p { margin: 0 0 4px; }
-    .quiz label { display: block; margin-top: 8px; cursor: pointer; font-size: 0.95rem; }
-    .check-btn {
-      margin-top: 10px;
-      padding: 8px 16px;
-      background: var(--word-blue);
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      font-weight: 700;
-      font-size: 0.85rem;
-      cursor: pointer;
-      font-family: inherit;
-    }
-    .check-btn:disabled { opacity: .6; cursor: not-allowed; }
-    .feedback { margin-top: 8px; font-size: 0.95rem; color: var(--muted); }
-    .feedback.correct { color: #0f7b3f; font-weight: 600; }
-    .feedback.wrong { color: #b22222; font-weight: 600; }
-    #finalResult { margin-top: 12px; font-weight: 700; color: var(--word-dark); }
 
     /* ── NAV ENTRE HERRAMIENTAS ── */
     .detail-nav-bar {
@@ -338,49 +376,27 @@
       <h2>✏️ Simulador y actividad</h2>
       <p class="hint">Practica en el simulador y responde las preguntas. Inserta un número de página y prueba la opción de diferente primera página.</p>
 
-      <div class="simulator" aria-label="Simulador de numeración de páginas">
-        <div class="toolbar" role="toolbar">
-          <button type="button" id="editHeader" class="active">Editar encabezado</button>
-          <button type="button" id="editFooter">Editar pie</button>
-          <button type="button" id="insertPageNum">Insertar número de página</button>
-          <label><input type="checkbox" id="diffFirst"> Diferente primera página</label>
-          <button type="button" id="closeEdit" style="margin-left:auto;">Cerrar edición</button>
+      <div class="simulator-wrap" aria-label="Simulador de numeración de páginas">
+        <div class="sim-toolbar" role="toolbar">
+          <button type="button" id="choosePageStyle" class="btn">Número de página ▾</button>
+          <div class="page-style-menu hidden" id="pageStyleMenu">
+            <button class="page-option" data-template="headerSimple">Encabezado simple</button>
+            <button class="page-option" data-template="headerLeftNum">Encabezado con número #</button>
+            <button class="page-option" data-template="headerCenter">Encabezado centrado</button>
+            <button class="page-option" data-template="footerSimple">Pie simple</button>
+            <button class="page-option" data-template="footerCenter">Pie centrado</button>
+            <button class="page-option" data-template="footerUnderline">Pie subrayado</button>
+          </div>
         </div>
 
         <div class="doc-preview">
           <div id="docSim" class="doc-surface" tabindex="0" aria-label="Vista de documento">
-            <div class="page-header" contenteditable="true" aria-label="Encabezado">Encabezado del documento</div>
-            <div class="page-body">Este es un párrafo de ejemplo en la primera página. Practica insertando un número de página en el encabezado o pie para que aparezca en todas las hojas.</div>
-            <div class="page-footer" contenteditable="true" aria-label="Pie de página">Pie de página del documento</div>
+            <div class="page-header simple" contenteditable="false" aria-label="Encabezado">Encabezado del documento</div>
+            <div class="page-body"># Ejemplo de texto en la primera página. Practica insertando un número de página en el encabezado o pie para que aparezca en todas las hojas.</div>
+            <div class="page-footer simple" contenteditable="false" aria-label="Pie de página">Pie de página del documento</div>
           </div>
         </div>
-      </div>
-
-      <div class="quiz">
-        <div class="q" data-answer="insertMenu">
-          <p><strong>1.</strong> ¿Cuál es la ruta correcta para insertar un número de página en Word?</p>
-          <label><input type="radio" name="q1" value="insertMenu"> Insertar → Número de página</label>
-          <label><input type="radio" name="q1" value="viewMenu"> Ver → Número de página</label>
-          <label><input type="radio" name="q1" value="designMenu"> Diseño → Número de página</label>
-          <button type="button" class="check-btn" data-q="q1">Comprobar</button>
-          <div class="feedback" id="fb-q1"></div>
-        </div>
-        <div class="q" data-answer="footer">
-          <p><strong>2.</strong> Si quieres que el número aparezca en la parte inferior de cada página, ¿dónde debes insertarlo?</p>
-          <label><input type="radio" name="q2" value="footer"> En el pie de página</label>
-          <label><input type="radio" name="q2" value="header"> En el encabezado</label>
-          <label><input type="radio" name="q2" value="body"> En el cuerpo del documento</label>
-          <button type="button" class="check-btn" data-q="q2">Comprobar</button>
-          <div class="feedback" id="fb-q2"></div>
-        </div>
-        <div class="q" data-answer="diffFirstExp">
-          <p><strong>3.</strong> ¿Qué permite la opción "Diferente primera página"?</p>
-          <label><input type="radio" name="q3" value="diffFirstExp"> Usar un encabezado o pie distinto en la primera página</label>
-          <label><input type="radio" name="q3" value="same"> Mantener el mismo encabezado o pie en todas las páginas</label>
-          <button type="button" class="check-btn" data-q="q3">Comprobar</button>
-          <div class="feedback" id="fb-q3"></div>
-        </div>
-        <div id="finalResult"></div>
+        <p class="sim-hint">💡 Haz clic en el botón y elige uno de los estilos de encabezado o pie.</p>
       </div>
     </div>
 
@@ -400,106 +416,70 @@
 
   <script>
     (function () {
-      var editHeader = document.getElementById('editHeader');
-      var editFooter = document.getElementById('editFooter');
-      var insertPageNum = document.getElementById('insertPageNum');
-      var diffFirst = document.getElementById('diffFirst');
-      var closeEdit = document.getElementById('closeEdit');
+      var choosePageStyle = document.getElementById('choosePageStyle');
+      var pageStyleMenu = document.getElementById('pageStyleMenu');
+      var pageStyleButtons = document.querySelectorAll('.page-option');
       var docSim = document.getElementById('docSim');
       var headerArea = docSim.querySelector('.page-header');
       var footerArea = docSim.querySelector('.page-footer');
-      var checkButtons = document.querySelectorAll('.check-btn');
-      var finalResult = document.getElementById('finalResult');
-      var score = 0;
-      var total = document.querySelectorAll('.quiz .q').length;
 
-      function setMode(mode) {
-        editHeader.classList.toggle('active', mode === 'header');
-        editFooter.classList.toggle('active', mode === 'footer');
-        headerArea.contentEditable = (mode === 'header');
-        footerArea.contentEditable = (mode === 'footer');
-        if (mode === 'header') headerArea.focus();
-        if (mode === 'footer') footerArea.focus();
-      }
-
-      function insertPageNumberInto(target) {
-        var pageNumber = document.createElement('span');
-        pageNumber.className = 'page-number';
-        pageNumber.textContent = '1';
-        target.appendChild(document.createTextNode(' '));
-        target.appendChild(pageNumber);
-      }
-
-      function setFeedback(element, text, correct) {
-        element.textContent = text;
-        element.classList.remove('correct', 'wrong');
-        if (correct === true) element.classList.add('correct');
-        if (correct === false) element.classList.add('wrong');
-      }
-
-      editHeader.addEventListener('click', function () { setMode('header'); });
-      editFooter.addEventListener('click', function () { setMode('footer'); });
-      closeEdit.addEventListener('click', function () {
-        headerArea.contentEditable = 'false';
-        footerArea.contentEditable = 'false';
-        editHeader.classList.remove('active');
-        editFooter.classList.remove('active');
-      });
-
-      insertPageNum.addEventListener('click', function () {
-        if (footerArea.contentEditable === 'true') {
-          insertPageNumberInto(footerArea);
-        } else {
-          insertPageNumberInto(headerArea);
+      function applyPageTemplate(template) {
+        headerArea.className = 'page-header';
+        footerArea.className = 'page-footer';
+        switch (template) {
+          case 'headerSimple':
+            headerArea.classList.add('simple');
+            headerArea.textContent = '# Encabezado simple';
+            headerArea.contentEditable = 'true';
+            headerArea.focus();
+            footerArea.contentEditable = 'false';
+            break;
+          case 'headerLeftNum':
+            headerArea.classList.add('leftnum');
+            headerArea.textContent = '# Encabezado con número';
+            headerArea.contentEditable = 'true';
+            headerArea.focus();
+            footerArea.contentEditable = 'false';
+            break;
+          case 'headerCenter':
+            headerArea.classList.add('center');
+            headerArea.textContent = '# Encabezado centrado';
+            headerArea.contentEditable = 'true';
+            headerArea.focus();
+            footerArea.contentEditable = 'false';
+            break;
+          case 'footerSimple':
+            footerArea.classList.add('simple');
+            footerArea.textContent = '# Pie simple';
+            footerArea.contentEditable = 'true';
+            footerArea.focus();
+            headerArea.contentEditable = 'false';
+            break;
+          case 'footerCenter':
+            footerArea.classList.add('center');
+            footerArea.textContent = '# Pie centrado';
+            footerArea.contentEditable = 'true';
+            footerArea.focus();
+            headerArea.contentEditable = 'false';
+            break;
+          case 'footerUnderline':
+            footerArea.classList.add('underline');
+            footerArea.textContent = '# Pie subrayado';
+            footerArea.contentEditable = 'true';
+            footerArea.focus();
+            headerArea.contentEditable = 'false';
+            break;
         }
+      }
+
+      choosePageStyle.addEventListener('click', function () {
+        pageStyleMenu.classList.toggle('hidden');
       });
 
-      diffFirst.addEventListener('change', function () {
-        if (this.checked) {
-          headerArea.dataset.first = headerArea.innerHTML;
-          headerArea.innerHTML = 'Primera página sin número';
-        } else if (headerArea.dataset.first) {
-          headerArea.innerHTML = headerArea.dataset.first;
-        }
-      });
-
-      checkButtons.forEach(function (button) {
+      pageStyleButtons.forEach(function (button) {
         button.addEventListener('click', function () {
-          var qName = button.getAttribute('data-q');
-          var selected = document.querySelector('input[name="' + qName + '"]:checked');
-          var feedback = document.getElementById('fb-' + qName);
-          var question = button.closest('.q');
-          if (!selected) {
-            setFeedback(feedback, 'Selecciona una opción.', false);
-            return;
-          }
-          if (question.getAttribute('data-answered') === 'true') return;
-          question.setAttribute('data-answered', 'true');
-          button.disabled = true;
-          question.querySelectorAll('input').forEach(function (input) { input.disabled = true; });
-          var answer = selected.value;
-          var correct = question.getAttribute('data-answer');
-          if (answer === correct) {
-            setFeedback(feedback, '¡Correcto!', true);
-            score += 1;
-            if (correct === 'insertMenu') {
-              insertPageNumberInto(headerArea);
-            }
-            if (correct === 'footer') {
-              insertPageNumberInto(footerArea);
-            }
-            if (correct === 'diffFirstExp') {
-              diffFirst.checked = true;
-              diffFirst.dispatchEvent(new Event('change'));
-            }
-          } else {
-            setFeedback(feedback, 'Incorrecto. Revisa el paso en Word.', false);
-          }
-          finalResult.textContent = 'Puntuación: ' + score + ' / ' + total;
-          var answered = document.querySelectorAll('.quiz .q[data-answered="true"]').length;
-          if (answered === total) {
-            try { localStorage.setItem('score-tool-30-numero-de-pagina', '1'); } catch (e) {}
-          }
+          applyPageTemplate(this.dataset.template);
+          pageStyleMenu.classList.add('hidden');
         });
       });
     })();

@@ -182,20 +182,15 @@
       border: 1px solid #cfd8e5;
       border-radius: 12px;
       padding: 16px;
-      min-height: 160px;
-      display: grid;
-      gap: 12px;
+      min-height: 180px;
+      line-height: 1.7;
+      font-size: 0.95rem;
+      color: #1a1a1a;
+      white-space: pre-wrap;
+      user-select: text;
     }
-    .highlight-segment {
-      display: inline-block;
-      padding: 2px 4px;
-      border-radius: 4px;
-      margin: 2px 1px;
-      cursor: pointer;
-    }
-    .highlight-segment.selected {
-      outline: 2px solid #2b579a;
-      background: rgba(43,87,154,.15);
+    .highlight-editor span {
+      border-radius: 3px;
     }
     .highlight-yellow { background: #fff39d; }
     .highlight-green { background: #c7f0b3; }
@@ -331,23 +326,22 @@
     <!-- ACTIVIDAD: JUEGO RESALTAR -->
     <div class="extra-zone">
       <h2>✏️ Actividad</h2>
-      <p class="hint"><strong>Instrucción:</strong> Selecciona el texto correcto y aplica el color de resaltado indicado. Son 3 tareas.</p>
+      <p class="hint"><strong>Instrucción:</strong> Selecciona el texto que quieras resaltar y elige el color que prefieras. Puedes destacar el párrafo libremente.</p>
 
       <div class="highlight-card">
-        <p class="highlight-task" id="highlight-task">Tarea 1 de 3: selecciona el término importante y resáltalo en amarillo.</p>
+        <p class="highlight-task" id="highlight-task">Tarea única: selecciona el texto del párrafo y aplica el resaltado que quieras.</p>
         <div class="highlight-toolbar">
           <button id="color-yellow" class="highlight-button">Amarillo</button>
           <button id="color-green" class="highlight-button">Verde</button>
           <button id="color-pink" class="highlight-button">Rosa</button>
           <button id="color-none" class="highlight-button">Sin color</button>
         </div>
-        <div class="highlight-editor" id="highlight-editor" aria-label="Editor simulado de resaltado"></div>
+        <div class="highlight-editor" id="highlight-editor" contenteditable="true" aria-label="Editor simulado de resaltado"></div>
         <div class="highlight-actions">
-          <button id="apply-highlight" class="highlight-btn">Aplicar resaltado</button>
           <button id="check-highlight" class="highlight-btn">Comprobar</button>
           <button id="reset-highlight" class="highlight-btn gray">Reiniciar</button>
         </div>
-        <div class="highlight-feedback" id="highlight-feedback">Selecciona una parte del texto para comenzar.</div>
+        <div class="highlight-feedback" id="highlight-feedback">Selecciona cualquier parte del párrafo y elige un color para aplicar el resaltado al instante.</div>
         <div class="game-score" id="highlight-score">Puntaje del juego: 0 puntos</div>
       </div>
     </div>
@@ -368,39 +362,12 @@
 
   <script>
     (function () {
-      var tasks = [
-        {
-          instruction: 'Selecciona el término importante y resáltalo en amarillo.',
-          expectedColor: 'yellow',
-          segments: [
-            { id: 's1', text: 'El informe debe incluir ', color: 'none', correct: false },
-            { id: 's2', text: 'fecha de entrega', color: 'none', correct: true },
-            { id: 's3', text: ' y comentarios finales.', color: 'none', correct: false }
-          ]
-        },
-        {
-          instruction: 'Selecciona la frase clave y resáltala en verde.',
-          expectedColor: 'green',
-          segments: [
-            { id: 's1', text: 'Recuerda revisar la ', color: 'none', correct: false },
-            { id: 's2', text: 'lista de verificación', color: 'none', correct: true },
-            { id: 's3', text: ' antes de entregar.', color: 'none', correct: false }
-          ]
-        },
-        {
-          instruction: 'Selecciona el texto resaltado y quítale el color.',
-          expectedColor: 'none',
-          segments: [
-            { id: 's1', text: 'Este párrafo viene ', color: 'yellow', correct: false },
-            { id: 's2', text: 'resaltado para revisión', color: 'yellow', correct: true },
-            { id: 's3', text: ' y debe volver a normal.', color: 'yellow', correct: false }
-          ]
-        }
-      ];
+      var task = {
+        instruction: 'Selecciona todo el texto y elige un color para resaltarlo.',
+        text: 'Aprendamos la herramienta Resaltado de Microsoft Word. La encontramos en la pestaña de Inicio, en el grupo Fuente, representada por un ícono de marcador fluorescente.'
+      };
 
       var state = {
-        currentTask: 0,
-        selectedSegment: null,
         selectedColor: null,
         score: 0,
         gameScore: 0
@@ -416,13 +383,8 @@
         pink: document.getElementById('color-pink'),
         none: document.getElementById('color-none')
       };
-      var applyButton = document.getElementById('apply-highlight');
       var checkButton = document.getElementById('check-highlight');
       var resetButton = document.getElementById('reset-highlight');
-
-      function currentTask() {
-        return tasks[state.currentTask];
-      }
 
       function setFeedback(message, color) {
         feedback.textContent = message;
@@ -454,21 +416,8 @@
       }
 
       function renderEditor() {
-        var task = currentTask();
-        taskLabel.textContent = 'Tarea ' + (state.currentTask + 1) + ' de ' + tasks.length + ': ' + task.instruction;
-        editor.innerHTML = task.segments.map(function (segment) {
-          var selected = state.selectedSegment === segment.id ? ' selected' : '';
-          var className = 'highlight-segment ' + (segment.color === 'none' ? 'highlight-none' : 'highlight-' + segment.color);
-          return '<span class="' + className + selected + '" data-id="' + segment.id + '">' + segment.text + '</span>';
-        }).join('');
-
-        editor.querySelectorAll('.highlight-segment').forEach(function (element) {
-          element.addEventListener('click', function () {
-            state.selectedSegment = element.getAttribute('data-id');
-            renderEditor();
-            setFeedback('Segmento seleccionado. Elige un color y pulsa aplicar.', '#0b662f');
-          });
-        });
+        taskLabel.textContent = task.instruction;
+        editor.innerHTML = task.text;
       }
 
       function updateColorButtons() {
@@ -477,87 +426,60 @@
         });
       }
 
+      function applyHighlight(color) {
+        if (!color) { return; }
+        var selection = window.getSelection();
+        if (!selection || selection.rangeCount === 0 || selection.isCollapsed) {
+          setFeedback('Selecciona primero el texto con el cursor.', 'red');
+          return;
+        }
+        var range = selection.getRangeAt(0);
+        if (!editor.contains(range.commonAncestorContainer)) {
+          setFeedback('Selecciona dentro del párrafo.', 'red');
+          return;
+        }
+        if (color === 'none') {
+          document.execCommand('removeFormat', false, null);
+          setFeedback('Se eliminó el resaltado del texto seleccionado.', '#0b662f');
+          return;
+        }
+        document.execCommand('styleWithCSS', false, true);
+        document.execCommand('hiliteColor', false, color === 'yellow' ? '#fff39d' : color === 'green' ? '#c7f0b3' : '#ffcee3');
+        setFeedback('Resaltado aplicado al texto seleccionado.', '#0b662f');
+      }
+
       Object.keys(colorButtons).forEach(function (color) {
         colorButtons[color].addEventListener('click', function () {
           state.selectedColor = color;
           updateColorButtons();
-          setFeedback('Has elegido ' + (color === 'none' ? 'sin color' : color) + '. Aplica al segmento seleccionado.', '#0b662f');
+          applyHighlight(color);
         });
-      });
-
-      applyButton.addEventListener('click', function () {
-        if (!state.selectedSegment) {
-          setFeedback('Selecciona primero un segmento de texto.', 'red');
-          return;
-        }
-        if (!state.selectedColor) {
-          setFeedback('Selecciona primero un color de resaltado.', 'red');
-          return;
-        }
-        var task = currentTask();
-        task.segments = task.segments.map(function (segment) {
-          if (segment.id === state.selectedSegment) {
-            segment.color = state.selectedColor;
-          }
-          return segment;
-        });
-        renderEditor();
-        setFeedback('Color aplicado. Pulsa comprobar cuando quieras.', '#0b662f');
       });
 
       checkButton.addEventListener('click', function () {
-        var task = currentTask();
-        var correctSegment = task.segments.find(function (segment) { return segment.correct; });
-        if (!correctSegment) { return; }
-        if (correctSegment.color === task.expectedColor) {
-          state.score += 1;
-          if (state.gameScore !== -1) {
-            state.gameScore = 1;
-            saveGameScore();
-            updateGameScore();
-          }
-          if (state.currentTask + 1 < tasks.length) {
-            setFeedback('¡Muy bien! Pasando a la siguiente tarea.', '#0f7b3f');
-            state.currentTask += 1;
-            state.selectedSegment = null;
-            state.selectedColor = null;
-            updateColorButtons();
-            renderEditor();
-          } else {
-            setFeedback('¡Perfecto! Has completado todas las tareas.', '#0f7b3f');
-            taskLabel.textContent = 'Actividad terminada. Puntaje: ' + state.score + ' / ' + tasks.length + '.';
-          }
-        } else {
-          state.gameScore = -1;
-          saveGameScore();
-          updateGameScore();
-          setFeedback('No es correcto aún. Revisa el color o selecciona otra parte del texto.', 'red');
+        if (editor.innerHTML.trim() === task.text) {
+          setFeedback('Todavía no hay resaltado. Selecciona texto y elige un color.', 'red');
+          return;
         }
+        setFeedback('¡Muy bien! Has aplicado resaltado en el párrafo.', '#0f7b3f');
       });
 
       resetButton.addEventListener('click', function () {
-        state.currentTask = 0;
-        state.selectedSegment = null;
         state.selectedColor = null;
         state.score = 0;
         state.gameScore = 0;
-        tasks.forEach(function (task) {
-          task.segments.forEach(function (segment) {
-            segment.color = 'none';
-          });
-        });
         updateColorButtons();
         renderEditor();
         updateGameScore();
         saveGameScore();
-        setFeedback('Juego reiniciado. Selecciona un segmento para comenzar.', '#555');
+        setFeedback('Juego reiniciado. Selecciona texto y aplica un resaltado.', '#555');
       });
 
       loadGameScore();
       updateColorButtons();
       renderEditor();
       updateGameScore();
-      setFeedback('Selecciona un segmento para comenzar.', '#555');
+      setFeedback('Selecciona texto con el cursor y elige un color.', '#555');
     })();
   </script>
 

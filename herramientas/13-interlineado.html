@@ -332,10 +332,10 @@
     <!-- ACTIVIDAD: JUEGO INTERLINEADO -->
     <div class="extra-zone">
       <h2>✏️ Actividad</h2>
-      <p class="hint"><strong>Instrucción:</strong> Selecciona el párrafo correcto y aplícale el interlineado indicado. Son 3 tareas en total.</p>
+      <p class="hint"><strong>Instrucción:</strong> Selecciona cada renglón y aplícale un interlineado diferente. Los 3 renglones deben quedar con un interlineado distinto cada uno.</p>
 
       <div class="spacing-card">
-        <div class="task-summary" id="spacing-task">Tarea 1 de 3: selecciona el párrafo que debe tener interlineado 1,5.</div>
+        <div class="task-summary" id="spacing-task">Selecciona un renglón y luego elige su interlineado. Los 3 deben quedar diferentes entre sí.</div>
         <div class="line-spacing-toolbar">
           <button id="spacing-1" class="line-spacing-button">1,0</button>
           <button id="spacing-15" class="line-spacing-button">1,5</button>
@@ -343,11 +343,10 @@
         </div>
         <div class="line-spacing-editor" id="spacing-editor" aria-label="Editor simulado de interlineado"></div>
         <div class="spacing-actions">
-          <button id="apply-spacing" class="editor-btn">Aplicar interlineado</button>
           <button id="check-spacing" class="editor-btn">Comprobar</button>
           <button id="reset-spacing" class="editor-btn gray">Reiniciar</button>
         </div>
-        <div class="line-spacing-feedback" id="spacing-feedback">Selecciona un párrafo para comenzar.</div>
+        <div class="line-spacing-feedback" id="spacing-feedback">Selecciona un renglón para comenzar.</div>
         <div class="game-score" id="spacing-score">Puntaje del juego: 0 puntos</div>
       </div>
     </div>
@@ -368,42 +367,31 @@
 
   <script>
     (function () {
-      var tasks = [
+      // Un solo renglón por línea, sin un interlineado "correcto" fijo:
+      // la meta es que los 3 queden con un interlineado distinto entre sí.
+      // Los párrafos son más largos para que se note bien la diferencia entre líneas.
+      var paragraphs = [
         {
-          instruction: 'Selecciona el párrafo que debe usar interlineado 1,5.',
-          expected: 1.5,
-          paragraphs: [
-            { id: 'p1', text: 'El título debe estar apretado, sin espacio extra entre líneas.', spacing: 1, correct: false },
-            { id: 'p2', text: 'El cuerpo del texto se ve mejor con interlineado 1,5 para facilitar la lectura.', spacing: 1, correct: true },
-            { id: 'p3', text: 'Los comentarios cortos pueden usar interlineado sencillo.', spacing: 1, correct: false }
-          ]
+          id: 'p1',
+          text: 'El informe final debe incluir un resumen ejecutivo que explique de manera clara y organizada los resultados obtenidos durante todo el periodo evaluado, de modo que cualquier lector entienda rápidamente los puntos más importantes.',
+          spacing: null
         },
         {
-          instruction: 'Selecciona el párrafo que debe usar interlineado 2,0.',
-          expected: 2.0,
-          paragraphs: [
-            { id: 'p1', text: 'Una lista de instrucciones breves sigue un interlineado sencillo.', spacing: 1, correct: false },
-            { id: 'p2', text: 'El bloque de texto de ejemplo debe aparecer amplio y fácil de leer.', spacing: 1, correct: true },
-            { id: 'p3', text: 'Las notas al pie suelen estar compactas, con poco espacio.', spacing: 1, correct: false }
-          ]
+          id: 'p2',
+          text: 'El cuerpo del documento reúne varias secciones extensas con explicaciones detalladas, ejemplos prácticos y observaciones adicionales que ayudan a comprender mejor cada uno de los temas tratados a lo largo del texto.',
+          spacing: null
         },
         {
-          instruction: 'Selecciona el párrafo que debe usar interlineado 1,0.',
-          expected: 1.0,
-          paragraphs: [
-            { id: 'p1', text: 'El pie de foto debe estar compacto y cerca de la imagen.', spacing: 1, correct: false },
-            { id: 'p2', text: 'Los títulos breves y subtítulos suelen usar interlineado sencillo.', spacing: 1, correct: true },
-            { id: 'p3', text: 'Una referencia extensa normalmente se abre con mayor espacio.', spacing: 1, correct: false }
-          ]
+          id: 'p3',
+          text: 'Las conclusiones finales retoman los hallazgos más relevantes del trabajo realizado y proponen algunas recomendaciones concretas para tener en cuenta durante la siguiente etapa del proyecto.',
+          spacing: null
         }
       ];
 
       var state = {
-        currentTask: 0,
         selectedParagraph: null,
-        selectedSpacing: null,
-        score: 0,
-        gameScore: 0
+        gameScore: 0,
+        activityCompleted: false
       };
 
       var editor = document.getElementById('spacing-editor');
@@ -415,12 +403,11 @@
         1.5: document.getElementById('spacing-15'),
         2: document.getElementById('spacing-2')
       };
-      var applyButton = document.getElementById('apply-spacing');
       var checkButton = document.getElementById('check-spacing');
       var resetButton = document.getElementById('reset-spacing');
 
-      function currentTask() {
-        return tasks[state.currentTask];
+      function findParagraph(id) {
+        return paragraphs.find(function (paragraph) { return paragraph.id === id; });
       }
 
       function setFeedback(message, color) {
@@ -453,109 +440,86 @@
       }
 
       function renderEditor() {
-        var task = currentTask();
-        taskLabel.textContent = 'Tarea ' + (state.currentTask + 1) + ' de ' + tasks.length + ': ' + task.instruction;
-        editor.innerHTML = task.paragraphs.map(function (paragraph) {
+        editor.innerHTML = paragraphs.map(function (paragraph) {
           var selected = state.selectedParagraph === paragraph.id ? ' selected' : '';
-          return '<div class="line-spacing-paragraph' + selected + '" data-id="' + paragraph.id + '" style="line-height:' + paragraph.spacing + ';">' + paragraph.text + '</div>';
+          var lineHeight = paragraph.spacing !== null ? paragraph.spacing : 1;
+          var spacingInfo = paragraph.spacing === null ? ' [Sin interlineado elegido]' : ' [Interlineado: ' + paragraph.spacing + ']';
+          return '<div class="line-spacing-paragraph' + selected + '" data-id="' + paragraph.id + '" style="line-height:' + lineHeight + ';">' +
+                 paragraph.text +
+                 '<span style="color: #999; font-size: 12px; display: block; margin-top: 4px; line-height: normal;">' + spacingInfo + '</span>' +
+                 '</div>';
         }).join('');
 
         editor.querySelectorAll('.line-spacing-paragraph').forEach(function (element) {
           element.addEventListener('click', function () {
             state.selectedParagraph = element.getAttribute('data-id');
             renderEditor();
-            setFeedback('Párrafo seleccionado. Elige un interlineado y pulsa aplicar.', '#0b662f');
+            setFeedback('✓ Renglón seleccionado. Elige un interlineado para aplicarlo al instante.', '#0b662f');
           });
-        });
-      }
-
-      function updateButtonState() {
-        Object.keys(spacingButtons).forEach(function (key) {
-          spacingButtons[key].classList.toggle('active', Number(key) === state.selectedSpacing);
         });
       }
 
       Object.keys(spacingButtons).forEach(function (key) {
         spacingButtons[key].addEventListener('click', function () {
-          state.selectedSpacing = Number(key);
-          updateButtonState();
-          setFeedback('Seleccionaste interlineado ' + key + '. Aplica al párrafo seleccionado.', '#0b662f');
-        });
-      });
-
-      applyButton.addEventListener('click', function () {
-        if (!state.selectedParagraph) {
-          setFeedback('Selecciona primero un párrafo.', 'red');
-          return;
-        }
-        if (!state.selectedSpacing) {
-          setFeedback('Selecciona primero un valor de interlineado.', 'red');
-          return;
-        }
-        var task = currentTask();
-        task.paragraphs = task.paragraphs.map(function (paragraph) {
-          if (paragraph.id === state.selectedParagraph) {
-            paragraph.spacing = state.selectedSpacing;
+          if (!state.selectedParagraph) {
+            setFeedback('⚠ Primero selecciona el renglón al que quieres aplicar el interlineado.', '#d9534f');
+            return;
           }
-          return paragraph;
+          var paragraph = findParagraph(state.selectedParagraph);
+          paragraph.spacing = Number(key);
+          renderEditor();
+          setFeedback('✓ Interlineado ' + key + ' aplicado.', '#0b662f');
         });
-        renderEditor();
-        setFeedback('Interlineado aplicado. Pulsa comprobar cuando quieras.', '#0b662f');
       });
 
       checkButton.addEventListener('click', function () {
-        var task = currentTask();
-        var correctParagraph = task.paragraphs.find(function (paragraph) { return paragraph.correct; });
-        if (!correctParagraph) { return; }
-        if (correctParagraph.spacing === task.expected) {
-          state.score += 1;
-          if (state.gameScore !== -1) {
-            state.gameScore = 1;
-            saveGameScore();
-            updateGameScore();
-          }
-          if (state.currentTask + 1 < tasks.length) {
-            setFeedback('¡Perfecto! Avanzando a la siguiente tarea.', '#0f7b3f');
-            state.currentTask += 1;
-            state.selectedParagraph = null;
-            state.selectedSpacing = null;
-            updateButtonState();
-            renderEditor();
-          } else {
-            setFeedback('¡Excelente! Has completado todas las tareas.', '#0f7b3f');
-            taskLabel.textContent = 'Actividad terminada. Puntaje: ' + state.score + ' / ' + tasks.length + '.';
-          }
+        if (state.activityCompleted) { return; }
+
+        var allAssigned = paragraphs.every(function (paragraph) {
+          return paragraph.spacing !== null;
+        });
+
+        var spacings = paragraphs.map(function (paragraph) { return paragraph.spacing; });
+        var uniqueSpacings = spacings.filter(function (spacing, index) {
+          return spacings.indexOf(spacing) === index;
+        });
+        var allDifferent = uniqueSpacings.length === spacings.length;
+
+        if (allAssigned && allDifferent) {
+          state.activityCompleted = true;
+          state.gameScore = 1;
+          saveGameScore();
+          updateGameScore();
+          setFeedback('🏆 ¡Muy bien! Los 3 renglones tienen interlineados diferentes.', '#0f7b3f');
+          taskLabel.textContent = '✓ Actividad completada exitosamente.';
+        } else if (!allAssigned) {
+          setFeedback('⚠ Todavía falta aplicar un interlineado a alguno de los renglones.', '#d9534f');
         } else {
           state.gameScore = -1;
           saveGameScore();
           updateGameScore();
-          setFeedback('Aún no es el interlineado correcto. Ajusta el párrafo seleccionado.', 'red');
+          setFeedback('✗ Dos renglones quedaron con el mismo interlineado. Cambia alguno.', '#d9534f');
         }
       });
 
       resetButton.addEventListener('click', function () {
-        state.currentTask = 0;
         state.selectedParagraph = null;
-        state.selectedSpacing = null;
-        state.score = 0;
         state.gameScore = 0;
-        tasks.forEach(function (task) {
-          task.paragraphs.forEach(function (paragraph) {
-            paragraph.spacing = 1;
-          });
+        state.activityCompleted = false;
+        paragraphs.forEach(function (paragraph) {
+          paragraph.spacing = null;
         });
-        updateButtonState();
+        taskLabel.textContent = 'Selecciona un renglón y luego elige su interlineado. Los 3 deben quedar diferentes entre sí.';
         renderEditor();
         updateGameScore();
         saveGameScore();
-        setFeedback('Juego reiniciado. Selecciona un párrafo para comenzar.', '#555');
+        setFeedback('🔄 Actividad reiniciada. Selecciona un renglón para comenzar.', '#555');
       });
 
       loadGameScore();
-      updateButtonState();
       renderEditor();
       updateGameScore();
-      setFeedback('Selecciona un párrafo para comenzar.', '#555');
+      setFeedback('Selecciona un renglón para comenzar.', '#555');
     })();
   </script>
 

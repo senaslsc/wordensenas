@@ -424,14 +424,13 @@
     <!-- ACTIVIDAD: JUEGO VIÑETAS -->
     <div class="extra-zone">
       <h2>✏️ Actividad</h2>
-      <p class="hint"><strong>Instrucción:</strong> Selecciona un estilo de viñeta y aplícalo en la página correcta. Son 3 tareas en total.</p>
+      <p class="hint"><strong>Instrucción:</strong> Selecciona un cuadro y luego un estilo de viñeta para aplicarlo al instante. La actividad se completa cuando los 3 cuadros tengan un tipo de viñeta diferente entre sí.</p>
 
       <div class="bullet-activity">
         <div class="bullet-toolbar">
           <div><span class="tool-label">Estilo de viñeta</span></div>
           <div class="bullet-style-list" id="bullet-style-list"></div>
           <div class="bullet-actions">
-            <button id="apply-bullets" class="editor-btn">Aplicar viñetas</button>
             <button id="check-bullets" class="editor-btn">Comprobar</button>
             <button id="reset-bullets" class="editor-btn gray">Reiniciar</button>
           </div>
@@ -471,17 +470,15 @@
       ];
 
       var pages = [
-        { id: 'page1', title: 'Resumen', note: 'Aplica viñetas al resumen del proyecto.', expected: 'dot' },
-        { id: 'page2', title: 'Lista de materiales', note: 'Aplica viñetas tipo cuadro.', expected: 'square' },
-        { id: 'page3', title: 'Tareas', note: 'Aplica viñetas tipo guion.', expected: 'dash' }
+        { id: 'page1', title: 'Resumen', note: 'Aplica una viñeta a este cuadro.' },
+        { id: 'page2', title: 'Lista de materiales', note: 'Aplica una viñeta a este cuadro.' },
+        { id: 'page3', title: 'Tareas', note: 'Aplica una viñeta a este cuadro.' }
       ];
 
       var state = {
         selectedStyle: 'dot',
         selectedPage: 'page1',
         applied: { page1: null, page2: null, page3: null },
-        currentTask: 0,
-        score: 0,
         gameScore: 0
       };
 
@@ -491,7 +488,6 @@
       var selectedPageLabel = document.getElementById('selected-bullet-page');
       var feedback = document.getElementById('bullet-feedback');
       var scoreLabel = document.getElementById('bullet-score');
-      var applyButton = document.getElementById('apply-bullets');
       var checkButton = document.getElementById('check-bullets');
       var resetButton = document.getElementById('reset-bullets');
 
@@ -518,9 +514,11 @@
         styleList.querySelectorAll('.bullet-style-button').forEach(function (button) {
           button.addEventListener('click', function () {
             state.selectedStyle = this.getAttribute('data-style');
+            state.applied[state.selectedPage] = { style: state.selectedStyle };
             renderStyles();
+            renderPages();
             updateLabels();
-            setFeedback('Estilo de viñeta seleccionado: ' + currentStyle().label + '.', '#0b662f');
+            setFeedback('Viñeta "' + currentStyle().label + '" aplicada en ' + currentPage().title + '.', '#0b662f');
           });
         });
       }
@@ -573,37 +571,25 @@
         selectedPageLabel.textContent = currentPage().title;
       }
 
-      applyButton.addEventListener('click', function () {
-        state.applied[state.selectedPage] = { style: state.selectedStyle };
-        renderPages();
-        setFeedback('Viñetas aplicadas en ' + currentPage().title + '.', '#0b662f');
-      });
-
       checkButton.addEventListener('click', function () {
-        var page = currentPage();
-        var applied = state.applied[page.id];
-        if (applied && applied.style === page.expected) {
-          state.score += 1;
-          state.gameScore = state.gameScore !== -1 ? 1 : -1;
+        var appliedStyles = pages.map(function (page) {
+          return state.applied[page.id] ? state.applied[page.id].style : null;
+        });
+        var allApplied = appliedStyles.every(function (style) { return style !== null; });
+        var allDifferent = new Set(appliedStyles).size === appliedStyles.length;
+
+        if (allApplied && allDifferent) {
+          state.gameScore = 1;
           saveScore();
           updateScore();
-          if (state.currentTask + 1 < pages.length) {
-            state.currentTask += 1;
-            state.selectedPage = pages[state.currentTask].id;
-            state.selectedStyle = pages[state.currentTask].expected;
-            renderStyles();
-            renderPages();
-            updateLabels();
-            setFeedback('¡Correcto! Ahora aplica viñetas en: ' + currentPage().title + '.', '#0f7b3f');
-          } else {
-            setFeedback('¡Perfecto! Completaste todas las viñetas.', '#0f7b3f');
-            scoreLabel.textContent = 'Final: ' + state.score + ' / ' + pages.length;
-          }
+          setFeedback('¡Perfecto! Los 3 cuadros tienen viñetas diferentes.', '#0f7b3f');
+        } else if (!allApplied) {
+          setFeedback('Aún faltan cuadros por marcar con una viñeta.', '#c0392b');
         } else {
           state.gameScore = -1;
           saveScore();
           updateScore();
-          setFeedback('No es correcto. Revisa el estilo y la página seleccionada.', '#c0392b');
+          setFeedback('No es correcto. Los 3 cuadros deben tener viñetas distintas entre sí.', '#c0392b');
         }
       });
 
@@ -611,15 +597,13 @@
         state.selectedStyle = 'dot';
         state.selectedPage = 'page1';
         state.applied = { page1: null, page2: null, page3: null };
-        state.currentTask = 0;
-        state.score = 0;
         state.gameScore = 0;
         saveScore();
         renderStyles();
         renderPages();
         updateLabels();
         updateScore();
-        setFeedback('Actividad reiniciada. Selecciona estilo y página.', '#555');
+        setFeedback('Actividad reiniciada. Selecciona un cuadro y una viñeta.', '#555');
       });
 
       loadScore();
@@ -627,7 +611,7 @@
       renderPages();
       updateLabels();
       updateScore();
-      setFeedback('Selecciona un estilo de viñeta y la página adecuada.', '#555');
+      setFeedback('Selecciona un cuadro y aplica una viñeta distinta en cada uno.', '#555');
     })();
   </script>
 

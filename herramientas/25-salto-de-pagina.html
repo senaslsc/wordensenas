@@ -134,35 +134,79 @@
     .extra-zone h2 { margin: 0 0 8px; font-size: 1rem; color: var(--word-blue); }
     .extra-zone p.hint { margin: 0 0 6px; font-size: 0.85rem; color: var(--muted); }
 
-    .exercise-shell { display: grid; grid-template-columns: 1fr 340px; gap: 18px; margin-top: 10px; }
-    @media (max-width: 760px) { .exercise-shell { grid-template-columns: 1fr; } }
-    .exercise-panel { background: #f8fbff; border: 1px solid rgba(0,0,0,.06); border-radius: 12px; padding: 16px; }
-    .field-label { font-weight: 700; display: block; margin-bottom: 6px; color: var(--word-blue); }
-    .page-select {
-      width: 100%; padding: 10px; border-radius: 8px;
-      border: 1px solid var(--border);
-      font-family: inherit; font-size: 0.95rem;
-    }
-    .actions-row { display: flex; gap: 10px; margin: 12px 0 10px; }
-    .actions-row button {
-      flex: 1; padding: 10px 12px; border-radius: 8px;
+    .exercise-panel { background: #f8fbff; border: 1px solid rgba(0,0,0,.06); border-radius: 12px; padding: 16px; margin-top: 10px; }
+
+    .pagebreak-toolbar { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
+    .pagebreak-toolbar button {
+      flex: 1 1 170px; padding: 10px 12px; border-radius: 8px;
       border: none; color: #fff; font-weight: 700;
       cursor: pointer; font-family: inherit; font-size: 0.9rem;
     }
     #applySimple { background: var(--word-blue); }
     #resetSimple { background: #605e5c; }
+
     .feedback {
       padding: 10px 12px; border-radius: 8px;
       border: 1px solid transparent; min-height: 44px;
       display: flex; align-items: center; font-size: 0.92rem;
+      margin-bottom: 8px;
     }
     .feedback.success { background: #f0fbf3; border-color: #81c784; color: #16542a; }
     .feedback.warn { background: #fff8e6; border-color: #f8c471; color: #7f5a1a; }
+    .score-line { margin: 0 0 14px; font-size: 0.9rem; color: var(--muted); }
 
-    .preview-stack { display: flex; flex-direction: column; gap: 14px; align-items: center; }
-    .page-mini { width: 100%; max-width: 260px; background: #fff; border: 1px solid rgba(0,0,0,.08); border-radius: 10px; padding: 12px; box-shadow: 0 10px 20px rgba(0,0,0,.06); }
-    .page-mini .page-label { font-weight: 700; color: var(--word-blue); margin-bottom: 8px; }
-    .page-mini p { margin: 0 0 8px; color: #333; font-size: 0.88rem; }
+    .document-stack { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+
+    .page-mini {
+      width: 100%;
+      max-width: 320px;
+      aspect-ratio: 1 / 1.294;
+      background: #fff;
+      border: 2px solid rgba(0,0,0,.1);
+      border-radius: 10px;
+      box-shadow: 0 12px 24px rgba(0,0,0,.07);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .page-mini.active {
+      border-color: var(--word-blue);
+      box-shadow: 0 12px 24px rgba(43,87,154,.18);
+    }
+    .page-mini .page-label {
+      font-weight: 700;
+      color: var(--word-blue);
+      margin-bottom: 8px;
+      font-size: 0.82rem;
+    }
+    .page-mini textarea {
+      flex: 1;
+      width: 100%;
+      border: none;
+      resize: none;
+      font-family: inherit;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: #333;
+      outline: none;
+      background: transparent;
+    }
+
+    .page-break-marker {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      width: 100%;
+      max-width: 320px;
+    }
+    .page-break-marker::before,
+    .page-break-marker::after { content: ''; flex: 1; border-top: 1px dashed #b8c4d1; }
 
     /* ── NAV ENTRE HERRAMIENTAS ── */
     .detail-nav-bar {
@@ -251,33 +295,25 @@
     <div class="block">
       <h2>🎥 Video explicativo</h2>
       <div class="video-wrapper">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/oYvHQRIKfbI?si=f1zJZ7lfMtGGL0wd&amp;start=29" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>      </div>
+        <iframe src="https://www.youtube.com/embed/9nEndiBCvQk?start=30" title="Video explicativo: Salto de página en Word" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
     </div>
 
     <!-- ACTIVIDAD: SALTO DE PÁGINA -->
     <div class="extra-zone">
       <h2>✏️ Actividad</h2>
-      <p class="hint">Selecciona la página después de la cual deseas agregar una nueva hoja y pulsa <strong>Aplicar salto de página</strong>.</p>
+      <p class="hint">Escribe dentro de la hoja, coloca el cursor donde quieras dividir el texto y pulsa <strong>Aplicar salto de página</strong>. Se creará una nueva hoja del mismo tamaño a partir de ahí.</p>
 
-      <div class="exercise-shell">
-        <div class="exercise-panel">
-          <div>
-            <label for="pageSelect" class="field-label">Seleccionar página</label>
-            <select id="pageSelect" class="page-select"></select>
-          </div>
-
-          <div class="actions-row">
-            <button id="applySimple" type="button" aria-label="Aplicar salto de página">Aplicar salto de página</button>
-            <button id="resetSimple" type="button" aria-label="Reiniciar">Reiniciar</button>
-          </div>
-
-          <div class="feedback" id="feedback">Elige una página y pulsa Aplicar.</div>
+      <div class="exercise-panel">
+        <div class="pagebreak-toolbar">
+          <button id="applySimple" type="button">📄 Aplicar salto de página</button>
+          <button id="resetSimple" type="button">Reiniciar</button>
         </div>
 
-        <aside class="exercise-panel">
-          <h3 style="margin:0 0 10px;color:var(--word-blue)">Vista previa del documento</h3>
-          <div class="preview-stack" id="previewStack"></div>
-        </aside>
+        <div class="feedback" id="feedback">Escribe en la hoja y coloca el cursor donde quieras dividir el texto.</div>
+        <div class="score-line" id="scoreLine">Puntaje: 0</div>
+
+        <div class="document-stack" id="previewStack"></div>
       </div>
     </div>
 
@@ -297,20 +333,20 @@
 
   <script>
     (function () {
-      var initialParagraphs = [
-        'Introducción. Este documento muestra cómo usar saltos de página en Word.',
-        'Capítulo 1. Contenidos del primer capítulo que siguen en esta página.',
-        'Capítulo 2. Aquí empieza el segundo capítulo y queremos que comience en una página nueva.',
-        'Apéndice. Información adicional y recursos al final del documento.'
-      ];
+      var initialText = 'Introducción. Este documento muestra cómo usar saltos de página en Word.\n\nCapítulo 1. Contenidos del primer capítulo que siguen en esta página.\n\nCapítulo 2. Aquí empieza el segundo capítulo y queremos que comience en una página nueva.\n\nApéndice. Información adicional y recursos al final del documento.';
 
-      var pages = [ initialParagraphs.slice() ];
+      var state = {
+        pages: [ initialText ],
+        activePage: 0,
+        gameScore: 0
+      };
 
-      var pageSelect = document.getElementById('pageSelect');
+      var previewStack = document.getElementById('previewStack');
       var applySimple = document.getElementById('applySimple');
       var resetSimple = document.getElementById('resetSimple');
-      var previewStack = document.getElementById('previewStack');
       var feedback = document.getElementById('feedback');
+      var scoreLine = document.getElementById('scoreLine');
+      var textareas = [];
 
       function setFeedback(msg, type) {
         feedback.textContent = msg;
@@ -318,68 +354,105 @@
         if (type) feedback.classList.add(type);
       }
 
-      function renderPageSelect() {
-        pageSelect.innerHTML = '';
-        for (var i = 0; i < pages.length; i++) {
-          var opt = document.createElement('option');
-          opt.value = i;
-          opt.textContent = 'Después de Página ' + (i + 1);
-          pageSelect.appendChild(opt);
-        }
+      function saveScore() { try { localStorage.setItem('score-tool-25-salto-de-pagina', state.gameScore); } catch (e) {} }
+      function loadScore() {
+        var value = null;
+        try { value = localStorage.getItem('score-tool-25-salto-de-pagina'); } catch (e) {}
+        state.gameScore = value !== null ? Number(value) : 0;
+      }
+      function updateScore() {
+        if (state.gameScore === 1) { scoreLine.textContent = 'Puntaje: +1'; scoreLine.style.color = '#0f7b3f'; }
+        else { scoreLine.textContent = 'Puntaje: 0'; scoreLine.style.color = '#0b2d5c'; }
       }
 
-      function renderPreview() {
+      function markActive(activeEl) {
+        var all = previewStack.querySelectorAll('.page-mini');
+        for (var i = 0; i < all.length; i++) { all[i].classList.remove('active'); }
+        activeEl.classList.add('active');
+      }
+
+      function renderPreview(focusIndex, cursorPos) {
         previewStack.innerHTML = '';
-        pages.forEach(function (page, idx) {
+        textareas = [];
+
+        state.pages.forEach(function (text, idx) {
+          if (idx > 0) {
+            var marker = document.createElement('div');
+            marker.className = 'page-break-marker';
+            marker.textContent = 'Salto de página';
+            previewStack.appendChild(marker);
+          }
+
           var pm = document.createElement('div');
-          pm.className = 'page-mini';
+          pm.className = 'page-mini' + (state.activePage === idx ? ' active' : '');
+
           var label = document.createElement('div');
           label.className = 'page-label';
           label.textContent = 'Página ' + (idx + 1);
           pm.appendChild(label);
 
-          if (!page || page.length === 0) {
-            var blank = document.createElement('p');
-            blank.textContent = 'Página en blanco';
-            blank.style.fontStyle = 'italic';
-            blank.style.color = '#666';
-            pm.appendChild(blank);
-          } else {
-            page.forEach(function (p) {
-              var para = document.createElement('p');
-              para.textContent = p;
-              pm.appendChild(para);
-            });
-          }
+          var textarea = document.createElement('textarea');
+          textarea.value = text;
+          textarea.addEventListener('input', function () {
+            state.pages[idx] = this.value;
+          });
+          textarea.addEventListener('focus', function () {
+            state.activePage = idx;
+            markActive(pm);
+          });
+          pm.appendChild(textarea);
 
           previewStack.appendChild(pm);
+          textareas.push(textarea);
         });
-      }
 
-      function applyPageBreak() {
-        var idx = parseInt(pageSelect.value, 10);
-        pages.splice(idx + 1, 0, []);
-        renderPageSelect();
-        renderPreview();
-        setFeedback('Salto aplicado: se agregó una nueva página después de la página ' + (idx + 1) + '.', 'success');
-        if (pages.length > 1) {
-          try { localStorage.setItem('score-tool-25-salto-de-pagina', '1'); } catch (e) {}
+        if (typeof focusIndex === 'number' && textareas[focusIndex]) {
+          textareas[focusIndex].focus();
+          if (typeof cursorPos === 'number') {
+            textareas[focusIndex].setSelectionRange(cursorPos, cursorPos);
+          }
         }
       }
 
+      function applyPageBreak() {
+        var idx = state.activePage;
+        var textarea = textareas[idx];
+        if (!textarea) return;
+
+        var cursor = textarea.selectionStart;
+        var text = textarea.value;
+        var before = text.slice(0, cursor);
+        var after = text.slice(cursor);
+
+        state.pages[idx] = before;
+        state.pages.splice(idx + 1, 0, after);
+        state.activePage = idx + 1;
+
+        renderPreview(idx + 1, 0);
+        setFeedback('Salto de página aplicado. Ahora tienes ' + state.pages.length + ' páginas del mismo tamaño.', 'success');
+
+        state.gameScore = 1;
+        saveScore();
+        updateScore();
+      }
+
       function resetSimpleExercise() {
-        pages = [ initialParagraphs.slice() ];
-        renderPageSelect();
-        renderPreview();
+        state.pages = [ initialText ];
+        state.activePage = 0;
+        state.gameScore = 0;
+        saveScore();
+        renderPreview(0);
+        updateScore();
         setFeedback('Ejercicio reiniciado.', 'warn');
       }
 
       applySimple.addEventListener('click', applyPageBreak);
       resetSimple.addEventListener('click', resetSimpleExercise);
 
-      renderPageSelect();
-      renderPreview();
-      setFeedback('Selecciona la página y pulsa "Aplicar salto de página".', 'warn');
+      loadScore();
+      renderPreview(0);
+      updateScore();
+      setFeedback('Escribe en la hoja y coloca el cursor donde quieras dividir el texto.', 'warn');
     })();
   </script>
 

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -10,7 +10,6 @@
       --word-blue: #2B579A;
       --word-dark: #0b2d5c;
       --page-bg: #eef2f6;
-      --card: #fff;
       --text: #1a1a1a;
       --muted: #5c5c5c;
       --border: #d1d1d1;
@@ -18,203 +17,281 @@
       --nav-h: 54px;
       --tool-nav-h: 48px;
     }
+
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
+      min-height: 100vh;
       font-family: var(--font);
       color: var(--text);
       background: var(--page-bg);
       padding-bottom: calc(var(--nav-h) + var(--tool-nav-h) + 20px);
     }
 
-    /* BARRA SUPERIOR */
     .title-bar {
       background: var(--word-blue);
       color: #fff;
       padding: 6px 14px;
-      display: flex; align-items: center; gap: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
       font-size: 12px;
     }
     .word-logo {
       width: 24px; height: 24px;
-      background: #fff; color: var(--word-blue);
-      font-weight: 800; font-size: 15px;
-      display: flex; align-items: center; justify-content: center;
-      border-radius: 3px; text-decoration: none;
+      background: #fff;
+      color: var(--word-blue);
+      font-weight: 800;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 3px;
+      text-decoration: none;
     }
     .title-bar h1 { margin: 0; font-size: 13px; font-weight: 600; }
     .title-bar a.title-link { color: #fff; text-decoration: none; }
     .title-bar a.title-link:hover { text-decoration: underline; }
 
-    /* Solo pestaña Inicio */
     .ribbon-tabs {
-      display: flex; list-style: none; margin: 0; padding: 0 6px;
-      background: #fff; border-bottom: 2px solid var(--word-blue);
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0 6px;
+      background: #fff;
+      border-bottom: 2px solid var(--word-blue);
     }
     .ribbon-tabs li a {
-      display: block; padding: 9px 16px;
-      font-size: 13px; color: var(--word-blue);
-      font-weight: 700; text-decoration: none;
+      display: block;
+      padding: 9px 16px;
+      font-size: 13px;
+      color: var(--word-blue);
+      font-weight: 700;
+      text-decoration: none;
       border-bottom: 3px solid var(--word-blue);
     }
 
-    /* CABECERA */
     .detail-header {
       background: linear-gradient(135deg, var(--word-blue), #1e3f6e);
-      color: #fff; padding: 20px 16px;
-      display: flex; align-items: center; gap: 16px;
+      color: #fff;
+      padding: 20px 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
     }
     .detail-header img {
-      width: 64px; height: 64px; object-fit: contain;
-      background: rgba(255,255,255,.15); border-radius: 8px; padding: 6px;
+      width: 64px;
+      height: 64px;
+      object-fit: contain;
+      background: rgba(255,255,255,.15);
+      border-radius: 8px;
+      padding: 6px;
     }
     .detail-header h1 { margin: 0 0 4px; font-size: 1.4rem; }
     .detail-cat {
-      display: inline-block; background: rgba(255,255,255,.2);
-      padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;
+      display: inline-block;
+      background: rgba(255,255,255,.2);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
     }
 
-    /* CONTENIDO */
-    .detail-body { max-width: 800px; margin: 0 auto; padding: 16px 16px 24px; }
+    .detail-body {
+      max-width: 840px;
+      margin: 0 auto;
+      padding: 16px 16px 24px;
+    }
     .block {
-      background: #fff; border: 1px solid var(--border);
-      border-radius: 8px; padding: 14px 16px; margin-bottom: 16px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
     }
     .block h2 { margin: 0 0 12px; font-size: 1rem; color: var(--word-blue); }
 
-    /* VIDEO */
-    .video-btn-wrap {
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      background: #f0f4fa; border: 2px solid var(--word-blue);
-      border-radius: 12px; padding: 32px 20px; gap: 14px; text-align: center;
-    }
-    .video-btn-wrap p { margin: 0; color: var(--muted); font-size: 0.88rem; }
-    .btn-youtube {
-      display: inline-flex; align-items: center; gap: 10px;
-      background: #FF0000; color: #fff;
-      font-weight: 700; font-size: 1rem;
-      padding: 12px 24px; border-radius: 8px;
-      text-decoration: none; font-family: inherit;
-      box-shadow: 0 4px 12px rgba(255,0,0,.3);
-      transition: background .2s, transform .15s;
-    }
-    .btn-youtube:hover { background: #cc0000; transform: translateY(-2px); }
-
-    /* ACTIVIDAD */
     .extra-zone {
-      background: #fff; border: 1px solid var(--word-blue);
-      border-radius: 8px; padding: 14px 16px; margin-bottom: 16px;
+      background: #fff;
+      border: 1px solid var(--word-blue);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
     }
     .extra-zone h2 { margin: 0 0 8px; font-size: 1rem; color: var(--word-blue); }
-    .extra-zone p.hint { margin: 0 0 6px; font-size: 0.85rem; color: var(--muted); }
+    .extra-zone p.hint { margin: 0; font-size: 0.95rem; color: #1b3c72; }
 
     .game-card {
-      background: #fff; border: 1px solid #c6c8cc;
-      border-radius: 14px; box-shadow: 0 4px 16px rgba(0,0,0,.08);
-      overflow: hidden; max-width: 760px; margin: 0 auto;
+      background: #fff;
+      border: 1px solid #c6c8cc;
+      border-radius: 14px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.08);
+      overflow: hidden;
+      max-width: 760px;
+      margin: 0 auto;
       padding: 16px;
     }
     .game-header {
-      display: flex; align-items: center; justify-content: space-between;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       margin-bottom: 14px;
     }
     .game-header strong { color: var(--word-blue); font-size: 1rem; }
     .game-score-top { font-weight: 700; color: var(--word-blue); }
 
-    .game-cols {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
-      align-items: start; margin-bottom: 12px;
+    .game-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
     }
-    @media (max-width: 540px) { .game-cols { grid-template-columns: 1fr; } }
+    @media (max-width: 620px) { .game-layout { grid-template-columns: 1fr; } }
 
-    .source-box {
-      background: #f7f9fb; border: 1px solid #d7d9dc;
-      border-radius: 10px; padding: 14px;
-      display: flex; flex-direction: column; gap: 10px;
+    .pane {
+      background: #f7f9fb;
+      border: 1px solid #d7d9dc;
+      border-radius: 10px;
+      padding: 14px;
     }
-    .source-box p { margin: 0; font-size: 0.88rem; color: var(--muted); }
-    .source-text {
-      background: #fff; border: 1px solid var(--border);
-      border-radius: 8px; padding: 10px;
-      font-size: 0.92rem; color: var(--text); line-height: 1.5;
+    .pane p { margin: 0 0 10px; color: #333; font-weight: 700; }
+
+    .clipboard-card {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: stretch;
+    }
+    .clipboard-box {
+      background: #fff;
+      border: 1px solid #cfd8e3;
+      border-radius: 10px;
+      padding: 14px;
+      text-align: center;
+      font-weight: 700;
+      color: #0f3a72;
     }
 
-    .doc-box {
-      background: #fff; border: 1px solid #d7d9dc;
-      border-radius: 10px; padding: 14px;
+    .doc-sim {
+      min-height: 220px;
+      background: #fff;
+      border: 1px solid #cfd8e3;
+      border-radius: 10px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
-    .doc-box p { margin: 0 0 8px; font-size: 0.88rem; color: var(--muted); }
+    .doc-line {
+      background: #f2f5f8;
+      border-radius: 8px;
+      padding: 12px;
+      color: #333;
+      min-height: 34px;
+      display: flex;
+      align-items: center;
+    }
+    .doc-line.blank {
+      background: #fff;
+      border: 2px dashed #a2a6ab;
+      justify-content: center;
+      color: #5a5a5a;
+      font-weight: 700;
+    }
+    .doc-line.correct {
+      border: 2px solid #0f7b3f;
+      background: #dff6dd;
+      color: #0f662f;
+    }
 
-    .drop-slot {
-      display: block; width: 100%;
-      background: #f3f6fa; border: 1px dashed #a2a6ab;
-      border-radius: 8px; padding: 10px 12px;
-      text-align: left; font-family: inherit;
-      font-size: 0.88rem; color: var(--text);
-      cursor: pointer; margin-bottom: 8px;
-      transition: border-color .2s, background .2s;
+    .game-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
     }
-    .drop-slot:hover { border-color: var(--word-blue); background: #eef4ff; }
-    .drop-slot.highlight { border-color: var(--word-blue); background: #dceaff; font-weight: 600; }
-    .drop-slot.correct { border-color: #0f7b3f; background: #dff6dd; color: #0f7b3f; font-weight: 700; }
-    .drop-slot.wrong   { border-color: #c00; background: #ffeaea; }
-
-    .game-controls-row {
-      display: flex; flex-wrap: wrap; gap: 10px;
-      align-items: center; justify-content: space-between;
-      border-top: 1px solid #e0e0e0; padding-top: 12px;
-    }
-    .game-controls { display: flex; gap: 8px; flex-wrap: wrap; }
     .boton {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 9px 16px; border-radius: 6px;
-      border: 1px solid #ccc; background: #fff;
-      font-family: inherit; font-size: 0.85rem;
-      font-weight: 600; cursor: pointer;
-      transition: background .15s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background: #fff;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s;
     }
     .boton:hover { background: #f3f3f3; }
     .boton.copiar { border-color: #27ae60; color: #1a7a3c; }
-    .boton.pegar  { border-color: #3498db; color: #1a6fa6; }
+    .boton.cortar { border-color: #e67e22; color: #b25a03; }
+    .boton.pegar { border-color: #3498db; color: #1a4f86; }
+    .boton.gray { border-color: #707070; color: #333; }
 
     .game-message {
-      font-size: 0.9rem; color: var(--muted);
-      min-height: 1.3em; margin-top: 8px;
+      margin-top: 14px;
+      font-size: 0.95rem;
+      min-height: 1.3em;
+      color: #555;
     }
 
-
-    /* NAV ENTRE HERRAMIENTAS */
     .detail-nav-bar {
-      position: fixed; bottom: var(--nav-h); left: 0; right: 0;
-      background: #fff; border-top: 1px solid var(--border);
-      padding: 8px 12px; display: flex; justify-content: center;
-      gap: 8px; flex-wrap: wrap; z-index: 99;
-      min-height: var(--tool-nav-h); align-items: center;
+      position: fixed;
+      bottom: var(--nav-h);
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-top: 1px solid var(--border);
+      padding: 8px 12px;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      z-index: 99;
+      min-height: var(--tool-nav-h);
+      align-items: center;
     }
     .detail-nav-bar a {
-      padding: 8px 18px; border-radius: 6px;
-      font-weight: 700; font-size: 13px; text-decoration: none;
-      background: var(--word-blue); color: #fff;
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 13px;
+      text-decoration: none;
+      background: var(--word-blue);
+      color: #fff;
       transition: background .15s;
     }
     .detail-nav-bar a:hover { background: var(--word-dark); }
     .detail-nav-bar a.btn-gray { background: #605e5c; }
     .detail-nav-bar a.btn-gray:hover { background: #3e3d3c; }
 
-    /* NAV INFERIOR */
     .bottom-nav {
-      position: fixed; bottom: 0; left: 0; right: 0;
-      height: var(--nav-h); background: var(--word-dark);
-      display: flex; justify-content: center;
-      z-index: 100; box-shadow: 0 -2px 12px rgba(0,0,0,.2);
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: var(--nav-h);
+      background: var(--word-dark);
+      display: flex;
+      justify-content: center;
+      z-index: 100;
+      box-shadow: 0 -2px 12px rgba(0,0,0,.2);
     }
     .bottom-nav a {
-      flex: 1; max-width: 130px;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 2px;
-      color: rgba(255,255,255,.8); text-decoration: none;
-      font-size: 0.62rem; font-weight: 500; padding: 4px;
+      flex: 1;
+      max-width: 130px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      color: rgba(255,255,255,.8);
+      text-decoration: none;
+      font-size: 0.62rem;
+      font-weight: 500;
+      padding: 4px;
     }
     .bottom-nav a:hover { color: #fff; background: rgba(255,255,255,.08); }
     .bottom-nav .nav-icon { font-size: 1.15rem; }
@@ -222,20 +299,17 @@
 </head>
 <body>
 
-  <!-- BARRA SUPERIOR -->
   <header class="title-bar">
     <a class="word-logo" href="../index.html" title="Inicio">W</a>
     <h1><a class="title-link" href="../index.html">Pegar — Word Básico</a></h1>
   </header>
 
-  <!-- SOLO PESTAÑA INICIO -->
   <nav aria-label="Menú Word">
     <ul class="ribbon-tabs">
       <li><a href="../index.html">Inicio</a></li>
     </ul>
   </nav>
 
-  <!-- CABECERA -->
   <header class="detail-header">
     <img src="../icons/Pegar.png" alt="Pegar" width="64" height="64" />
     <div>
@@ -246,22 +320,16 @@
 
   <div class="detail-body">
 
-    <!-- VIDEO -->
     <div class="block">
       <h2>🎥 Video explicativo</h2>
-      <div class="video-btn-wrap">
-        <p>Haz clic para ver el video explicativo sobre <strong>Pegar en Word</strong></p>
+      <div class="video-wrapper">
         <iframe width="560" height="315" src="https://www.youtube.com/embed/p7Rpt--MZwE?si=XvCHbbX2rfSanckh&amp;start=29" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-          &#9654; Ver video en YouTube
-        </a>
-        <p>Se abrirá en una pestaña nueva</p>
       </div>
     </div>
 
-    <!-- ACTIVIDAD -->
     <div class="extra-zone">
       <h2>✏️ Actividad</h2>
-      <p class="hint"><strong>Instrucción:</strong> Copia el texto y pégalo en el espacio correcto de la oración.</p>
+      <p class="hint">Elige una palabra, cópiala y pégala en el orden correcto: Pegar → texto → Word.</p>
 
       <div class="game-card">
         <div class="game-header">
@@ -269,103 +337,162 @@
           <span class="game-score-top">Puntos: <span id="paste-score">0</span></span>
         </div>
 
-        <div class="game-cols">
-          <!-- Texto fuente -->
-          <div class="source-box">
-            <p>Texto para copiar:</p>
-            <div class="source-text">Microsoft Word</div>
-            <button class="boton copiar" onclick="fakeCopy()">📋 Copiar</button>
+        <div class="game-layout">
+          <div class="pane clipboard-card">
+            <p>Palabras</p>
+            <div id="word-options">
+              <button class="boton" onclick="selectWord('Pegar')">Pegar</button>
+              <button class="boton" onclick="selectWord('texto')">texto</button>
+              <button class="boton" onclick="selectWord('Word')">Word</button>
+              <button class="boton" onclick="selectWord('archivo')">archivo</button>
+              <button class="boton" onclick="selectWord('copiar')">copiar</button>
+            </div>
+            <div class="clipboard-box" id="clipboard-text">Ninguna</div>
+            <div class="game-controls">
+              <button class="boton copiar" onclick="copyText()">📋 Copiar</button>
+              <button class="boton cortar" onclick="cutText()">✂️ Cortar</button>
+              <button class="boton pegar" onclick="pasteIntoDocument()">📥 Pegar</button>
+            </div>
           </div>
 
-          <!-- Documento con espacios -->
-          <div class="doc-box">
-            <p>Selecciona el espacio correcto y pega:</p>
-            <button class="drop-slot" data-index="1" onclick="selectSlot(this)">[1] ___ permite crear documentos de texto.</button>
-            <button class="drop-slot" data-index="2" onclick="selectSlot(this)">[2] Permite crear ___ documentos de texto.</button>
-            <button class="drop-slot" data-index="3" onclick="selectSlot(this)">[3] Permite crear documentos de ___.</button>
+          <div class="pane doc-sim" aria-label="Zona de pegado">
+            <p>Zona de pegado</p>
+            <div class="doc-line blank" id="paste-slot-0">1. Pe...</div>
+            <div class="doc-line blank" id="paste-slot-1">2. te...</div>
+            <div class="doc-line blank" id="paste-slot-2">3. Wo...</div>
           </div>
         </div>
 
-        <div class="game-controls-row">
-          <div class="game-controls">
-            <button class="boton pegar"  onclick="pasteToSlot()">📥 Pegar</button>
-            <button class="boton"        onclick="resetPasteGame()">🔄 Reiniciar</button>
-          </div>
+        <div class="game-controls">
+          <button class="boton gray" onclick="resetGame()">🔄 Reiniciar</button>
         </div>
-        <p class="game-message" id="game-feedback">Copia el texto y pégalo en el espacio correcto.</p>
+
+        <p class="game-message" id="game-feedback">Selecciona una palabra y presiona Copiar.</p>
       </div>
     </div>
 
   </div>
 
-  <!-- NAV ENTRE HERRAMIENTAS -->
   <nav class="detail-nav-bar" aria-label="Navegación entre herramientas">
     <a href="02-copiar.html">◀ Copiar</a>
     <a href="../index.html" class="btn-gray">🏠 Ver todas</a>
     <a href="04-zoom.html">Zoom ▶</a>
   </nav>
 
-  <!-- NAV INFERIOR -->
   <nav class="bottom-nav" aria-label="Menú principal">
     <a href="../index.html"><span class="nav-icon">🏠</span>Inicio</a>
   </nav>
 
   <script>
-    var pasteState = { copied: false, score: 0, selectedSlot: null };
+    var pasteState = {
+      selected: null,
+      copied: null,
+      nextIndex: 0,
+      score: 0,
+      target: ['Pegar', 'texto', 'Word']
+    };
 
-    function setFeedback(msg, color) {
+    function setFeedback(message, color) {
       var el = document.getElementById('game-feedback');
-      if (el) { el.textContent = msg; el.style.color = color || '#555'; }
-    }
-
-    function fakeCopy() {
-      pasteState.copied = true;
-      setFeedback('📋 Copiado. Ahora selecciona un espacio y pega.', '#0b662f');
-    }
-
-    function selectSlot(el) {
-      document.querySelectorAll('.drop-slot').forEach(function(s) { s.classList.remove('highlight'); });
-      el.classList.add('highlight');
-      pasteState.selectedSlot = el;
-      setFeedback('Espacio elegido. Ahora pulsa Pegar.', '#174a97');
-    }
-
-    function pasteToSlot() {
-      if (!pasteState.copied)       { setFeedback('❗ Primero copia el texto.', 'red'); return; }
-      if (!pasteState.selectedSlot) { setFeedback('❗ Elige un espacio primero.', 'red'); return; }
-      var idx = parseInt(pasteState.selectedSlot.getAttribute('data-index'), 10);
-      if (idx === 1) {
-        pasteState.selectedSlot.textContent = 'Microsoft Word permite crear documentos de texto.';
-        pasteState.selectedSlot.classList.remove('wrong');
-        pasteState.selectedSlot.classList.add('correct');
-        pasteState.score += 1;
-        document.getElementById('paste-score').textContent = pasteState.score;
-        setFeedback('🎉 ¡Correcto! Ganaste 1 punto.', '#0b662f');
-        try { localStorage.setItem('score-tool-03-pegar', '1'); } catch(e) {}
-        pasteState.copied = false;
-        pasteState.selectedSlot = null;
-      } else {
-        pasteState.selectedSlot.classList.remove('correct');
-        pasteState.selectedSlot.classList.add('wrong');
-        setFeedback('❌ Ese no es el lugar correcto. Intenta de nuevo.', '#b22222');
-        setTimeout(function() {
-          if (pasteState.selectedSlot) pasteState.selectedSlot.classList.remove('wrong');
-        }, 900);
+      if (el) {
+        el.textContent = message;
+        el.style.color = color || '#555';
       }
     }
 
-    function resetPasteGame() {
-      pasteState.copied = false; pasteState.selectedSlot = null;
-      var texts = [
-        '[1] ___ permite crear documentos de texto.',
-        '[2] Permite crear ___ documentos de texto.',
-        '[3] Permite crear documentos de ___.'
-      ];
-      document.querySelectorAll('.drop-slot').forEach(function(s, i) {
-        s.textContent = texts[i];
-        s.classList.remove('correct', 'wrong', 'highlight');
+    function selectWord(word) {
+      pasteState.selected = word;
+      var options = document.querySelectorAll('#word-options .boton');
+      options.forEach(function(btn) {
+        btn.style.background = btn.textContent === word ? '#dfe7ff' : '#fff';
       });
-      setFeedback('Juego reiniciado. Copia el texto y pégalo en el espacio correcto.', '#555');
+      setFeedback('Palabra seleccionada: ' + word + '. Ahora copia.', '#0b662f');
+    }
+
+    function copyText() {
+      if (!pasteState.selected) {
+        setFeedback('❗ Primero selecciona una palabra.', 'red');
+        return;
+      }
+      pasteState.copied = pasteState.selected;
+      document.getElementById('clipboard-text').textContent = pasteState.copied;
+      setFeedback('📋 Copiado: ' + pasteState.copied + '. Luego pega en la zona de la derecha.', '#0b662f');
+    }
+
+    function cutText() {
+      if (!pasteState.selected) {
+        setFeedback('❗ Primero selecciona una palabra.', 'red');
+        return;
+      }
+      pasteState.copied = pasteState.selected;
+      document.getElementById('clipboard-text').textContent = pasteState.copied;
+      disableOptionButton(pasteState.copied);
+      pasteState.selected = null;
+      setFeedback('✂️ Cortado: ' + pasteState.copied + '. Ahora pega en la zona de la derecha.', '#0b662f');
+    }
+
+    function disableOptionButton(word) {
+      var options = document.querySelectorAll('#word-options .boton');
+      options.forEach(function(btn) {
+        if (btn.textContent === word) {
+          btn.disabled = true;
+          btn.style.opacity = '0.5';
+          btn.style.cursor = 'not-allowed';
+        }
+      });
+    }
+
+    function pasteIntoDocument() {
+      if (!pasteState.copied) {
+        setFeedback('❗ Copia o corta una palabra primero.', 'red');
+        return;
+      }
+      if (pasteState.nextIndex >= pasteState.target.length) {
+        setFeedback('✅ Ya completaste la frase. Reinicia para jugar otra vez.', '#0b662f');
+        return;
+      }
+      var required = pasteState.target[pasteState.nextIndex];
+      if (pasteState.copied !== required) {
+        setFeedback('❌ Esa no es la palabra correcta. Copia la palabra ' + required + '.', 'red');
+        return;
+      }
+      var slot = document.getElementById('paste-slot-' + pasteState.nextIndex);
+      slot.textContent = pasteState.copied;
+      slot.classList.remove('blank');
+      slot.classList.add('correct');
+      pasteState.score += 1;
+      pasteState.nextIndex += 1;
+      document.getElementById('paste-score').textContent = pasteState.score;
+      pasteState.copied = null;
+      document.getElementById('clipboard-text').textContent = 'Ninguna';
+      if (pasteState.nextIndex === pasteState.target.length) {
+        setFeedback('🎉 ¡Bien! Pegaste las tres palabras en orden correcto.', '#0b662f');
+      } else {
+        setFeedback('✅ Correcto. Copia la siguiente palabra: ' + pasteState.target[pasteState.nextIndex] + '.', '#0b662f');
+      }
+    }
+
+    function resetGame() {
+      pasteState.selected = null;
+      pasteState.copied = null;
+      pasteState.nextIndex = 0;
+      pasteState.score = 0;
+      document.getElementById('paste-score').textContent = 0;
+      document.getElementById('clipboard-text').textContent = 'Ninguna';
+      pasteState.target.forEach(function(word, index) {
+        var slot = document.getElementById('paste-slot-' + index);
+        slot.textContent = (index + 1) + '. ' + word;
+        slot.classList.remove('correct');
+        slot.classList.add('blank');
+      });
+      var options = document.querySelectorAll('#word-options .boton');
+      options.forEach(function(btn) {
+        btn.style.background = '#fff';
+        btn.disabled = false;
+        btn.style.opacity = '1';
+        btn.style.cursor = 'pointer';
+      });
+      setFeedback('Juego reiniciado. Selecciona una palabra y copia o corta.', '#555');
     }
   </script>
 

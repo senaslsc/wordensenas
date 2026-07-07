@@ -352,10 +352,10 @@
     <!-- ACTIVIDAD: JUEGO BORDES -->
     <div class="extra-zone">
       <h2>✏️ Actividad</h2>
-      <p class="hint"><strong>Instrucción:</strong> Selecciona el párrafo correcto y aplícale la posición y el estilo de borde indicados. Son 4 tareas en total.</p>
+      <p class="hint"><strong>Instrucción:</strong> Selecciona cada renglón y aplícale un borde diferente (posición y/o estilo). Basta con que cada renglón quede distinto a los otros dos.</p>
 
       <div class="border-card">
-        <div class="task-summary" id="border-task">Tarea 1 de 4: selecciona el párrafo que debe tener borde inferior sólido.</div>
+        <div class="task-summary" id="border-task">Selecciona un renglón y luego elige su posición y estilo de borde. Los 3 deben quedar diferentes entre sí.</div>
         <div class="border-toolbar">
           <button id="position-top" class="border-button">Borde superior</button>
           <button id="position-bottom" class="border-button">Borde inferior</button>
@@ -369,11 +369,10 @@
         </div>
         <div class="border-editor" id="border-editor" aria-label="Editor simulado de bordes"></div>
         <div class="border-actions">
-          <button id="apply-border" class="editor-btn">Aplicar bordes</button>
           <button id="check-border" class="editor-btn">Comprobar</button>
           <button id="reset-border" class="editor-btn gray">Reiniciar</button>
         </div>
-        <div class="border-feedback" id="border-feedback">Selecciona un párrafo para comenzar.</div>
+        <div class="border-feedback" id="border-feedback">Selecciona un renglón para comenzar.</div>
         <div class="game-score" id="border-score">Puntaje del juego: 0 puntos</div>
       </div>
     </div>
@@ -394,57 +393,33 @@
 
   <script>
     (function () {
-      var tasks = [
+      // Un solo renglón (párrafo) por línea, cada uno con su propio borde esperado.
+      // Los 3 esperados son distintos entre sí (posición + estilo).
+      var paragraphs = [
         {
-          instruction: 'Aplica borde inferior sólido al párrafo del título:',
-          expectedPosition: 'bottom',
-          expectedStyle: 'solid',
-          paragraphs: [
-            { id: 'p1', text: 'INFORME DE GESTIÓN 2024', position: 'none', style: 'solid', correct: true },
-            { id: 'p2', text: 'Este documento presenta los resultados del año fiscal 2024 con énfasis en los objetivos estratégicos alcanzados.', position: 'none', style: 'solid', correct: false },
-            { id: 'p3', text: 'Preparado por: Departamento de Administración', position: 'none', style: 'solid', correct: false }
-          ]
+          id: 'p1',
+          text: 'La herramienta Bordes permite agregar líneas alrededor de la hoja y del texto.',
+          position: 'none',
+          style: 'solid'
         },
         {
-          instruction: 'Aplica borde completo discontinuo al párrafo de advertencia:',
-          expectedPosition: 'all',
-          expectedStyle: 'dashed',
-          paragraphs: [
-            { id: 'p1', text: 'Próxima reunión: 15 de junio en sala 301.', position: 'none', style: 'solid', correct: false },
-            { id: 'p2', text: 'IMPORTANTE: Este documento es confidencial y solo debe ser compartido con personal autorizado.', position: 'none', style: 'solid', correct: true },
-            { id: 'p3', text: 'Para más información, contacte al departamento de recursos humanos.', position: 'none', style: 'solid', correct: false }
-          ]
+          id: 'p2',
+          text: 'La herramienta Bordes permite agregar líneas alrededor de la hoja y del texto.',
+          position: 'none',
+          style: 'solid'
         },
         {
-          instruction: 'Aplica borde superior punteado al párrafo de conclusión:',
-          expectedPosition: 'top',
-          expectedStyle: 'dotted',
-          paragraphs: [
-            { id: 'p1', text: 'En conclusión, la organización ha cumplido con el 92% de los objetivos propuestos para este año.', position: 'none', style: 'solid', correct: true },
-            { id: 'p2', text: 'Se recomienda revisar los planes de mejora continua antes de la próxima junta directiva.', position: 'none', style: 'solid', correct: false },
-            { id: 'p3', text: 'Firma: ________________________     Fecha: ________________________', position: 'none', style: 'solid', correct: false }
-          ]
-        },
-        {
-          instruction: 'Aplica borde completo doble al párrafo especial:',
-          expectedPosition: 'all',
-          expectedStyle: 'double',
-          paragraphs: [
-            { id: 'p1', text: 'Los resultados financieros se distribuyen según se describe en el anexo A.', position: 'none', style: 'solid', correct: false },
-            { id: 'p2', text: '★ META ALCANZADA: Incremento de 25% en productividad ★', position: 'none', style: 'solid', correct: true },
-            { id: 'p3', text: 'Este logro fue posible gracias al trabajo en equipo de todos los departamentos.', position: 'none', style: 'solid', correct: false }
-          ]
+          id: 'p3',
+          text: 'La herramienta Bordes permite agregar líneas alrededor de la hoja y del texto.',
+          position: 'none',
+          style: 'solid'
         }
       ];
 
       var state = {
-        currentTask: 0,
         selectedParagraph: null,
-        selectedPosition: null,
-        selectedStyle: null,
-        score: 0,
         gameScore: 0,
-        taskCompleted: false
+        activityCompleted: false
       };
 
       var editor = document.getElementById('border-editor');
@@ -465,12 +440,11 @@
         double: document.getElementById('style-double')
       };
 
-      var applyButton = document.getElementById('apply-border');
       var checkButton = document.getElementById('check-border');
       var resetButton = document.getElementById('reset-border');
 
-      function currentTask() {
-        return tasks[state.currentTask];
+      function findParagraph(id) {
+        return paragraphs.find(function (paragraph) { return paragraph.id === id; });
       }
 
       function setFeedback(message, color) {
@@ -513,10 +487,7 @@
       }
 
       function renderEditor() {
-        var task = currentTask();
-        taskLabel.textContent = 'Tarea ' + (state.currentTask + 1) + ' de ' + tasks.length + ': ' + task.instruction;
-
-        editor.innerHTML = task.paragraphs.map(function (paragraph) {
+        editor.innerHTML = paragraphs.map(function (paragraph) {
           var selected = state.selectedParagraph === paragraph.id ? ' selected' : '';
           var classes = ['border-paragraph'];
 
@@ -528,6 +499,8 @@
           var borderInfo = '';
           if (paragraph.position !== 'none') {
             borderInfo = ' [Borde: ' + getPositionName(paragraph.position) + ' ' + getStyleName(paragraph.style) + ']';
+          } else {
+            borderInfo = ' [Sin borde]';
           }
 
           return '<div class="' + classes.join(' ') + selected + '" data-id="' + paragraph.id + '">' +
@@ -540,136 +513,104 @@
           element.addEventListener('click', function () {
             state.selectedParagraph = element.getAttribute('data-id');
             renderEditor();
-            setFeedback('✓ Párrafo seleccionado. Elige posición y estilo, luego aplica el borde.', '#0b662f');
+            setFeedback('✓ Renglón seleccionado. Elige una posición o un estilo para aplicarlo al instante.', '#0b662f');
           });
         });
       }
 
-      function updateButtonState() {
-        Object.keys(positionButtons).forEach(function (position) {
-          positionButtons[position].classList.toggle('active', state.selectedPosition === position);
-        });
-        Object.keys(styleButtons).forEach(function (style) {
-          styleButtons[style].classList.toggle('active', state.selectedStyle === style);
-        });
+      function applyPosition(position) {
+        if (!state.selectedParagraph) {
+          setFeedback('⚠ Primero selecciona el renglón al que quieres aplicar el borde.', '#d9534f');
+          return;
+        }
+        var paragraph = findParagraph(state.selectedParagraph);
+        paragraph.position = position;
+        renderEditor();
+        var posName = getPositionName(position);
+        setFeedback('✓ Borde ' + posName + ' aplicado. Ahora elige el estilo (o cámbialo si ya lo tenía).', '#0b662f');
+      }
+
+      function applyStyle(style) {
+        if (!state.selectedParagraph) {
+          setFeedback('⚠ Primero selecciona el renglón al que quieres aplicar el borde.', '#d9534f');
+          return;
+        }
+        var paragraph = findParagraph(state.selectedParagraph);
+        paragraph.style = style;
+        if (paragraph.position === 'none') {
+          setFeedback('✓ Estilo guardado. Ahora elige también una posición para ver el borde.', '#0b662f');
+        } else {
+          var styleName = getStyleName(style);
+          setFeedback('✓ Estilo ' + styleName + ' aplicado.', '#0b662f');
+        }
+        renderEditor();
       }
 
       Object.keys(positionButtons).forEach(function (position) {
         positionButtons[position].addEventListener('click', function () {
-          state.selectedPosition = position;
-          updateButtonState();
-          var posName = getPositionName(position);
-          setFeedback('✓ Has elegido borde ' + posName + '. Ahora elige el estilo.', '#0b662f');
+          applyPosition(position);
         });
       });
 
       Object.keys(styleButtons).forEach(function (style) {
         styleButtons[style].addEventListener('click', function () {
-          state.selectedStyle = style;
-          updateButtonState();
-          var styleName = getStyleName(style);
-          setFeedback('✓ Has elegido estilo ' + styleName + '. Selecciona un párrafo y aplica.', '#0b662f');
+          applyStyle(style);
         });
-      });
-
-      applyButton.addEventListener('click', function () {
-        if (!state.selectedParagraph) {
-          setFeedback('⚠ Primero debes seleccionar un párrafo.', '#d9534f');
-          return;
-        }
-        if (!state.selectedPosition) {
-          setFeedback('⚠ Debes elegir la posición del borde (superior, inferior o completo).', '#d9534f');
-          return;
-        }
-        if (!state.selectedStyle) {
-          setFeedback('⚠ Debes elegir el estilo del borde (sólido, discontinuo, etc.).', '#d9534f');
-          return;
-        }
-
-        var task = currentTask();
-        task.paragraphs = task.paragraphs.map(function (paragraph) {
-          if (paragraph.id === state.selectedParagraph) {
-            paragraph.position = state.selectedPosition;
-            paragraph.style = state.selectedStyle;
-          }
-          return paragraph;
-        });
-
-        renderEditor();
-        var posName = getPositionName(state.selectedPosition);
-        var styleName = getStyleName(state.selectedStyle);
-        setFeedback('✓ Borde ' + posName + ' ' + styleName + ' aplicado correctamente. Verifica con "Comprobar".', '#0b662f');
       });
 
       checkButton.addEventListener('click', function () {
-        if (!state.taskCompleted) {
-          var task = currentTask();
-          var correctParagraph = task.paragraphs.find(function (segment) { return segment.correct; });
-          if (!correctParagraph) { return; }
+        if (state.activityCompleted) { return; }
 
-          if (correctParagraph.position === task.expectedPosition && correctParagraph.style === task.expectedStyle) {
-            state.score += 1;
-            if (state.gameScore !== -1) {
-              state.gameScore = 1;
-              saveGameScore();
-              updateGameScore();
-            }
-            state.taskCompleted = true;
+        // Todos deben tener un borde aplicado (no "none")
+        var allHaveBorder = paragraphs.every(function (paragraph) {
+          return paragraph.position !== 'none';
+        });
 
-            if (state.currentTask + 1 < tasks.length) {
-              var posName = getPositionName(task.expectedPosition);
-              var styleName = getStyleName(task.expectedStyle);
-              setFeedback('🎉 ¡Excelente! Borde ' + posName + ' ' + styleName + ' correcto. Siguiente tarea...', '#0f7b3f');
+        // Y las combinaciones posición+estilo deben ser todas distintas entre sí
+        var combos = paragraphs.map(function (paragraph) {
+          return paragraph.position + '|' + paragraph.style;
+        });
+        var uniqueCombos = combos.filter(function (combo, index) {
+          return combos.indexOf(combo) === index;
+        });
+        var allDifferent = uniqueCombos.length === combos.length;
 
-              setTimeout(function () {
-                state.currentTask += 1;
-                state.selectedParagraph = null;
-                state.selectedPosition = null;
-                state.selectedStyle = null;
-                state.taskCompleted = false;
-                updateButtonState();
-                renderEditor();
-                setFeedback('Selecciona un párrafo para comenzar.', '#555');
-              }, 1200);
-            } else {
-              setFeedback('🏆 ¡PERFECTO! Has completado todas las tareas. Puntaje: ' + state.score + ' / ' + tasks.length, '#0f7b3f');
-              taskLabel.textContent = '✓ Actividad completada exitosamente. Puntuación final: ' + state.score + ' / ' + tasks.length;
-            }
-          } else {
-            state.gameScore = -1;
-            saveGameScore();
-            updateGameScore();
-            setFeedback('✗ No es correcto. Revisa el párrafo, la posición o el estilo del borde.', '#d9534f');
-          }
+        if (allHaveBorder && allDifferent) {
+          state.activityCompleted = true;
+          state.gameScore = 1;
+          saveGameScore();
+          updateGameScore();
+          setFeedback('🏆 ¡Muy bien! Los tres renglones tienen bordes diferentes entre sí.', '#0f7b3f');
+          taskLabel.textContent = '✓ Actividad completada exitosamente.';
+        } else if (!allHaveBorder) {
+          setFeedback('⚠ Todavía falta aplicar un borde a alguno de los renglones.', '#d9534f');
+        } else {
+          state.gameScore = -1;
+          saveGameScore();
+          updateGameScore();
+          setFeedback('✗ Dos renglones quedaron con el mismo borde. Cambia la posición o el estilo de alguno.', '#d9534f');
         }
       });
 
       resetButton.addEventListener('click', function () {
-        state.currentTask = 0;
         state.selectedParagraph = null;
-        state.selectedPosition = null;
-        state.selectedStyle = null;
-        state.score = 0;
         state.gameScore = 0;
-        state.taskCompleted = false;
-        tasks.forEach(function (task) {
-          task.paragraphs.forEach(function (paragraph) {
-            paragraph.position = 'none';
-            paragraph.style = 'solid';
-          });
+        state.activityCompleted = false;
+        paragraphs.forEach(function (paragraph) {
+          paragraph.position = 'none';
+          paragraph.style = 'solid';
         });
-        updateButtonState();
+        taskLabel.textContent = 'Selecciona un renglón y luego elige su posición y estilo de borde.';
         renderEditor();
         updateGameScore();
         saveGameScore();
-        setFeedback('🔄 Juego reiniciado. Selecciona un párrafo para comenzar.', '#555');
+        setFeedback('🔄 Actividad reiniciada. Selecciona un renglón para comenzar.', '#555');
       });
 
       loadGameScore();
-      updateButtonState();
       renderEditor();
       updateGameScore();
-      setFeedback('Selecciona un párrafo para comenzar.', '#555');
+      setFeedback('Selecciona un renglón para comenzar.', '#555');
     })();
   </script>
 

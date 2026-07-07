@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -105,8 +105,9 @@
       box-shadow: 0 4px 16px rgba(43,87,154,.08);
     }
     .sim-toolbar {
-      display: flex; flex-wrap: wrap; gap: 8px;
+      display: flex; gap: 8px;
       margin-bottom: 14px; align-items: center;
+      position: relative;
     }
     .btn {
       padding: 8px 12px; border-radius: 8px;
@@ -117,6 +118,36 @@
     }
     .btn:hover { background: #f0f4fa; }
     .btn.active { background: var(--word-blue); color: #fff; border-color: var(--word-blue); }
+
+    .header-style-menu {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 0;
+      width: 220px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+      z-index: 20;
+    }
+    .header-style-menu.hidden {
+      display: none;
+    }
+    .header-style-menu .header-option {
+      width: 100%;
+      justify-content: flex-start;
+      text-align: left;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: #f7f9fc;
+    }
+    .header-style-menu .header-option:hover {
+      background: #eef4ff;
+    }
 
     .sim-check-label {
       display: inline-flex; align-items: center; gap: 6px;
@@ -145,6 +176,38 @@
     .header-area[contenteditable="true"],
     .footer-area[contenteditable="true"] {
       outline: 2px solid var(--word-blue); background: #eef5ff;
+    }
+    .header-large {
+      min-height: 72px; padding: 16px 16px;
+      border-radius: 8px; background: #f9fbff;
+      font-size: 1rem; color: #222;
+      display: block;
+      white-space: pre-wrap;
+      line-height: 1.4;
+      position: relative;
+      transition: color .2s, text-align .2s, text-decoration .2s;
+    }
+    .header-large.simple {
+      text-align: left;
+      color: #1e293b;
+      font-weight: 600;
+    }
+    .header-large.title {
+      text-align: center;
+      color: #0b569d;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .header-large.empresa {
+      text-align: right;
+      color: #102a43;
+      font-weight: 700;
+      text-decoration: underline;
+    }
+    .header-large:empty::before {
+      content: attr(data-placeholder);
+      color: var(--muted); font-size: 0.95rem;
     }
     .doc-content {
       padding: 16px; font-size: 13px; line-height: 1.5;
@@ -242,37 +305,34 @@
 
     <!-- SIMULADOR -->
     <div class="extra-zone">
-      <h2>🖥️ Simulador — Encabezado y pie de página</h2>
-      <p class="hint"><strong>Instrucción:</strong> Usa los botones para editar el encabezado o el pie de página del documento.</p>
+      <h2>🖥️ Simulador — Encabezado</h2>
+      <p class="hint"><strong>Instrucción:</strong> Haz clic en el botón para ver las opciones de encabezado; luego escribe cualquier texto en el encabezado.</p>
 
       <div class="simulator-wrap">
         <div class="sim-toolbar">
-          <button id="editHeader"    class="btn active">📝 Editar encabezado</button>
-          <button id="editFooter"    class="btn">📝 Editar pie</button>
-          <button id="insertPageNum" class="btn">🔢 Insertar número de página</button>
-          <label class="sim-check-label">
-            <input type="checkbox" id="diffFirst"> Primera página diferente
-          </label>
-          <button id="closeHdr" class="btn" style="margin-left:auto;">✖ Cerrar</button>
+          <button id="chooseHeaderStyle" class="btn">Encabezado ▾</button>
+          <div class="header-style-menu hidden" id="headerStyleMenu">
+            <button class="btn header-option" data-template="simple">Encabezado simple</button>
+            <button class="btn header-option" data-template="title">Encabezado con título</button>
+            <button class="btn header-option" data-template="empresa">Encabezado de empresa</button>
+          </div>
         </div>
 
         <div class="doc-wrapper">
           <div id="docSim" class="doc" tabindex="0">
-            <div class="header-area" contenteditable="true" id="headerArea">Escuela Isabel II — Grado 702</div>
-            <div class="doc-content">Contenido del documento. Aquí puedes escribir el cuerpo del texto.</div>
-            <div class="footer-area" contenteditable="false" id="footerArea">Pie de página de ejemplo</div>
+            <div class="header-area header-large" contenteditable="false" id="headerArea" data-placeholder="Elige un estilo y escribe aquí"></div>
+            <div class="doc-content" contenteditable="true">Contenido del documento. Aquí puedes escribir el cuerpo del texto.</div>
           </div>
         </div>
-        <p class="sim-hint">💡 Haz clic en "Editar encabezado" y escribe directamente en el área azul del documento.</p>
+        <p class="sim-hint">💡 Selecciona un estilo de encabezado y luego escribe tu propio texto directamente en el área de encabezado.</p>
       </div>
     </div>
 
     <!-- EJERCICIO CON PUNTAJE -->
     <div class="extra-zone">
       <h2>✏️ Ejercicio</h2>
-      <p class="hint"><strong>Instrucción:</strong> Escribe el siguiente texto exactamente en el encabezado del simulador y pulsa <strong>Verificar</strong>.</p>
-      <div class="ejercicio-target">Colegio Isabel II</div>
-      <br>
+      <p class="hint"><strong>Instrucción:</strong> Elige un estilo de encabezado y escribe cualquier texto en el encabezado del simulador. Luego pulsa <strong>Verificar</strong>.</p>
+      <p class="hint">Puedes escribir tu nombre, el título del documento o cualquier frase que desees.</p>
       <button class="btn-verificar" id="btnVerificar">✅ Verificar</button>
       <div class="resultado-ejercicio" id="resultadoEjercicio"></div>
     </div>
@@ -293,50 +353,48 @@
 
   <script>
   (function () {
-    var headerArea    = document.getElementById('headerArea');
-    var footerArea    = document.getElementById('footerArea');
-    var editHeader    = document.getElementById('editHeader');
-    var editFooter    = document.getElementById('editFooter');
-    var insertPageNum = document.getElementById('insertPageNum');
-    var diffFirst     = document.getElementById('diffFirst');
-    var closeHdr      = document.getElementById('closeHdr');
+    var headerArea          = document.getElementById('headerArea');
+    var chooseHeaderStyle   = document.getElementById('chooseHeaderStyle');
+    var headerStyleMenu     = document.getElementById('headerStyleMenu');
+    var headerOptionButtons = document.querySelectorAll('.header-option');
 
-    function setMode(mode) {
-      editHeader.classList.toggle('active', mode === 'header');
-      editFooter.classList.toggle('active', mode === 'footer');
-      headerArea.contentEditable = (mode === 'header') ? 'true' : 'false';
-      footerArea.contentEditable = (mode === 'footer') ? 'true' : 'false';
-      if (mode === 'header') headerArea.focus();
-      if (mode === 'footer') footerArea.focus();
-    }
-    setMode('header');
-
-    editHeader.addEventListener('click', function () { setMode('header'); });
-    editFooter.addEventListener('click', function () { setMode('footer'); });
-
-    insertPageNum.addEventListener('click', function () {
-      var area = (headerArea.contentEditable === 'true') ? headerArea : footerArea;
-      var sp = document.createElement('span');
-      sp.textContent = '1';
-      sp.style.cssText = 'font-weight:700;display:inline-block;min-width:22px;text-align:center;background:#2B579A;color:#fff;border-radius:4px;padding:0 4px;';
-      area.appendChild(document.createTextNode(' '));
-      area.appendChild(sp);
-    });
-
-    diffFirst.addEventListener('change', function () {
-      if (this.checked) {
-        headerArea.dataset.saved = headerArea.innerHTML;
-        headerArea.innerHTML = '(Primera página sin encabezado)';
-      } else {
-        if (headerArea.dataset.saved) headerArea.innerHTML = headerArea.dataset.saved;
+    function applyHeaderTemplate(template) {
+      headerArea.classList.remove('simple', 'title', 'empresa');
+      var text = '';
+      if (template === 'simple') {
+        headerArea.classList.add('simple');
+        text = 'Encabezado simple: ';
+      } else if (template === 'title') {
+        headerArea.classList.add('title');
+        text = 'Título del documento: ';
+      } else if (template === 'empresa') {
+        headerArea.classList.add('empresa');
+        text = 'Empresa / Nombre: ';
       }
+      headerArea.textContent = text;
+      headerArea.contentEditable = 'true';
+      headerArea.focus();
+      placeCaretAtEnd(headerArea);
+    }
+
+    function placeCaretAtEnd(el) {
+      var range = document.createRange();
+      var sel = window.getSelection();
+      range.selectNodeContents(el);
+      range.collapse(false);
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+
+    chooseHeaderStyle.addEventListener('click', function () {
+      headerStyleMenu.classList.toggle('hidden');
     });
 
-    closeHdr.addEventListener('click', function () {
-      headerArea.contentEditable = 'false';
-      footerArea.contentEditable = 'false';
-      editHeader.classList.remove('active');
-      editFooter.classList.remove('active');
+    headerOptionButtons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        applyHeaderTemplate(this.dataset.template);
+        headerStyleMenu.classList.add('hidden');
+      });
     });
 
     /* EJERCICIO */
@@ -344,13 +402,13 @@
       var texto = headerArea.textContent.trim();
       var resultado = document.getElementById('resultadoEjercicio');
       resultado.className = 'resultado-ejercicio';
-      if (texto === 'Colegio Isabel II') {
+      if (texto.length > 0) {
         resultado.classList.add('correcto');
-        resultado.textContent = '🎉 ¡Correcto! Escribiste el encabezado bien. Resultado: 1/1 punto.';
+        resultado.textContent = '🎉 ¡Correcto! Escribiste el encabezado. Resultado: 1/1 punto.';
         try { localStorage.setItem('score-tool-28-encabezado', '1'); } catch(e) {}
       } else {
         resultado.classList.add('incorrecto');
-        resultado.textContent = '❌ No es correcto. Revisa que diga exactamente: Colegio Isabel II';
+        resultado.textContent = '❌ No es correcto. El encabezado está vacío. Escribe cualquier texto antes de verificar.';
       }
     });
   })();

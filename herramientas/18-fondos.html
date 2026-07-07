@@ -159,6 +159,26 @@
       margin-bottom: 14px;
       align-items: center;
     }
+    #background-color {
+      min-width: 200px;
+      padding: 10px 12px;
+      border: 1px solid #cfd8e5;
+      border-radius: 8px;
+      background: #fff;
+      color: #000;
+      font-weight: 700;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+    }
+    #background-color option {
+      padding: 8px;
+    }
+    #background-color option.color-red { background: #ff7f7f; color: #ff7f7f; }
+    #background-color option.color-blue { background: #7fb3ff; color: #7fb3ff; }
+    #background-color option.color-yellow { background: #fff4a8; color: #fff4a8; }
+    #background-color option.color-gray { background: #e0e0e4; color: #e0e0e4; }
     .background-button {
       min-width: 110px;
       padding: 10px 14px;
@@ -209,9 +229,11 @@
       font-size: 0.9rem;
       white-space: pre-line;
     }
+    .sheet-card.sheet-color-red .sheet-body { background: #ffd6d6; }
     .sheet-card.sheet-color-blue .sheet-body { background: #dcecff; }
-    .sheet-card.sheet-color-green .sheet-body { background: #d9f0d8; }
     .sheet-card.sheet-color-yellow .sheet-body { background: #fff7d2; }
+    .sheet-card.sheet-color-gray .sheet-body { background: #efeff1; }
+    .sheet-card.sheet-color-green .sheet-body { background: #d5f2d5; }
     .sheet-card.sheet-color-none .sheet-body { background: #ffffff; }
     .sheet-label {
       margin-top: 10px;
@@ -364,19 +386,23 @@
     <!-- ACTIVIDAD: JUEGO FONDOS -->
     <div class="extra-zone">
       <h2>✏️ Actividad</h2>
-      <p class="hint"><strong>Instrucción:</strong> Selecciona la hoja indicada y aplica el color de fondo correcto. Son 3 tareas.</p>
+      <p class="hint"><strong>Instrucción:</strong> Selecciona cada hoja y aplica el color de fondo solicitado. Usa los colores primarios más gris; el cambio se hace al elegir la opción.</p>
 
       <div class="background-card">
-        <p class="background-task" id="background-task">Tarea 1 de 3: selecciona la hoja indicada y aplica el color correcto de página.</p>
+        <p class="background-task" id="background-task">Aplica el color correcto a cada hoja usando el menú desplegable.</p>
         <div class="background-toolbar" id="background-toolbar">
-          <button id="bg-none" class="background-button">Sin color</button>
-          <button id="bg-blue" class="background-button">Azul claro</button>
-          <button id="bg-green" class="background-button">Verde claro</button>
-          <button id="bg-yellow" class="background-button">Amarillo claro</button>
+          <label for="background-color">Color de fondo:</label>
+          <select id="background-color">
+            <option value="">Selecciona un color</option>
+            <option value="red">🟥 Rojo</option>
+            <option value="blue">🟦 Azul</option>
+            <option value="yellow">🟨 Amarillo</option>
+            <option value="gray">⬜ Gris</option>
+            <option value="green">🟩 Verde</option>
+          </select>
         </div>
         <div class="page-preview" id="page-preview"></div>
         <div class="background-actions">
-          <button id="apply-background" class="background-btn">Aplicar color</button>
           <button id="check-background" class="background-btn">Comprobar</button>
           <button id="reset-background" class="background-btn gray">Reiniciar</button>
         </div>
@@ -401,38 +427,21 @@
 
   <script>
     (function () {
-      var tasks = [
-        {
-          instruction: 'Aplica color azul claro a la hoja de la carta de invitación.',
-          expected: 'blue',
-          pages: [
-            { id: 'page1', title: 'Carta de invitación', text: 'Invitación a la fiesta de graduación.', color: 'none', correct: true },
-            { id: 'page2', title: 'Informe semanal', text: 'Resumen de actividades de la semana.', color: 'none', correct: false },
-            { id: 'page3', title: 'Lista de tareas', text: 'Tareas pendientes para completar.', color: 'none', correct: false }
-          ]
+      var task = {
+        instruction: 'Aplica distintos colores de fondo a cada hoja en la vista previa.',
+        expected: {
+          page1: 'red',
+          page2: 'blue',
+          page3: 'yellow'
         },
-        {
-          instruction: 'Aplica color verde claro a la hoja del informe semanal.',
-          expected: 'green',
-          pages: [
-            { id: 'page1', title: 'Carta de invitación', text: 'Invitación a la fiesta de graduación.', color: 'none', correct: false },
-            { id: 'page2', title: 'Informe semanal', text: 'Resumen de actividades de la semana.', color: 'none', correct: true },
-            { id: 'page3', title: 'Lista de tareas', text: 'Tareas pendientes para completar.', color: 'none', correct: false }
-          ]
-        },
-        {
-          instruction: 'Quita el color de fondo de la hoja de la lista de tareas.',
-          expected: 'none',
-          pages: [
-            { id: 'page1', title: 'Carta de invitación', text: 'Invitación a la fiesta de graduación.', color: 'none', correct: false },
-            { id: 'page2', title: 'Informe semanal', text: 'Resumen de actividades de la semana.', color: 'none', correct: false },
-            { id: 'page3', title: 'Lista de tareas', text: 'Tareas pendientes para completar.', color: 'blue', correct: true }
-          ]
-        }
-      ];
+        pages: [
+          { id: 'page1', title: 'Carta de invitación', text: 'Invitación a la fiesta de graduación.', color: 'none' },
+          { id: 'page2', title: 'Informe semanal', text: 'Resumen de actividades de la semana.', color: 'none' },
+          { id: 'page3', title: 'Lista de tareas', text: 'Tareas pendientes para completar.', color: 'none' }
+        ]
+      };
 
       var state = {
-        currentTask: 0,
         selectedPage: null,
         selectedColor: null,
         score: 0,
@@ -443,17 +452,9 @@
       var feedback = document.getElementById('background-feedback');
       var gameScoreLabel = document.getElementById('background-score');
       var taskLabel = document.getElementById('background-task');
-      var colorButtons = {
-        none: document.getElementById('bg-none'),
-        blue: document.getElementById('bg-blue'),
-        green: document.getElementById('bg-green'),
-        yellow: document.getElementById('bg-yellow')
-      };
-      var applyButton = document.getElementById('apply-background');
+      var colorSelect = document.getElementById('background-color');
       var checkButton = document.getElementById('check-background');
       var resetButton = document.getElementById('reset-background');
-
-      function currentTask() { return tasks[state.currentTask]; }
 
       function updateGameScore() {
         if (!gameScoreLabel) { return; }
@@ -486,13 +487,12 @@
       }
 
       function renderPreview() {
-        var task = currentTask();
-        taskLabel.textContent = 'Tarea ' + (state.currentTask + 1) + ' de ' + tasks.length + ': ' + task.instruction;
+        taskLabel.textContent = task.instruction;
         preview.innerHTML = task.pages.map(function (page) {
           var selected = state.selectedPage === page.id ? ' selected' : '';
           var colorClass = 'sheet-color-' + page.color;
           var badge = '<span class="color-chip ' + page.color + '"></span>';
-          var labelText = page.color === 'none' ? 'Sin color' : page.color.replace('blue', 'Azul claro').replace('green', 'Verde claro').replace('yellow', 'Amarillo claro');
+          var labelText = page.color === 'none' ? 'Sin color' : page.color === 'red' ? 'Rojo' : page.color === 'blue' ? 'Azul' : page.color === 'yellow' ? 'Amarillo' : page.color === 'gray' ? 'Gris' : page.color === 'green' ? 'Verde' : page.color;
           return '<div class="sheet-card' + selected + ' ' + colorClass + '" data-id="' + page.id + '">' +
                  '<h3 class="sheet-title">' + page.title + '</h3>' +
                  '<div class="sheet-body">' + page.text + '</div>' +
@@ -504,29 +504,21 @@
           card.addEventListener('click', function () {
             state.selectedPage = card.getAttribute('data-id');
             renderPreview();
-            setFeedback('Hoja seleccionada. Elige un color y pulsa Aplicar.', '#0b662f');
+            setFeedback('Hoja seleccionada. Elige un color del menú desplegable.', '#0b662f');
           });
         });
       }
 
-      function updateButtonState() {
-        Object.keys(colorButtons).forEach(function (color) {
-          colorButtons[color].classList.toggle('active', state.selectedColor === color);
-        });
-      }
-
-      Object.keys(colorButtons).forEach(function (color) {
-        colorButtons[color].addEventListener('click', function () {
-          state.selectedColor = color;
-          updateButtonState();
-          setFeedback('Seleccionaste ' + (color === 'none' ? 'sin color' : 'color ' + color) + '. Ahora aplica.', '#0b662f');
-        });
-      });
-
-      applyButton.addEventListener('click', function () {
-        if (!state.selectedPage) { setFeedback('Selecciona primero una hoja.', 'red'); return; }
-        if (!state.selectedColor) { setFeedback('Selecciona primero un color.', 'red'); return; }
-        var task = currentTask();
+      colorSelect.addEventListener('change', function () {
+        state.selectedColor = colorSelect.value;
+        if (!state.selectedPage) {
+          setFeedback('Selecciona primero una hoja antes de elegir un color.', 'red');
+          return;
+        }
+        if (!state.selectedColor) {
+          setFeedback('Selecciona un color válido.', 'red');
+          return;
+        }
         task.pages = task.pages.map(function (page) {
           if (page.id === state.selectedPage) {
             page.color = state.selectedColor;
@@ -534,45 +526,33 @@
           return page;
         });
         renderPreview();
-        setFeedback('Color aplicado. Pulsa Comprobar cuando quieras.', '#0b662f');
+        setFeedback('Color aplicado al instante al cambiar la opción.', '#0b662f');
       });
 
       checkButton.addEventListener('click', function () {
-        var task = currentTask();
-        var correct = task.pages.find(function (page) { return page.correct; });
-        if (!correct) { return; }
-        if (correct.color === task.expected) {
+        var current = task;
+        var valid = current.pages.every(function (page) {
+          return page.color === current.expected[page.id];
+        });
+        if (valid) {
           state.score += 1;
           if (state.gameScore !== -1) { state.gameScore = 1; saveGameScore(); updateGameScore(); }
-          if (state.currentTask + 1 < tasks.length) {
-            setFeedback('¡Bien! Pasando a la siguiente tarea.', '#0f7b3f');
-            state.currentTask += 1;
-            state.selectedPage = null;
-            state.selectedColor = null;
-            updateButtonState();
-            renderPreview();
-          } else {
-            setFeedback('¡Perfecto! Completaste todas las tareas.', '#0f7b3f');
-            taskLabel.textContent = 'Actividad terminada. Puntaje: ' + state.score + ' / ' + tasks.length + '.';
-          }
+          setFeedback('¡Correcto! Todos los colores son los esperados.', '#0f7b3f');
         } else {
           state.gameScore = -1;
           saveGameScore();
           updateGameScore();
-          setFeedback('No es correcto. Revisa la hoja o el color aplicado.', 'red');
+          setFeedback('Aún falta corregir algún color. Revisa cada hoja.', 'red');
         }
       });
 
       resetButton.addEventListener('click', function () {
-        state.currentTask = 0;
         state.selectedPage = null;
         state.selectedColor = null;
         state.score = 0;
         state.gameScore = 0;
-        tasks.forEach(function (task) {
-          task.pages.forEach(function (page) { page.color = 'none'; });
-        });
-        updateButtonState();
+        task.pages.forEach(function (page) { page.color = 'none'; });
+        colorSelect.value = '';
         renderPreview();
         updateGameScore();
         saveGameScore();
@@ -580,7 +560,6 @@
       });
 
       loadGameScore();
-      updateButtonState();
       renderPreview();
       updateGameScore();
       setFeedback('Selecciona una hoja y un color para comenzar.', '#555');

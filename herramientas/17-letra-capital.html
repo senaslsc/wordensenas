@@ -347,10 +347,10 @@
     <!-- ACTIVIDAD: JUEGO LETRA CAPITAL -->
     <div class="extra-zone">
       <h2>✏️ Actividad</h2>
-      <p class="hint"><strong>Instrucción:</strong> Selecciona el párrafo correcto y aplica el tipo de letra capital indicado. Son 3 tareas.</p>
+      <p class="hint"><strong>Instrucción:</strong> Selecciona un párrafo y elige un tipo de letra capital. El cambio se aplicará inmediatamente cuando elijas el estilo y el número de líneas.</p>
 
       <div class="dropcap-card">
-        <p class="dropcap-task" id="dropcap-task">Tarea 1 de 3: selecciona el párrafo correcto y aplica letra capital tipo "caída" con 2 líneas.</p>
+        <p class="dropcap-task" id="dropcap-task">Actividad: aplica diferentes letras capitales a cada párrafo.</p>
 
         <div class="highlight-toolbar">
           <button id="style-dropped" class="highlight-button">Letra capital (caída)</button>
@@ -366,11 +366,10 @@
 
         <div class="highlight-editor" id="dropcap-editor" aria-label="Editor simulado de letra capital"></div>
         <div class="dropcap-actions">
-          <button id="apply-dropcap" class="dropcap-btn">Aplicar letra capital</button>
           <button id="check-dropcap" class="dropcap-btn">Comprobar</button>
           <button id="reset-dropcap" class="dropcap-btn gray">Reiniciar</button>
         </div>
-        <div class="dropcap-feedback" id="dropcap-feedback">Selecciona un párrafo para comenzar.</div>
+        <div class="dropcap-feedback" id="dropcap-feedback">Selecciona un párrafo, elige estilo y líneas para aplicar el formato al instante.</div>
         <div class="game-score" id="dropcap-score">Puntaje del juego: 0 puntos</div>
       </div>
     </div>
@@ -391,41 +390,21 @@
 
   <script>
     (function () {
-      var tasks = [
-        {
-          instruction: 'Aplica letra capital (caída) al párrafo del inicio con 2 líneas.',
-          expectedStyle: 'dropped',
-          expectedLines: 2,
-          paragraphs: [
-            { id: 'p1', text: 'Hace muchos años, en un pueblo pequeño, nació una historia que aún se cuenta.', dropcap: { style: 'none', lines: 1 }, correct: true },
-            { id: 'p2', text: 'La modernidad transformó las plazas y las tiendas, pero no los relatos.', dropcap: { style: 'none', lines: 1 }, correct: false },
-            { id: 'p3', text: 'Los niños escuchaban atentos cada tarde en la plaza central.', dropcap: { style: 'none', lines: 1 }, correct: false }
-          ]
+      var task = {
+        instruction: 'Selecciona un párrafo y aplica una letra capital diferente según el estilo elegido.',
+        expected: {
+          p1: { style: 'dropped', lines: 2 },
+          p2: { style: 'margin', lines: 3 },
+          p3: { style: 'none', lines: 0 }
         },
-        {
-          instruction: 'Aplica letra capital en margen al párrafo central con 3 líneas.',
-          expectedStyle: 'margin',
-          expectedLines: 3,
-          paragraphs: [
-            { id: 'p1', text: 'Introducción breve que acompaña el bloque principal.', dropcap: { style: 'none', lines: 1 }, correct: false },
-            { id: 'p2', text: 'Ejemplo principal: este párrafo debe mostrar letra capital en el margen.', dropcap: { style: 'none', lines: 1 }, correct: true },
-            { id: 'p3', text: 'Conclusión del ejemplo, que no debe cambiar en esta tarea.', dropcap: { style: 'none', lines: 1 }, correct: false }
-          ]
-        },
-        {
-          instruction: 'Quita la letra capital del párrafo marcado (sin letra capital).',
-          expectedStyle: 'none',
-          expectedLines: 0,
-          paragraphs: [
-            { id: 'p1', text: 'Este párrafo está inicialmente con letra capital y debe volver a normal.', dropcap: { style: 'dropped', lines: 2 }, correct: true },
-            { id: 'p2', text: 'Otro párrafo de ejemplo que se mantiene.', dropcap: { style: 'none', lines: 1 }, correct: false },
-            { id: 'p3', text: 'Texto de apoyo que no cambia.', dropcap: { style: 'none', lines: 1 }, correct: false }
-          ]
-        }
-      ];
+        paragraphs: [
+          { id: 'p1', text: 'Hace muchos años, en un pueblo pequeño, nació una historia que aún se cuenta.', dropcap: { style: 'none', lines: 0 } },
+          { id: 'p2', text: 'La modernidad transformó las plazas y las tiendas, pero no los relatos.', dropcap: { style: 'none', lines: 0 } },
+          { id: 'p3', text: 'Los niños escuchaban atentos cada tarde en la plaza central.', dropcap: { style: 'none', lines: 0 } }
+        ]
+      };
 
       var state = {
-        currentTask: 0,
         selectedParagraph: null,
         selectedStyle: null,
         selectedLines: null,
@@ -450,11 +429,8 @@
         3: document.getElementById('lines-3')
       };
 
-      var applyButton = document.getElementById('apply-dropcap');
       var checkButton = document.getElementById('check-dropcap');
       var resetButton = document.getElementById('reset-dropcap');
-
-      function currentTask() { return tasks[state.currentTask]; }
 
       function updateGameScore() {
         if (!gameScoreLabel) { return; }
@@ -487,11 +463,11 @@
       }
 
       function renderEditor() {
-        var task = currentTask();
-        taskLabel.textContent = 'Tarea ' + (state.currentTask + 1) + ' de ' + tasks.length + ': ' + task.instruction;
-        editor.innerHTML = task.paragraphs.map(function (p) {
+        var current = task;
+        taskLabel.textContent = current.instruction;
+        editor.innerHTML = current.paragraphs.map(function (p) {
           var cls = 'highlight-paragraph';
-          var drop = p.dropcap && p.dropcap.style ? p.dropcap : { style: 'none', lines: 1 };
+          var drop = p.dropcap && p.dropcap.style ? p.dropcap : { style: 'none', lines: 0 };
           var html = p.text;
           if (drop.style && drop.style !== 'none') {
             var first = html.charAt(0);
@@ -513,7 +489,7 @@
           el.addEventListener('click', function () {
             state.selectedParagraph = el.getAttribute('data-id');
             renderEditor();
-            setFeedback('Párrafo seleccionado. Elige estilo y número de líneas, luego pulsa aplicar.', '#0b662f');
+            setFeedback('Párrafo seleccionado. Elige estilo y número de líneas para aplicar al instante.', '#0b662f');
           });
         });
       }
@@ -523,28 +499,16 @@
         Object.keys(lineButtons).forEach(function (k) { lineButtons[k].classList.toggle('active', Number(k) === state.selectedLines); });
       }
 
-      Object.keys(styleButtons).forEach(function (k) {
-        styleButtons[k].addEventListener('click', function () {
-          state.selectedStyle = k;
-          updateButtonState();
-          setFeedback('Has elegido ' + k + '. Ahora elige número de líneas.', '#0b662f');
-        });
-      });
-
-      Object.keys(lineButtons).forEach(function (k) {
-        lineButtons[k].addEventListener('click', function () {
-          state.selectedLines = Number(k);
-          updateButtonState();
-          setFeedback('Has elegido ' + k + ' líneas.', '#0b662f');
-        });
-      });
-
-      applyButton.addEventListener('click', function () {
-        if (!state.selectedParagraph) { setFeedback('Selecciona primero un párrafo.', 'red'); return; }
-        if (!state.selectedStyle) { setFeedback('Selecciona primero un estilo (caída/margen/sin).', 'red'); return; }
-        if (state.selectedStyle !== 'none' && !state.selectedLines) { setFeedback('Selecciona el número de líneas para la letra capital.', 'red'); return; }
-
-        var task = currentTask();
+      function applyCurrentSelection() {
+        if (!state.selectedParagraph) {
+          return;
+        }
+        if (!state.selectedStyle) {
+          return;
+        }
+        if (state.selectedStyle !== 'none' && !state.selectedLines) {
+          return;
+        }
         task.paragraphs = task.paragraphs.map(function (p) {
           if (p.id === state.selectedParagraph) {
             p.dropcap = { style: state.selectedStyle, lines: state.selectedStyle === 'none' ? 0 : state.selectedLines };
@@ -552,31 +516,36 @@
           return p;
         });
         renderEditor();
-        setFeedback('Letra capital aplicada. Pulsa comprobar cuando estés listo.', '#0b662f');
+      }
+
+      Object.keys(styleButtons).forEach(function (k) {
+        styleButtons[k].addEventListener('click', function () {
+          state.selectedStyle = k;
+          updateButtonState();
+          applyCurrentSelection();
+          setFeedback('Has elegido ' + k + '. Ahora el estilo se aplica inmediatamente.', '#0b662f');
+        });
+      });
+
+      Object.keys(lineButtons).forEach(function (k) {
+        lineButtons[k].addEventListener('click', function () {
+          state.selectedLines = Number(k);
+          updateButtonState();
+          applyCurrentSelection();
+          setFeedback('Has elegido ' + k + ' líneas.', '#0b662f');
+        });
       });
 
       checkButton.addEventListener('click', function () {
-        var task = currentTask();
-        var correct = task.paragraphs.find(function (p) { return p.correct; });
+        var current = task;
+        var correct = current.paragraphs.find(function (p) { return current.expected[p.id]; });
         if (!correct) { return; }
+        var expected = current.expected[correct.id];
         var drop = correct.dropcap || { style: 'none', lines: 0 };
-        var expectedStyle = task.expectedStyle;
-        var expectedLines = task.expectedLines;
-        if ((drop.style === expectedStyle) && (drop.lines === expectedLines)) {
+        if (drop.style === expected.style && drop.lines === expected.lines) {
           state.score += 1;
           if (state.gameScore !== -1) { state.gameScore = 1; saveGameScore(); updateGameScore(); }
-          if (state.currentTask + 1 < tasks.length) {
-            setFeedback('¡Correcto! Pasando a la siguiente tarea.', '#0f7b3f');
-            state.currentTask += 1;
-            state.selectedParagraph = null;
-            state.selectedStyle = null;
-            state.selectedLines = null;
-            updateButtonState();
-            renderEditor();
-          } else {
-            setFeedback('¡Perfecto! Has completado todas las tareas.', '#0f7b3f');
-            taskLabel.textContent = 'Actividad terminada. Puntaje: ' + state.score + ' / ' + tasks.length + '.';
-          }
+          setFeedback('¡Correcto! La letra capital se aplicó bien.', '#0f7b3f');
         } else {
           state.gameScore = -1;
           saveGameScore();
@@ -586,13 +555,12 @@
       });
 
       resetButton.addEventListener('click', function () {
-        state.currentTask = 0;
         state.selectedParagraph = null;
         state.selectedStyle = null;
         state.selectedLines = null;
         state.score = 0;
         state.gameScore = 0;
-        tasks.forEach(function (t) { t.paragraphs.forEach(function (p) { p.dropcap = { style: 'none', lines: 1 }; }); });
+        task.paragraphs.forEach(function (p) { p.dropcap = { style: 'none', lines: 0 }; });
         updateButtonState();
         renderEditor();
         updateGameScore();

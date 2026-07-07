@@ -179,6 +179,18 @@
       line-height: 1.8;
       font-size: 0.98rem;
       color: #1a1a1a;
+      cursor: text;
+      outline: none;
+      user-select: text;
+      -webkit-user-select: text;
+    }
+    .editor-area *::selection {
+      background: rgba(43,87,154,.22);
+      color: inherit;
+    }
+    .editor-area::selection {
+      background: rgba(43,87,154,.22);
+      color: inherit;
     }
     .editor-segment {
       cursor: pointer;
@@ -300,10 +312,12 @@
     <!-- ACTIVIDAD: JUEGO NEGRITA -->
     <div class="extra-zone">
       <h2>✏️ Actividad</h2>
-      <p class="hint"><strong>Instrucción:</strong> Selecciona la palabra más importante y aplícale Negrita, como en Word.</p>
-
+      
+ <strong style="display:block;font-size:22px;line-height:1.4;margin-bottom:14px;">
+📝 Instrucción: <span style="color:#002873;">Selecciona el título completo "Mi presentación"</span> y aplícale <span style="color:#002873;">Negrita</span>, como en Microsoft Word.
+</strong>
       <div class="bold-card">
-        <div class="task-summary" id="bold-task-summary">Selecciona la palabra más importante y aplica Negrita.</div>
+        <div class="task-summary" id="bold-task-summary">Selecciona el título completo y aplica Negrita.</div>
         <div class="editor-toolbar">
           <button id="bold-btn" class="editor-btn">Negrita</button>
           <button id="remove-bold-btn" class="editor-btn gray">Quitar negrita</button>
@@ -332,14 +346,19 @@
   <script>
     (function () {
       var task = {
-        instructions: 'Selecciona la palabra importante y aplícale Negrita.',
+        instructions: 'Selecciona el título completo "Mi presentación" y aplícale Negrita.',
         segments: [
-          { id: 'a', text: 'La', correct: false, bold: false },
+          { id: 'a', text: 'Mi', correct: true, bold: false },
           { id: 'b', text: 'presentación', correct: true, bold: false },
-          { id: 'c', text: 'es', correct: false, bold: false },
-          { id: 'd', text: 'para', correct: false, bold: false },
-          { id: 'e', text: 'el', correct: false, bold: false },
-          { id: 'f', text: 'proyecto.', correct: false, bold: false }
+          { id: 'c', text: '__BREAK__', correct: false, bold: false },
+          { id: 'd', text: 'La', correct: false, bold: false },
+          { id: 'e', text: 'presentación', correct: false, bold: false },
+          { id: 'f', text: 'es', correct: false, bold: false },
+          { id: 'g', text: 'para', correct: false, bold: false },
+          { id: 'h', text: 'el', correct: false, bold: false },
+          { id: 'i', text: 'proyecto', correct: false, bold: false },
+          { id: 'j', text: 'de', correct: false, bold: false },
+          { id: 'k', text: 'ciencias.', correct: false, bold: false }
         ]
       };
 
@@ -363,20 +382,26 @@
 
       function renderEditor() {
         taskSummary.textContent = task.instructions;
-        editor.innerHTML = task.segments.map(function (segment) {
-          var classes = 'editor-segment' + (segment.bold ? ' bold' : '');
-          if (state.selectedId === segment.id) {
-            classes += ' selected';
-          }
-          return '<span class="' + classes + '" data-id="' + segment.id + '">' + segment.text + '</span>';
-        }).join(' ');
+        editor.innerHTML = '';
 
-        editor.querySelectorAll('.editor-segment').forEach(function (span) {
-          span.addEventListener('click', function () {
-            state.selectedId = span.getAttribute('data-id');
+        task.segments.forEach(function(segment){
+          if(segment.text==='__BREAK__'){
+            editor.appendChild(document.createElement('br'));
+            editor.appendChild(document.createElement('br'));
+            return;
+          }
+
+          var span=document.createElement('span');
+          span.className='editor-segment'+(segment.bold?' bold':'');
+          if(state.selectedId===segment.id){ span.className+=' selected'; }
+          span.dataset.id=segment.id;
+          span.textContent=segment.text+' ';
+          span.onclick=function(){
+            state.selectedId=segment.id;
             renderEditor();
-            setFeedback('Segmento seleccionado. Usa Negrita o Quitar negrita.', '#0b662f');
-          });
+            setFeedback('Palabra seleccionada. Selecciona también la otra palabra del título o pulsa Negrita.','#0b662f');
+          };
+          editor.appendChild(span);
         });
       }
 

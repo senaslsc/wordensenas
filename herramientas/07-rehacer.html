@@ -123,7 +123,7 @@
       border: none;
     }
 
-    /* ── ACTIVIDAD: JUEGO REHACER ── */
+    /* SIMULACIÓN WORD - REHACER */
     .extra-zone {
       background: #fff;
       border: 1px solid var(--word-blue);
@@ -146,50 +146,154 @@
       margin-right: auto;
     }
     .redo-card-top {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 12px; margin-bottom: 12px; flex-wrap: wrap;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
     }
     .redo-card-top h3 { margin: 0; color: var(--word-blue); font-size: 1.05rem; }
     .redo-card-top p { margin: 0; font-size: 0.92rem; color: var(--muted); }
     .redo-score { color: var(--word-blue); font-weight: 700; }
-
-    .redo-preview {
-      background: #f4f8ff;
-      border: 1px solid #cfd8e5;
-      border-radius: 12px;
-      padding: 14px;
-      min-height: 110px;
-      margin-bottom: 12px;
-      color: #1a1a1a;
-    }
-    .redo-preview-label { font-size: 0.9rem; font-weight: 700; margin-bottom: 8px; color: #0f407e; }
-    .redo-preview p { margin: 0; line-height: 1.6; white-space: pre-wrap; }
-
-    .redo-toolbar, .redo-btn-group {
-      display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px;
-    }
-    .redo-action-btn, .redo-btn {
-      flex: 1; min-width: 120px;
-      padding: 12px 14px;
-      background: #eef5ff;
-      border: 1px solid #cfd8e5;
-      border-radius: 10px;
-      color: var(--word-dark);
-      font-weight: 700;
-      font-family: inherit;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: background .15s, border-color .15s;
-    }
-    .redo-action-btn:hover, .redo-btn:hover { background: #e7f0ff; }
-    .redo-btn.gray { background: #fff; color: var(--word-blue); border: 1px solid #d7e6ff; }
-
     .redo-feedback {
       min-height: 24px;
       font-weight: 600;
       color: #555;
       font-size: 0.95rem;
       margin: 4px 2px 0;
+    }
+
+/* SIMULACIÓN TIPO WORD */
+.word-shell {
+  border: 1px solid #d8e2ef;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+}
+.word-mini-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: #f3f7fd;
+  border-bottom: 1px solid #dfe8f4;
+  padding: 10px 12px;
+  font-size: 0.85rem;
+  color: #183b67;
+  font-weight: 700;
+}
+.word-mini-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  color: #18467f;
+  font-weight: 700;
+}
+.word-mini-tabs span {
+  background: #fff;
+  border: 1px solid #d7e3f3;
+  border-radius: 999px;
+  padding: 4px 10px;
+}
+.word-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px;
+  background: #fff;
+  border-bottom: 1px solid #eef2f6;
+}
+.tool-btn {
+  border: 1px solid #cfd8e5;
+  background: #eef5ff;
+  color: #0b2d5c;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: transform .12s ease, background .12s ease, border-color .12s ease;
+}
+.tool-btn:hover {
+  background: #dfeaff;
+  border-color: #2B579A;
+  transform: translateY(-1px);
+}
+.tool-btn.primary {
+  background: #2B579A;
+  color: #fff;
+  border-color: #2B579A;
+}
+.tool-btn.primary:hover {
+  background: #244a82;
+  border-color: #244a82;
+}
+.tool-btn.gray {
+  background: #fff;
+  color: #2B579A;
+}
+.word-sheet-wrap {
+  background: #f8fbff;
+  padding: 16px;
+}
+.word-sheet {
+  background: #fff;
+  border: 1px solid #d5ddea;
+  border-radius: 10px;
+  min-height: 260px;
+  box-shadow: 0 10px 24px rgba(43,87,154,.08);
+  padding: 24px 26px;
+}
+.editor {
+  min-height: 210px;
+  outline: none;
+  font-family: Calibri, "Segoe UI", sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #222;
+}
+.editor h4 {
+  margin: 0 0 10px;
+  font-size: 1.08rem;
+  color: #1e3f6e;
+}
+.editor p { margin: 0 0 10px; }
+.editor ul { margin: 8px 0 0 20px; padding: 0; }
+.editor li { margin: 6px 0; }
+.selection-tip {
+  font-size: 0.84rem;
+  color: #5c5c5c;
+  margin: 10px 0 0;
+}
+
+
+    .redo-btn-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .redo-btn {
+      border: 1px solid #cfd8e5;
+      background: #eef5ff;
+      color: #0b2d5c;
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 700;
+      border-radius: 8px;
+      padding: 10px 14px;
+      cursor: pointer;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+    }
+    .redo-btn:hover {
+      background: #dfeaff;
+      border-color: #2B579A;
+      transform: translateY(-1px);
+    }
+    .redo-btn.gray {
+      background: #fff;
     }
 
     /* ── NAV ENTRE HERRAMIENTAS ── */
@@ -282,37 +386,60 @@
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Ug1Xx2SCcZo?si=uoj3LIX-APCAANTv&amp;start=29" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>      </div>
     </div>
 
+    
     <!-- ACTIVIDAD: JUEGO REHACER -->
     <div class="extra-zone">
       <h2>✏️ Actividad</h2>
-      <p class="hint"><strong>Instrucción:</strong> Aplica un cambio, deshazlo y luego usa <strong>Rehacer</strong> para restaurarlo.</p>
+      <p class="hint"><strong>Instrucción:</strong> Escribe o selecciona un texto, aplica un cambio, usa <strong>Deshacer</strong> y luego pulsa <strong>Rehacer</strong>.</p>
 
       <div class="redo-card">
         <div class="redo-card-top">
           <div>
-            <h3>Juego Rehacer</h3>
-            <p>Haz un cambio, deshazlo y luego pulsa Rehacer.</p>
+            <h3>↻ Mini Word: Rehacer cambios</h3>
+            <p>Haz una acción, deshazla y luego vuelve a aplicarla.</p>
           </div>
           <div class="redo-score">Puntos: <span id="redo-score">0</span></div>
         </div>
 
-        <div class="redo-preview">
-          <div class="redo-preview-label">Documento actual</div>
-          <p id="redo-document">Este documento tiene su contenido original.</p>
+        <div class="word-shell">
+          <div class="word-mini-bar">
+            <div class="word-mini-tabs">
+              <span>Archivo</span>
+              <span>Inicio</span>
+              <span>Insertar</span>
+            </div>
+            <div id="redo-state-label">Documento editable</div>
+          </div>
+
+          <div class="word-toolbar" aria-label="Herramientas de formato">
+            <button type="button" class="tool-btn" onclick="formatSelection('bold')"><strong>B</strong> Negrita</button>
+            <button type="button" class="tool-btn" onclick="formatSelection('underline')"><u>U</u> Subrayar</button>
+            <button type="button" class="tool-btn" onclick="formatSelection('highlight')">🟨 Resaltar</button>
+            <button type="button" class="tool-btn" onclick="formatSelection('blue')">A Azul</button>
+            <button type="button" class="tool-btn primary" onclick="insertSampleText()">✍️ Insertar texto</button>
+          </div>
+
+          <div class="word-sheet-wrap">
+            <div class="word-sheet">
+              <div id="redo-document" class="editor" contenteditable="true" spellcheck="true" aria-label="Documento editable"><h4>Aprendamos Microsoft Word</h4>
+<p>Microsoft Word es un procesador de texto que nos ayuda a escribir, editar y organizar información.</p>
+<p>Escribe una palabra, selecciónala con el mouse y usa las herramientas de la barra.</p>
+<ul>
+  <li>Crear documentos</li>
+  <li>Editar documentos</li>
+  <li>Guardar documentos</li>
+</ul></div>
+              <div class="selection-tip">Tip: escribe dentro del documento, selecciona una parte y usa las herramientas. Después prueba Deshacer y Rehacer.</div>
+            </div>
+          </div>
         </div>
 
-        <div class="redo-toolbar">
-          <button type="button" class="redo-action-btn" onclick="performRedoAction('add')">Agregar texto</button>
-          <button type="button" class="redo-action-btn" onclick="performRedoAction('delete')">Eliminar frase</button>
-          <button type="button" class="redo-action-btn" onclick="performRedoAction('format')">Cambiar estilo</button>
-        </div>
-
-        <div class="redo-btn-group">
+        <div class="redo-btn-group" style="margin-top:12px;">
           <button class="redo-btn" onclick="undoAction()">↶ Deshacer</button>
           <button class="redo-btn" onclick="redoAction()">↻ Rehacer</button>
           <button class="redo-btn gray" onclick="resetRedoGame()">🔄 Reiniciar</button>
         </div>
-        <div id="redo-feedback" class="redo-feedback">Haz un cambio, luego pulsa Deshacer y finalmente Rehacer.</div>
+        <div id="redo-feedback" class="redo-feedback">Escribe o selecciona texto, luego usa Deshacer y Rehacer.</div>
       </div>
     </div>
 
@@ -330,48 +457,259 @@
     <a href="../index.html"><span class="nav-icon">🏠</span>Inicio</a>
   </nav>
 
+  
+  
   <script>
     (function () {
-      var actions = {
-        add: 'Este documento tiene su contenido original. Se agregó una frase extra para continuar.',
-        delete: 'Este documento tiene su contenido original. Se eliminó una frase innecesaria.',
-        format: 'Este documento tiene su contenido original. El texto importante aparece resaltado.'
-      };
+      var original = `<h4>Aprendamos Microsoft Word</h4>
+<p>Microsoft Word es un procesador de texto que nos ayuda a escribir, editar y organizar información.</p>
+<p>Escribe una palabra, selecciónala con el mouse y usa las herramientas de la barra.</p>
+<ul>
+  <li>Crear documentos</li>
+  <li>Editar documentos</li>
+  <li>Guardar documentos</li>
+</ul>`;
+
       var state = {
-        history: [{ content: 'Este documento tiene su contenido original.' }],
+        history: [],
         currentIndex: 0,
         score: 0,
-        redoFinished: false
+        redoFinished: false,
+        restoring: false
       };
-      var scoreEl = document.getElementById('redo-score');
-      var docEl = document.getElementById('redo-document');
-      var feedback = document.getElementById('redo-feedback');
+
+      var editor = null;
+      var savedRange = null;
 
       function setFeedback(message, color) {
+        var feedback = document.getElementById('redo-feedback');
         if (feedback) {
           feedback.textContent = message;
           feedback.style.color = color || '#555';
         }
       }
 
+      function setStateLabel(msg) {
+        var el = document.getElementById('redo-state-label');
+        if (el) el.textContent = msg;
+      }
+
       function updateScore() {
-        if (scoreEl) { scoreEl.textContent = state.score; }
+        var scoreEl = document.getElementById('redo-score');
+        if (scoreEl) scoreEl.textContent = state.score;
       }
 
-      function updateDocument() {
-        if (docEl) { docEl.textContent = state.history[state.currentIndex].content; }
+      function snapshot() {
+        return editor ? editor.innerHTML : '';
       }
 
-      window.performRedoAction = function (actionKey) {
-        if (state.currentIndex < state.history.length - 1) {
-          state.history = state.history.slice(0, state.currentIndex + 1);
-        }
-        state.history.push({ content: actions[actionKey] });
-        state.currentIndex += 1;
+      function restore(html) {
+        if (!editor) return;
+        state.restoring = true;
+        editor.innerHTML = html;
+        clearSelection();
+        setTimeout(function () {
+          state.restoring = false;
+        }, 0);
+      }
+
+      function pushState() {
+        if (!editor || state.restoring) return;
+        var current = snapshot();
+        if (state.history.length && state.history[state.currentIndex] === current) return;
+        state.history = state.history.slice(0, state.currentIndex + 1);
+        state.history.push(current);
+        state.currentIndex = state.history.length - 1;
         state.redoFinished = false;
-        updateDocument();
-        setFeedback('Acción aplicada. Ahora pulsa Deshacer y luego Rehacer.', '#0b662f');
-      };
+      }
+
+      function focusEditor() {
+        if (!editor) return;
+        editor.focus();
+      }
+
+      function clearSelection() {
+        var sel = window.getSelection();
+        if (sel) sel.removeAllRanges();
+      }
+
+      function saveSelection() {
+        var sel = window.getSelection();
+        if (!sel || sel.rangeCount === 0) return;
+        var range = sel.getRangeAt(0);
+        if (editor && editor.contains(range.commonAncestorContainer)) {
+          savedRange = range.cloneRange();
+        }
+      }
+
+      function restoreSelection() {
+        if (!savedRange) return false;
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(savedRange);
+        return true;
+      }
+
+      function getCurrentRange() {
+        var sel = window.getSelection();
+        if (!sel || sel.rangeCount === 0) return null;
+        return sel.getRangeAt(0);
+      }
+
+      function selectionIntersectsNode(range, node) {
+        try {
+          return range.intersectsNode(node);
+        } catch (e) {
+          var nodeRange = document.createRange();
+          nodeRange.selectNodeContents(node);
+          return !(
+            range.compareBoundaryPoints(Range.END_TO_START, nodeRange) <= 0 ||
+            range.compareBoundaryPoints(Range.START_TO_END, nodeRange) >= 0
+          );
+        }
+      }
+
+      function getTextNodesInRange(range) {
+        if (!editor) return [];
+        var walker = document.createTreeWalker(
+          editor,
+          NodeFilter.SHOW_TEXT,
+          {
+            acceptNode: function (node) {
+              if (!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+              return selectionIntersectsNode(range, node)
+                ? NodeFilter.FILTER_ACCEPT
+                : NodeFilter.FILTER_REJECT;
+            }
+          }
+        );
+
+        var nodes = [];
+        var current;
+        while ((current = walker.nextNode())) {
+          nodes.push(current);
+        }
+        return nodes;
+      }
+
+      function wrapNode(node, styleMap) {
+        var span = document.createElement('span');
+        Object.keys(styleMap).forEach(function (key) {
+          span.style[key] = styleMap[key];
+        });
+        node.parentNode.insertBefore(span, node);
+        span.appendChild(node);
+        return span;
+      }
+
+      function applyStyleToSelection(styleMap) {
+        focusEditor();
+        if (!restoreSelection()) {
+          setFeedback('Selecciona primero un texto dentro del documento.', 'red');
+          return false;
+        }
+
+        var range = getCurrentRange();
+        if (!range || range.collapsed) {
+          setFeedback('Selecciona primero un texto dentro del documento.', 'red');
+          return false;
+        }
+
+        var nodes = getTextNodesInRange(range);
+        if (!nodes.length) {
+          setFeedback('No se detectó un texto válido para modificar.', 'red');
+          return false;
+        }
+
+        // Procesar de atrás hacia adelante para no romper offsets al partir nodos
+        for (var i = nodes.length - 1; i >= 0; i--) {
+          var node = nodes[i];
+          var start = (node === range.startContainer) ? range.startOffset : 0;
+          var end = (node === range.endContainer) ? range.endOffset : node.nodeValue.length;
+
+          if (end < node.nodeValue.length) {
+            node.splitText(end);
+          }
+          var selectedNode = node;
+          if (start > 0) {
+            selectedNode = node.splitText(start);
+          }
+          wrapNode(selectedNode, styleMap);
+        }
+
+        savedRange = null;
+        setStateLabel('Formato aplicado');
+        pushState();
+        return true;
+      }
+
+      function formatSelection(mode) {
+        var ok = false;
+
+        if (mode === 'bold') {
+          ok = applyStyleToSelection({ fontWeight: '700' });
+          if (ok) setFeedback('Se aplicó negrita al texto seleccionado.', '#174a97');
+        } else if (mode === 'underline') {
+          ok = applyStyleToSelection({ textDecoration: 'underline' });
+          if (ok) setFeedback('Se aplicó subrayado al texto seleccionado.', '#174a97');
+        } else if (mode === 'highlight') {
+          ok = applyStyleToSelection({ backgroundColor: '#fff29b' });
+          if (ok) setFeedback('Se aplicó resaltado al texto seleccionado.', '#174a97');
+        } else if (mode === 'blue') {
+          ok = applyStyleToSelection({ color: '#002873' });
+          if (ok) setFeedback('Se cambió el color del texto a azul.', '#174a97');
+        }
+
+        if (!ok && (mode === 'bold' || mode === 'underline' || mode === 'highlight' || mode === 'blue')) {
+          return;
+        }
+
+        try {
+          var sel = window.getSelection();
+          if (sel && sel.rangeCount > 0) {
+            savedRange = sel.getRangeAt(0).cloneRange();
+          }
+        } catch (e) {}
+      }
+
+      function insertSampleText() {
+        focusEditor();
+        if (!restoreSelection()) {
+          setFeedback('Coloca el cursor dentro del documento para insertar texto.', 'red');
+          return;
+        }
+
+        var range = getCurrentRange();
+        if (!range) return;
+
+        range.deleteContents();
+
+        var wrapper = document.createElement('div');
+        wrapper.innerHTML = '<p><strong>Texto agregado:</strong> esta es una nueva frase para practicar Rehacer.</p>';
+        var fragment = document.createDocumentFragment();
+        while (wrapper.firstChild) {
+          fragment.appendChild(wrapper.firstChild);
+        }
+
+        var lastNode = fragment.lastChild;
+        range.insertNode(fragment);
+
+        if (lastNode) {
+          range = document.createRange();
+          range.setStartAfter(lastNode);
+          range.collapse(true);
+          var sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(range);
+          savedRange = range.cloneRange();
+        }
+
+        pushState();
+        setFeedback('Se agregó texto nuevo al documento.', '#174a97');
+        setStateLabel('Texto insertado');
+      }
+
+      window.formatSelection = formatSelection;
 
       window.undoAction = function () {
         if (state.currentIndex === 0) {
@@ -379,8 +717,9 @@
           return;
         }
         state.currentIndex -= 1;
-        updateDocument();
-        setFeedback('Deshecho. Pulsa Rehacer para restaurar el cambio.', '#0b662f');
+        restore(state.history[state.currentIndex]);
+        setStateLabel('Volvimos a un estado anterior');
+        setFeedback('Deshecho. Ahora pulsa Rehacer para restaurar el cambio.', '#0b662f');
       };
 
       window.redoAction = function () {
@@ -389,7 +728,7 @@
           return;
         }
         state.currentIndex += 1;
-        updateDocument();
+        restore(state.history[state.currentIndex]);
         if (!state.redoFinished) {
           state.redoFinished = true;
           state.score += 1;
@@ -399,18 +738,63 @@
         } else {
           setFeedback('Rehacer restauró el siguiente paso.', '#0b662f');
         }
+        setStateLabel('Cambio restaurado');
       };
 
       window.resetRedoGame = function () {
-        state.history = [{ content: 'Este documento tiene su contenido original.' }];
-        state.currentIndex = 0;
-        state.redoFinished = false;
-        updateDocument();
-        setFeedback('Haz un cambio, luego pulsa Deshacer y finalmente Rehacer.', '#555');
+        state.restoring = true;
+        editor.innerHTML = original;
+        clearSelection();
+        setTimeout(function () {
+          state.restoring = false;
+          state.history = [original];
+          state.currentIndex = 0;
+          state.redoFinished = false;
+          savedRange = null;
+          updateScore();
+          setStateLabel('Documento editable');
+          setFeedback('Escribe o selecciona texto y luego usa Deshacer y Rehacer.', '#555');
+        }, 0);
       };
 
-      updateScore();
-      updateDocument();
+      document.addEventListener('DOMContentLoaded', function () {
+        editor = document.getElementById('redo-document');
+
+        editor.addEventListener('input', function () {
+          pushState();
+          setStateLabel('Cambios guardados');
+        });
+
+        editor.addEventListener('mouseup', function () {
+          saveSelection();
+          setStateLabel('Texto listo para formato');
+        });
+
+        editor.addEventListener('keyup', function () {
+          saveSelection();
+          setStateLabel('Texto listo para formato');
+        });
+
+        editor.addEventListener('focus', function () {
+          saveSelection();
+        });
+
+        // Guardar la selección antes de que el botón robe el foco
+        document.querySelectorAll('.tool-btn').forEach(function (btn) {
+          btn.addEventListener('mousedown', function (e) {
+            e.preventDefault();
+            saveSelection();
+          });
+          btn.addEventListener('click', function () {
+            restoreSelection();
+          });
+        });
+
+        state.history = [original];
+        state.currentIndex = 0;
+        updateScore();
+        setFeedback('Escribe o selecciona texto, luego usa Deshacer y Rehacer.', '#555');
+      });
     })();
   </script>
 
